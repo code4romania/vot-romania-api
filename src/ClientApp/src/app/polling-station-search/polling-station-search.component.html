@@ -1,0 +1,18 @@
+<div class="wrapper">
+    <div class="w-100 centered-items">
+      <p>Unde stai?</p>
+    </div>
+    <div class="w-100 centered-items">
+      <div class="input-group search-input">
+        <input type="text" class="form-control" [attr.placeholder]="searchText" [attr.aria-label]="searchText"
+          aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div #map style="height: 596px;" class="map"></div>
+</div>

@@ -1,0 +1,33 @@
+.wrapper {
+  align-items: center;
+  text-align: center;
+  margin-top: 50px;
+
+  p {
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .options-list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    .option {
+      background: #FFCC00;
+      width: 200px;
+      height: 100px;
+      margin: 5px;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .tile-list {
+      display: block;
+    }
+  }
+}

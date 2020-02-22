@@ -1,0 +1,9 @@
+nav {
+  height: 90px;
+}
+
+.dropdown-menu {
+  &.small {
+    min-width: 0;
+  }
+}
