@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -21,6 +21,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareCardComponent } from './share-card/share-card.component';
 import { DonateCardComponent } from './donate-card/donate-card.component';
 import { PollingStationSearchComponent } from './polling-station-search/polling-station-search.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { HereAddressService } from './services/here-suggest.service';
+import { DataService } from './services/data.service';
 
 const appRoutes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -49,9 +52,14 @@ const appRoutes = [
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot({ data: appStateReducer }),
     EffectsModule.forRoot([ApplicationEffects]),
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    HereAddressService,
+    DataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
