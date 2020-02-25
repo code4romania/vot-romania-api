@@ -1,0 +1,41 @@
+#donate-link-button {
+  max-width: 200px;
+  width: calc(100vw - 200px);
+  margin-left: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  font-size: 17px;
+  background-color: #4DCB79;
+  text-decoration: none;
+  height: 45px;
+  border-radius: 5px;
+}
+
+.middle {
+  display: flex;
+  justify-content: center;
+}
+
+.box {
+  width: 55%;
+  padding: 30px;
+  margin-top: 60px;
+
+
+  &.box-dark {
+    background: #352245;
+    color: #FFFFFF;
+    font-size: 16px;
+  }
+
+  .text {
+    font-family: inherit;
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    text-rendering: optimizeLegibility;
+  }
+}

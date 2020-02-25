@@ -1,0 +1,35 @@
+<div class="wrapper">
+  <div class="w-100 centered-items">
+    <p>Unde stai?</p>
+  </div>
+  <form>
+    <div class="w-100 centered-items">
+      <div class="input-group search-input">
+        <input type="text"
+          class="form-control"
+          [formControl]="control"
+          [matAutocomplete]="auto"
+          [attr.placeholder]="searchText"
+          [attr.aria-label]="searchText">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary"
+            type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <mat-autocomplete #auto="matAutocomplete"
+          [displayWith]="getDisplayFn()"
+          (optionSelected)=onSelectingSuggestion($event.option.value)>
+          <mat-option *ngFor="let address of filteredAddresses | async"
+            [value]="address">
+            {{address.label}}
+          </mat-option>
+        </mat-autocomplete>
+      </div>
+    </div>
+  </form>
+  <div #map
+    id="map"
+    style="height: 596px;"
+    class="map"></div>
+</div>

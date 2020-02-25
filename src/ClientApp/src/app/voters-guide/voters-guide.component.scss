@@ -1,0 +1,40 @@
+.wrapper {
+	align-items: center;
+	text-align: center;
+	margin-top: 50px;
+
+	p {
+		font-style: normal;
+		font-weight: 600;
+	}
+
+	.options-list {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+
+		.option {
+      background: #ffcc00;
+      color: #352245;
+			width: 200px;
+			height: 100px;
+			margin: 5px;
+			font-weight: 600;
+			font-size: 16px;
+			line-height: 24px;
+			text-align: center;
+      padding: 5px;
+
+			&.is-selected {
+        background: #352245;
+        color: #ffcc00;
+			}
+		}
+	}
+
+	@media (max-width: 575px) {
+		.tile-list {
+			display: block;
+		}
+	}
+}

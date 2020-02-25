@@ -1,0 +1,20 @@
+<ng-container *ngIf="data">
+  <div class="container wrapper">
+    <p>{{ data.description }}
+    </p>
+
+    <div class="options-list">
+      <div class="option cursor-pointer"
+        *ngFor="let option of data.options"
+        [class.is-selected]="option.isSelected"
+        (click)="showDescriptionFor(option)">
+        {{option.title}}
+      </div>
+
+    </div>
+    <div class="text-left">
+      <span>{{description}}</span>
+    </div>
+  </div>
+
+</ng-container>

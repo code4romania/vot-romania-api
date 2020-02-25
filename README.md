@@ -17,15 +17,19 @@ This project is built by amazing volunteers and you can be one of them! Here's a
 You can also list any pending features and planned improvements for the project here.
 
 ## Built With
+.net core 3.1 and Angular 8
 
 ### Programming languages
+C# 8
 
 ### Platforms
 
 ### Frontend framework
 
-### Package managers
+Angular 8
 
+### Package managers
+NPM
 ### Database technology & provider
 
 ## Repos and projects
@@ -34,13 +38,7 @@ Mention all related repos and projects.
 
 ## Deployment
 
-Guide users through getting your code up and running on their own system. In this section you can talk about:
-1. Installation process
-2. Software dependencies
-3. Latest releases
-4. API references
-
-Describe and show how to build your code and run the tests.
+run `dotnet watch run` to debug your code
 
 ## Feedback
 
