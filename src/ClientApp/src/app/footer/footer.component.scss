@@ -2,7 +2,7 @@ footer {
   background-color: #352245;
   margin-top: 45px;
 
-  .gray{
+  .gray {
     background-color: #D9D9D9;
     border-top: 1px solid #E0E0E0;
   }
@@ -14,8 +14,6 @@ footer {
     height: 60px;
   }
 }
-
-
 
 .social-link-item {
   height: 45px;
@@ -75,6 +73,11 @@ footer {
   display: flex;
   justify-content: flex-end;
   padding-bottom: 0.5em;
+}
+
+.media {
+  display: flex;
+  align-items: flex-start;
 }
 
 @media screen and (max-width: 575px) {
