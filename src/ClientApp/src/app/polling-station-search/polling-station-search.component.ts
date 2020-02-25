@@ -3,12 +3,16 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit
+  AfterViewInit,
+  OnDestroy
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { switchMap, debounceTime, map } from 'rxjs/operators';
 import { HereAddressService, Suggestion } from '../services/here-suggest.service';
+import { ApplicationState } from '../state/reducers';
+import { Store, select } from '@ngrx/store';
+import { getPollingStations } from '../state/selectors';
 
 declare var H: any;
 
@@ -17,17 +21,21 @@ declare var H: any;
   templateUrl: './polling-station-search.component.html',
   styleUrls: ['./polling-station-search.component.scss']
 })
-export class PollingStationSearchComponent implements OnInit, AfterViewInit {
+export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   control = new FormControl();
   filteredAddresses: Observable<Suggestion[]>;
   searchText: string = 'Caută adresa ta pentru a afla la ce secție ești arondat';
 
   private platform: any;
+  private hereMap: any;
+  private mapUi: any;
 
   @ViewChild('map', { static: true })
   public mapElement: ElementRef;
 
-  constructor(private addressSuggest: HereAddressService) {
+  private subscription: Subscription;
+
+  constructor(private addressSuggest: HereAddressService, private store: Store<ApplicationState>) {
     this.platform = new H.service.Platform({
       apikey: hereMapsToken
     });
@@ -39,23 +47,59 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit {
       switchMap(value => this.addressSuggest.suggest(value)),
       map(value => value.suggestions)
     );
+
+    this.initializeMap();
+
+    this.store.pipe(select(getPollingStations))
+      .subscribe(ps => {
+        const icon = new H.map.Icon('assets/pin.png');
+        const pinGroups = new H.map.Group();
+        this.hereMap.addObject(pinGroups);
+
+        pinGroups.addEventListener('tap', (evt) => {
+          // event target is the marker itself, group is a parent event target
+          // for all objects that it contains
+          const bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+            // read custom data
+            content: evt.target.getData()
+          });
+          // show info bubble
+          this.mapUi.addBubble(bubble);
+        }, false);
+
+        ps.forEach(data => {
+          const marker = new H.map.Marker({ lat: data.lat, lng: data.lng }, { icon: icon });
+          marker.setData(data.properties.adresa);
+          pinGroups.addObject(marker);
+        });
+
+      });
   }
 
-  ngAfterViewInit(): void {
+  private initializeMap() {
     const defaultLayers = this.platform.createDefaultLayers();
 
-    const hereMap = new H.Map(
-      this.mapElement.nativeElement,
+    this.hereMap = new H.Map(this.mapElement.nativeElement,
       defaultLayers.vector.normal.map,
       {
         center: { lat: 45.658, lng: 25.6012 },
         zoom: 7,
         pixelRatio: window.devicePixelRatio || 1
-      }
-    );
+      });
 
-    const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(hereMap));
+    const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(this.hereMap));
 
+    this.mapUi = H.ui.UI.createDefault(this.hereMap, defaultLayers);
+  }
+
+  ngAfterViewInit(): void {
+
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
   getDisplayFn() {

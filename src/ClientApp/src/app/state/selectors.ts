@@ -16,9 +16,15 @@ export const getGeneralInfo = createSelector(
     getApplicationState,
     state => state.generalInfo
 );
+
 export const getVotingGuide = createSelector(
     getApplicationState,
     state => state.votingGuide
+);
+
+export const getPollingStations = createSelector(
+  getApplicationState,
+  state => state.pollingStations
 );
 
 export const getError = createSelector(

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using VotRomania.Providers;
 
 namespace VotRomania
 {
@@ -22,6 +23,7 @@ namespace VotRomania
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IDataProvider, DummyDataProvider>();
             services.AddControllersWithViews();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             // In production, the Angular files will be served from this directory

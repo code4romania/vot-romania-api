@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace VotRomania.Models
 {
@@ -10,9 +11,16 @@ namespace VotRomania.Models
 
     public class PollingStationsInfo
     {
-        public string id { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
+
+        [JsonProperty("lat")]
         public float Lat { get; set; }
+
+        [JsonProperty("lng")]
         public float Lng { get; set; }
+
+        [JsonProperty("properties")]
         public PollingStationDetails Properties { get; set; }
     }
 
@@ -35,17 +43,11 @@ namespace VotRomania.Models
         public string Description { get; set; }
     }
 
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(JsonStringEnumConverter))]
     public enum Language
     {
         Ro,
-        Hu,
-    }
-
-    public class Geometry
-    {
-        public string type { get; set; }
-        public float[] coordinates { get; set; }
+        Hu
     }
 
     public class PollingStationDetails
@@ -56,5 +58,4 @@ namespace VotRomania.Models
         public string Institutie { get; set; }
         public string Adresa { get; set; }
     }
-
 }
