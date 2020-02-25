@@ -37,7 +37,7 @@ export class HereAddressService {
     // Begin assigning parameters
     params = params.append('query', location);
     params = params.append('maxresults', '5');
-    params = params.append('apikey', 'Um0LhLV4phI2QpCYrBCwmWgvdjmH6NFvd709PhMqsQg');
+    params = params.append('apikey', hereMapsToken);
 
     return this.httpClient.get<ILocationSearchResponse>(this.url, { params: params });
   }

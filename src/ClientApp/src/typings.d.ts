@@ -4,5 +4,5 @@ interface NodeModule {
   id: string;
 }
 
-declare const hereMapsToken: string; // TODO: retrieve from server
+declare const hereMapsToken: string;
 

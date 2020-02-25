@@ -29,7 +29,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit {
 
   constructor(private addressSuggest: HereAddressService) {
     this.platform = new H.service.Platform({
-      apikey: 'Um0LhLV4phI2QpCYrBCwmWgvdjmH6NFvd709PhMqsQg'
+      apikey: hereMapsToken
     });
   }
 
