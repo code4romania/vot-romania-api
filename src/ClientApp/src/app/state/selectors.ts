@@ -1,5 +1,5 @@
-import { createSelector, createFeatureSelector } from "@ngrx/store";
-import { ApplicationState } from "./reducers";
+import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { ApplicationState } from './reducers';
 
 const getApplicationState = createFeatureSelector<ApplicationState>('data');
 

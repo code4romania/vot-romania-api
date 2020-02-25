@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 export interface Option {
@@ -13,18 +13,38 @@ export interface VotingGuide {
   options: Option[];
 }
 
-export interface AppData {
+export interface StaticData {
   language: string;
   generalInfo: string;
   votersGuide: VotingGuide;
+}
+
+export interface PollingStationDetails {
+  judet: string;
+  localitate: string;
+  numarSectie: string;
+  institutie: string;
+  adresa: string;
+}
+
+export interface PollingStationInfo {
+  id: string;
+  lat: number;
+  lng: number;
+  properties: PollingStationDetails;
+}
+
+export interface ApplicationData {
+  staticTexts: StaticData[];
+  pollingStationsInfo: PollingStationInfo[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
   constructor(private http: HttpClient) { }
 
-  getData() {
-    return this.http.get<AppData[]>('api/data')
+  getData(): Observable<ApplicationData> {
+    return this.http.get<ApplicationData>('api/data')
       .pipe(catchError(this.handleError));
   }
 

@@ -3,7 +3,7 @@ using VotRomania.Models;
 
 namespace VotRomania.Queries
 {
-    public class GetData:IRequest<ApplicationData[]>
+    public class GetData:IRequest<ApplicationData>
     {
     }
 }

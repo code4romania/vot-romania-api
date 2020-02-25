@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -24,12 +21,10 @@ namespace VotRomania.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<ApplicationData>> Get()
+        public async Task<ApplicationData> Get()
         {
             var data =await _mediator.Send(new GetData());
             return data;
         }
-
-   
     }
 }

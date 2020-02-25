@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoadDataDoneAction, LoadDataErorrAction, ActionTypes } from './actions';
+import { LoadDataDoneAction, LoadDataErrorAction, ActionTypes } from './actions';
 import { Observable, of } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { Action } from '@ngrx/store';
@@ -18,7 +18,7 @@ export class ApplicationEffects {
         mergeMap(action =>
             this.dataService.getData().pipe(
                 map(data => (new LoadDataDoneAction(data))),
-                catchError(err => of(new LoadDataErorrAction(err)))
+                catchError(err => of(new LoadDataErrorAction(err)))
             )
         )
     );

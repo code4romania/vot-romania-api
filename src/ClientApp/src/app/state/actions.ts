@@ -1,5 +1,5 @@
-import { Action } from "@ngrx/store";
-import { AppData } from "../services/data.service";
+import { Action } from '@ngrx/store';
+import { ApplicationData } from '../services/data.service';
 
 const typeCache: { [label: string]: boolean } = {};
 export function actionType<T extends string>(label: T): T {
@@ -22,17 +22,17 @@ export class ActionTypes {
 export class LoadDataAction implements Action {
     readonly type = ActionTypes.LOAD_DATA;
 }
-export class LoadDataErorrAction implements Action {
+export class LoadDataErrorAction implements Action {
     readonly type = ActionTypes.LOAD_DATA_ERROR;
     constructor(public payload: string) { }
 }
 export class LoadDataDoneAction implements Action {
     readonly type = ActionTypes.LOAD_DATA_DONE;
     payload: {
-        data: AppData[]
+        data: ApplicationData
     };
 
-    constructor(data: AppData[]) {
+    constructor(data: ApplicationData) {
         this.payload = {
             data
         };
@@ -45,4 +45,4 @@ export class ChangeSelectedLanguage implements Action{
     constructor(public payload: string) { }
 }
 
-export type AppActions = LoadDataAction | LoadDataDoneAction | LoadDataErorrAction | ChangeSelectedLanguage;
+export type AppActions = LoadDataAction | LoadDataDoneAction | LoadDataErrorAction | ChangeSelectedLanguage;

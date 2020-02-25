@@ -33,6 +33,7 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
     this.subscription = this.store
       .pipe(select(getVotingGuide),
         map(guide => {
