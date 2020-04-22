@@ -1,4 +1,4 @@
-# Project name
+# Vot Romania
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/NEW_REPO_SLUG_HERE.svg?style=for-the-badge)](https://github.com/code4romania/NEW_REPO_SLUG_HERE/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/NEW_REPO_SLUG_HERE.svg?style=for-the-badge)](https://github.com/code4romania/NEW_REPO_SLUG_HERE/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
@@ -12,9 +12,13 @@ Give a short introduction of your project. Let this section explain the objectiv
 
 ## Contributing
 
-This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.md).
+This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
 
-You can also list any pending features and planned improvements for the project here.
+Help us out by testing this project in the [staging environment](insert_link_here). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
+
+If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
+
+Also, this is [the workflow we follow](.github/WORKFLOW.md).
 
 ## Built With
 .net core 3.1 and Angular 8
