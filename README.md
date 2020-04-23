@@ -4,7 +4,7 @@
 
 Insert bullets description of the project if available.
 
-[See the project live](insert_link_here)
+[See the project live](https://vot-romania.now.sh/)
 
 Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.
 
@@ -14,7 +14,7 @@ Give a short introduction of your project. Let this section explain the objectiv
 
 This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
 
-Help us out by testing this project in the [staging environment](insert_link_here). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
+Help us out by testing this project in the [staging environment](https://vot-romania.now.sh/). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
 
 If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
