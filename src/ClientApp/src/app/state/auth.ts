@@ -5,6 +5,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { AuthService, LoginCredentials, LoginResponse } from '../services/auth.service';
 import { catchError, map, mergeMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 export class AuthActionTypes {
   static readonly LOGIN_REQUESTED = actionType('Login requested');
@@ -41,7 +42,8 @@ export type AuthActions = LoginRequested | LoginSucceeded | LoginFailed | Logout
 export class AuthEffects {
 
   constructor(private actions$: Actions,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
 
   }
 
@@ -50,10 +52,12 @@ export class AuthEffects {
     ofType(AuthActionTypes.LOGIN_REQUESTED),
     mergeMap((action: LoginRequested) =>
       this.authService.login(action.payload).pipe(
-        map(data => (new LoginSucceeded(data))),
+        map(data => {
+          this.router.navigate(['admin']);
+          return new LoginSucceeded(data);
+        }),
         catchError(err => of(new LoginFailed(err)))
       )
     )
   );
-
 }

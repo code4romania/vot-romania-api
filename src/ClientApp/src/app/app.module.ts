@@ -27,6 +27,7 @@ import { DataService } from './services/data.service';
 import { MatInputModule } from '@angular/material';
 import { AuthEffects } from './state/auth';
 import {LoginComponent} from './login/login.component';
+import {AdminComponent} from './admin/admin.component';
 
 const materialImports = [
   MatAutocompleteModule,
@@ -37,6 +38,7 @@ const appRoutes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'termeni-si-conditii', component: TermsAndConditionsComponent, pathMatch: 'full' },
   { path: 'politica-de-confidentialitate', component: PrivacyPolicyComponent, pathMatch: 'full' },
+  { path: 'admin', component: AdminComponent, pathMatch: 'full' },
   { path: 'admin/login', component: LoginComponent, pathMatch: 'full' },
 ];
 
@@ -54,6 +56,7 @@ const appRoutes = [
     DonateCardComponent,
     PollingStationSearchComponent,
     LoginComponent,
+    AdminComponent
   ],
   imports: [
     BrowserAnimationsModule,

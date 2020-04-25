@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {select, Store} from '@ngrx/store';
-import {LoginRequested} from '../state/auth';
-import {getAuthError, getAuthToken} from '../state/selectors';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
+import { LoginRequested } from '../state/auth';
+import { getAuthError } from '../state/selectors';
 
 @Component({
   selector: 'app-login',
