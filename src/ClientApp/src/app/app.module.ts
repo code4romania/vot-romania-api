@@ -24,12 +24,22 @@ import { PollingStationSearchComponent } from './polling-station-search/polling-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HereAddressService } from './services/here-suggest.service';
 import { DataService } from './services/data.service';
+import { MatInputModule } from '@angular/material';
+import { AuthEffects } from './state/auth';
+import {LoginComponent} from './login/login.component';
+
+const materialImports = [
+  MatAutocompleteModule,
+  MatInputModule
+];
 
 const appRoutes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'termeni-si-conditii', component: TermsAndConditionsComponent, pathMatch: 'full' },
-  { path: 'politica-de-confidentialitate', component: PrivacyPolicyComponent, pathMatch: 'full' }
+  { path: 'politica-de-confidentialitate', component: PrivacyPolicyComponent, pathMatch: 'full' },
+  { path: 'admin/login', component: LoginComponent, pathMatch: 'full' },
 ];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +52,8 @@ const appRoutes = [
     PrivacyPolicyComponent,
     ShareCardComponent,
     DonateCardComponent,
-    PollingStationSearchComponent
+    PollingStationSearchComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -51,10 +62,10 @@ const appRoutes = [
     FormsModule,
     RouterModule.forRoot(appRoutes),
     StoreModule.forRoot({ data: appStateReducer }),
-    EffectsModule.forRoot([ApplicationEffects]),
+    EffectsModule.forRoot([ApplicationEffects, AuthEffects]),
     BsDropdownModule.forRoot(),
-    MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ...materialImports
   ],
   providers: [
     HereAddressService,
