@@ -28,6 +28,7 @@ import { MatInputModule } from '@angular/material';
 import { AuthEffects } from './state/auth';
 import {LoginComponent} from './login/login.component';
 import {AdminComponent} from './admin/admin.component';
+import {AuthGuard} from './services/auth.guard';
 
 const materialImports = [
   MatAutocompleteModule,
@@ -38,7 +39,7 @@ const appRoutes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'termeni-si-conditii', component: TermsAndConditionsComponent, pathMatch: 'full' },
   { path: 'politica-de-confidentialitate', component: PrivacyPolicyComponent, pathMatch: 'full' },
-  { path: 'admin', component: AdminComponent, pathMatch: 'full' },
+  { path: 'admin', component: AdminComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'admin/login', component: LoginComponent, pathMatch: 'full' },
 ];
 

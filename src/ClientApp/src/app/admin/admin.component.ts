@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginRequested, Logout} from '../state/auth';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-admin',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
   ngOnInit() {
+  }
+
+  logout() {
+    this.store.dispatch(new Logout());
   }
 
 }

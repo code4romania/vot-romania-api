@@ -16,6 +16,10 @@ export interface LoginResponse {
 export class AuthService {
   constructor(private http: HttpClient) { }
 
+  getToken(): string {
+    return localStorage.getItem('token');
+  }
+
   login(credentials: LoginCredentials): Observable<LoginResponse> {
     // TODO
     return of({ authToken: 'token'});
