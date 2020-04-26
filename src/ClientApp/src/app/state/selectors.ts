@@ -22,10 +22,17 @@ export const getVotingGuide = createSelector(
     state => state.votingGuide
 );
 
-export const getPollingStations = createSelector(
-  getApplicationState,
-  state => state.pollingStations
+
+export const getSelectedAddressDetails = createSelector(
+    getApplicationState,
+    state => state.selectedAddressDetails
 );
+
+export const getMapPins = createSelector(
+    getApplicationState,
+    state => ({ userAddress: state.selectedAddressDetails, pollingStations: state.pollingStations })
+);
+
 
 export const getError = createSelector(
     getApplicationState,

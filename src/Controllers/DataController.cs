@@ -8,7 +8,7 @@ using VotRomania.Queries;
 namespace VotRomania.Controllers
 {
     [ApiController]
-    [Route("api/data")]
+    [Route("api")]
     public class DataController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -21,10 +21,22 @@ namespace VotRomania.Controllers
         }
 
         [HttpGet]
+        [Route("data")]
         public async Task<ApplicationData> Get()
         {
-            var data =await _mediator.Send(new GetData());
+            var data = await _mediator.Send(new GetData());
             return data;
+        }
+
+        [HttpGet]
+        [Route("polling-stations")]
+        public async Task<PollingStationsInfo[]> GetPollingStations([FromQuery] double latitude,
+            [FromQuery] double longitude)
+        {
+            var data = await _mediator.Send(new GetPollingStations(latitude, longitude));
+
+            return data;
+
         }
     }
 }

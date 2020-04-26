@@ -1,6 +1,7 @@
 import { AppActions, ActionTypes } from './actions';
 import { VotingGuide, StaticData, PollingStationInfo } from '../services/data.service';
-
+import { LocationDetails } from '../services/here-address.service';
+import { get } from 'lodash';
 export interface ApplicationState {
     languages: string[];
     generalInfo: string;
@@ -9,6 +10,7 @@ export interface ApplicationState {
     staticTexts: StaticData[];
     error: string;
     pollingStations: PollingStationInfo[];
+    selectedAddressDetails: LocationDetails;
 }
 
 const initialState: ApplicationState = {
@@ -18,7 +20,8 @@ const initialState: ApplicationState = {
     error: '',
     generalInfo: '',
     selectedLanguage: 'Ro', // change to enum
-    pollingStations: []
+    pollingStations: [],
+    selectedAddressDetails: undefined
 };
 export function appStateReducer(state: ApplicationState = initialState, action: AppActions): ApplicationState {
     switch (action.type) {
@@ -33,8 +36,7 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 languages: action.payload.data.staticTexts.map(x => x.language),
                 staticTexts: action.payload.data.staticTexts,
                 generalInfo: languageData.generalInfo,
-                votingGuide: languageData.votersGuide,
-                pollingStations: action.payload.data.pollingStationsInfo
+                votingGuide: languageData.votersGuide
             };
         case ActionTypes.CHANGE_LANGUAGE:
             const changedLanguageData = state.staticTexts.find(x => x.language === action.payload);
@@ -50,6 +52,12 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 selectedLanguage: action.payload
             };
 
+        case ActionTypes.LOAD_LOCATIONS_DONE:
+            return {
+                ...state,
+                pollingStations: action.pollingStations,
+                selectedAddressDetails: action.userLocation
+            };
 
         default:
             return state;

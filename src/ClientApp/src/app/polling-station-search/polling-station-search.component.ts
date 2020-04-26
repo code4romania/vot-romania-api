@@ -8,14 +8,20 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { switchMap, debounceTime, map } from 'rxjs/operators';
-import { HereAddressService, Suggestion } from '../services/here-suggest.service';
+import { switchMap, debounceTime, map, filter } from 'rxjs/operators';
+import { HereAddressService, AddressSuggestion, LocationDetails } from '../services/here-address.service';
 import { ApplicationState } from '../state/reducers';
 import { Store, select } from '@ngrx/store';
-import { getPollingStations } from '../state/selectors';
+import { getMapPins } from '../state/selectors';
+import { replace } from 'lodash'
+import { PollingStationInfo } from '../services/data.service';
+import { LoadLocations } from '../state/actions';
 
 declare var H: any;
-
+export enum PinType {
+  UserLocationIcon = '#efc007',
+  PollingStationIcon = '#119DA4'
+}
 @Component({
   selector: 'app-polling-station-search',
   templateUrl: './polling-station-search.component.html',
@@ -23,12 +29,18 @@ declare var H: any;
 })
 export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   control = new FormControl();
-  filteredAddresses: Observable<Suggestion[]>;
+  filteredAddresses: Observable<AddressSuggestion[]>;
   searchText: string = 'Caută adresa ta pentru a afla la ce secție ești arondat';
 
   private platform: any;
   private hereMap: any;
   private mapUi: any;
+
+
+  private readonly svgIcon: string = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="%%fill%%" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3" fill="%%fill%%" ></circle></svg>`;
+
+  private readonly userIcon = new H.map.Icon(this.getSvgMarker(PinType.UserLocationIcon));
+  private readonly pollingStationIcon = new H.map.Icon(this.getSvgMarker(PinType.PollingStationIcon));
 
   @ViewChild('map', { static: true })
   public mapElement: ElementRef;
@@ -44,35 +56,40 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
   ngOnInit() {
     this.filteredAddresses = this.control.valueChanges.pipe(
       debounceTime(300),
+      filter(value => typeof value === 'string'),
       switchMap(value => this.addressSuggest.suggest(value)),
       map(value => value.suggestions)
     );
 
     this.initializeMap();
 
-    this.store.pipe(select(getPollingStations))
-      .subscribe(ps => {
-        const icon = new H.map.Icon('assets/pin.png');
-        const pinGroups = new H.map.Group();
-        this.hereMap.addObject(pinGroups);
+    this.store.pipe(select(getMapPins))
+      .pipe(filter(data => data !== undefined && data.pollingStations !== undefined && data.userAddress !== undefined))
+      .subscribe((details: { userAddress: LocationDetails, pollingStations: PollingStationInfo[] }) => {
+        this.clearMap();
+        const { userAddress, pollingStations } = details;
 
-        pinGroups.addEventListener('tap', (evt) => {
-          // event target is the marker itself, group is a parent event target
-          // for all objects that it contains
-          const bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
-            // read custom data
-            content: evt.target.getData()
-          });
-          // show info bubble
-          this.mapUi.addBubble(bubble);
-        }, false);
+        const position = userAddress.displayPosition;
 
-        ps.forEach(data => {
-          const marker = new H.map.Marker({ lat: data.lat, lng: data.lng }, { icon: icon });
-          marker.setData(data.properties.adresa);
-          pinGroups.addObject(marker);
+        const userAddressMarker = new H.map.Marker({ lat: position.latitude, lng: position.longitude }, { icon: this.userIcon });
+        const mapMarkers: any[] = [];
+        mapMarkers.push(userAddressMarker);
+
+        pollingStations.forEach(p => {
+          const pollingStationMarker = new H.map.Marker({ lat: p.lat, lng: p.lng }, { icon: this.pollingStationIcon });
+          mapMarkers.push(pollingStationMarker);
         });
 
+        const group = new H.map.Group();
+
+        // add markers to the group
+        group.addObjects(mapMarkers);
+        this.hereMap.addObject(group);
+
+        // get geo bounding box for the group and set it to the map
+        this.hereMap.getViewModel().setLookAtData({
+          bounds: group.getBoundingBox()
+        });
       });
   }
 
@@ -92,6 +109,10 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
     this.mapUi = H.ui.UI.createDefault(this.hereMap, defaultLayers);
   }
 
+  private clearMap(): void {
+    this.hereMap.removeObjects(this.hereMap.getObjects());
+  }
+
   ngAfterViewInit(): void {
 
   }
@@ -106,11 +127,16 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
     return (val) => this.display(val);
   }
 
-  private display(address: Suggestion): string {
+  private display(address: AddressSuggestion): string {
     return address ? address.label : '';
   }
 
-  onSelectingSuggestion(data: Suggestion): void {
+  onSelectingSuggestion(data: AddressSuggestion): void {
     console.log('you selected:', data);
+    this.store.dispatch(new LoadLocations(data.locationId));
+  }
+
+  private getSvgMarker(pinType: PinType): string {
+    return replace(this.svgIcon, '%%fill%%', pinType);
   }
 }

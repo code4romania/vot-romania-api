@@ -1,13 +1,13 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using VotRomania.Providers;
+using VotRomania.Services;
 
 namespace VotRomania
 {
@@ -24,6 +24,7 @@ namespace VotRomania
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IDataProvider, DummyDataProvider>();
+            services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>();
             services.AddControllersWithViews();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             // In production, the Angular files will be served from this directory

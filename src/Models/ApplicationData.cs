@@ -6,7 +6,6 @@ namespace VotRomania.Models
     public class ApplicationData
     {
         public StaticData[] StaticTexts { get; set; }
-        public PollingStationsInfo[] PollingStationsInfo { get; set; }
     }
 
     public class PollingStationsInfo

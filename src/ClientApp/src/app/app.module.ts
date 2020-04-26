@@ -22,7 +22,7 @@ import { ShareCardComponent } from './share-card/share-card.component';
 import { DonateCardComponent } from './donate-card/donate-card.component';
 import { PollingStationSearchComponent } from './polling-station-search/polling-station-search.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { HereAddressService } from './services/here-suggest.service';
+import { HereAddressService } from './services/here-address.service';
 import { DataService } from './services/data.service';
 
 const appRoutes = [
