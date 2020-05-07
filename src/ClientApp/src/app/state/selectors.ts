@@ -38,3 +38,13 @@ export const getError = createSelector(
     getApplicationState,
     state => state.error
 );
+
+export const getAuthToken = createSelector(
+  getApplicationState,
+  state => state.auth.token
+);
+
+export const getAuthError = createSelector(
+  getApplicationState,
+  state => state.auth.error
+);
