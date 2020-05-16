@@ -3,43 +3,44 @@ using System.Linq;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
 using VotRomania.Models;
-using VotRomania.Providers;
+using VotRomania.Stores;
 
 namespace VotRomania.Services
 {
-
     public class IneffectiveSearchService : IPollingStationSearchService
     {
+        private readonly IPollingStationsRepository _pollingStationsRepository;
 
-        private class PollingStationGeoCoordinate
+
+        private readonly List<(GeoCoordinate Coordinates, PollingStationModel[] PollingStations)> _pollingStations;
+
+        // TODO: Change to KDTree
+        public IneffectiveSearchService(IPollingStationsRepository pollingStationsRepository)
         {
-            public GeoCoordinate Coordinates { get; set; }
-            public PollingStationsInfo[] Data { get; set; }
-        }
-
-        private List<PollingStationGeoCoordinate> _pollingStations;
-
-
-        public IneffectiveSearchService(IDataProvider dataProvider)
-        {
-            var pollingStations = dataProvider.LoadPollingStationsInfos();
+            _pollingStationsRepository = pollingStationsRepository;
+            var pollingStations = pollingStationsRepository.GetPollingStationsAsync().GetAwaiter().GetResult();
 
             _pollingStations = pollingStations
-                .GroupBy(x => new { lat = x.Lat, lng = x.Lng }, p => p, (key, pollingStationsInfos) => new PollingStationGeoCoordinate()
-                {
-                    Coordinates = new GeoCoordinate(key.lat, key.lng),
-                    Data = pollingStationsInfos.ToArray()
-                })
+                .GroupBy(
+                    x => new { lat = x.Latitude, lng = x.Longitude },
+                    p => p,
+                    (key, pollingStationsInfos) => (new GeoCoordinate(key.lat, key.lng), pollingStationsInfos.ToArray())
+                    )
                 .ToList();
         }
 
-        public Task<PollingStationsInfo[]> GetNearestPollingStationsAsync(double latitude, double longitude)
+        public Task<PollingStationsGroupModel[]> GetNearestPollingStationsAsync(double latitude, double longitude)
         {
             var userLocation = new GeoCoordinate(latitude, longitude);
             var pollingStationsInfos = _pollingStations
                 .OrderBy(x => x.Coordinates.GetDistanceTo(userLocation))
                 .Take(6)
-                .SelectMany(x => x.Data)
+                .Select(x => new PollingStationsGroupModel()
+                {
+                    Latitude = x.Coordinates.Latitude,
+                    Longitude = x.Coordinates.Longitude,
+                    PollingStations = x.PollingStations
+                })
                 .ToArray();
 
             return Task.FromResult(pollingStationsInfos);

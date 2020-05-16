@@ -1,3 +1,4 @@
+using System.Linq;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,8 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using VotRomania.Options;
 using VotRomania.Providers;
 using VotRomania.Services;
+using VotRomania.Stores;
 
 namespace VotRomania
 {
@@ -23,10 +26,18 @@ namespace VotRomania
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+
+            services.Configure<DatabaseOptions>(Configuration.GetSection("Database"));
+
+            services.AddDbContext<VotRomaniaContext>(ServiceLifetime.Singleton);
             services.AddSingleton<IDataProvider, DummyDataProvider>();
+            services.AddSingleton<IPollingStationsRepository, PollingStationsRepository>();
             services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>();
             services.AddControllersWithViews();
             services.AddMediatR(Assembly.GetExecutingAssembly());
+
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

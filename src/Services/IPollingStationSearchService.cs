@@ -5,6 +5,6 @@ namespace VotRomania.Services
 {
     public interface IPollingStationSearchService
     {
-        Task<PollingStationsInfo[]> GetNearestPollingStationsAsync(double latitude, double longitude);
+        Task<PollingStationsGroupModel[]> GetNearestPollingStationsAsync(double latitude, double longitude);
     }
 }

@@ -3,7 +3,7 @@ using VotRomania.Models;
 
 namespace VotRomania.Queries
 {
-    public class GetPollingStations : IRequest<PollingStationsInfo[]>
+    public class GetPollingStations : IRequest<PollingStationsGroupModel[]>
     {
         public double Latitude { get; }
         public double Longitude { get; }

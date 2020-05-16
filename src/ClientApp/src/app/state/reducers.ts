@@ -1,5 +1,5 @@
 import { AppActions, ActionTypes } from './actions';
-import { VotingGuide, StaticData, PollingStationInfo } from '../services/data.service';
+import { VotingGuide, StaticData, PollingStationGroup } from '../services/data.service';
 import { AuthActions, AuthActionTypes } from './auth';
 
 import { LocationDetails } from '../services/here-address.service';
@@ -11,7 +11,7 @@ export interface ApplicationState {
     votingGuide: VotingGuide;
     staticTexts: StaticData[];
     error: string;
-    pollingStations: PollingStationInfo[];
+    pollingStations: PollingStationGroup[];
     selectedAddressDetails: LocationDetails;
     auth: {
         token: string;
