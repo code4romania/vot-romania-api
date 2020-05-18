@@ -1,7 +1,9 @@
 import { AppActions, ActionTypes } from './actions';
-import { VotingGuide, StaticData, PollingStationInfo } from '../services/data.service';
+import { VotingGuide, StaticData, PollingStationGroup } from '../services/data.service';
 import { AuthActions, AuthActionTypes } from './auth';
 
+import { LocationDetails } from '../services/here-address.service';
+import { get } from 'lodash';
 export interface ApplicationState {
     languages: string[];
     generalInfo: string;
@@ -9,7 +11,8 @@ export interface ApplicationState {
     votingGuide: VotingGuide;
     staticTexts: StaticData[];
     error: string;
-    pollingStations: PollingStationInfo[];
+    pollingStations: PollingStationGroup[];
+    selectedAddressDetails: LocationDetails;
     auth: {
         token: string;
         error: string;
@@ -24,6 +27,7 @@ const initialState: ApplicationState = {
     generalInfo: '',
     selectedLanguage: 'Ro', // change to enum
     pollingStations: [],
+    selectedAddressDetails: undefined,
     auth: { token: '', error: '' },
 };
 export function appStateReducer(state: ApplicationState = initialState, action: AppActions | AuthActions): ApplicationState {
@@ -39,8 +43,7 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 languages: action.payload.data.staticTexts.map(x => x.language),
                 staticTexts: action.payload.data.staticTexts,
                 generalInfo: languageData.generalInfo,
-                votingGuide: languageData.votersGuide,
-                pollingStations: action.payload.data.pollingStationsInfo
+                votingGuide: languageData.votersGuide
             };
         case ActionTypes.CHANGE_LANGUAGE:
             const changedLanguageData = state.staticTexts.find(x => x.language === action.payload);
@@ -70,6 +73,13 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
             return {
                 ...state,
                 auth: { token: '', error: '' }
+            };
+
+        case ActionTypes.LOAD_LOCATIONS_DONE:
+            return {
+                ...state,
+                pollingStations: action.pollingStations,
+                selectedAddressDetails: action.userLocation
             };
 
         default:

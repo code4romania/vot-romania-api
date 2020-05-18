@@ -20,7 +20,6 @@ namespace VotRomania.QueryHandlers
         {
             var data = new ApplicationData
             {
-                PollingStationsInfo = _dataProvider.LoadPollingStationsInfos(),
                 StaticTexts = _dataProvider.LoadStaticData()
             };
 

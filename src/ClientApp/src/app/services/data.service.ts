@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -19,24 +19,25 @@ export interface StaticData {
   votersGuide: VotingGuide;
 }
 
-export interface PollingStationDetails {
-  judet: string;
-  localitate: string;
-  numarSectie: string;
-  institutie: string;
-  adresa: string;
+export interface PollingStation {
+  id: number;
+  latitude: number;
+  longitude: number;
+  county: string;
+  locality: string;
+  pollingStationNumber: string;
+  institution: string;
+  address: string;
 }
 
-export interface PollingStationInfo {
-  id: string;
-  lat: number;
-  lng: number;
-  properties: PollingStationDetails;
+export interface PollingStationGroup {
+  latitude: number;
+  longitude: number;
+  pollingStations: PollingStation[];
 }
 
 export interface ApplicationData {
   staticTexts: StaticData[];
-  pollingStationsInfo: PollingStationInfo[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -45,6 +46,16 @@ export class DataService {
 
   getData(): Observable<ApplicationData> {
     return this.http.get<ApplicationData>('api/data')
+      .pipe(catchError(this.handleError));
+  }
+
+  getPollingStations(latitude: number, longitude: number): Observable<PollingStationGroup[]> {
+    let params = new HttpParams();
+
+    params = params.append('latitude', latitude.toString());
+    params = params.append('longitude', longitude.toString());
+
+    return this.http.get<PollingStationGroup[]>('api/polling-stations', { params: params })
       .pipe(catchError(this.handleError));
   }
 

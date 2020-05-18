@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VotRomania.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/admin")]
     [ApiController]
     public class AdminController : ControllerBase
     {
+
     }
 }
