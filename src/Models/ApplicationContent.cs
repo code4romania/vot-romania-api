@@ -1,6 +1,6 @@
 ﻿namespace VotRomania.Models
 {
-    public class ApplicationData
+    public class ApplicationContent
     {
         public StaticData[] StaticTexts { get; set; }
     }

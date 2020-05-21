@@ -2,9 +2,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 using VotRomania.Models;
 using VotRomania.Queries;
-using VotRomania.Stores;
 
 namespace VotRomania.Controllers
 {
@@ -14,30 +14,78 @@ namespace VotRomania.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<DataController> _logger;
-        private readonly IPollingStationsRepository _repository;
 
-        public DataController(IMediator mediator, ILogger<DataController> logger, IPollingStationsRepository repository)
+        public DataController(IMediator mediator, ILogger<DataController> logger)
         {
             _mediator = mediator;
             _logger = logger;
-            _repository = repository;
         }
 
         [HttpGet]
-        [Route("data")]
-        public async Task<ApplicationData> Get()
+        [Route("content")]
+        [SwaggerOperation(Summary = "Gets website content")]
+        [SwaggerResponse(200, "Content.", typeof(ApplicationContent))]
+        [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]
+        public async Task<ApplicationContent> Get()
         {
             var data = await _mediator.Send(new GetData());
             return data;
         }
 
         [HttpGet]
-        [Route("polling-stations")]
-        public async Task<PollingStationsGroupModel[]> GetPollingStations([FromQuery] double latitude, [FromQuery] double longitude)
+        [Route("search-polling-stations")]
+        [SwaggerOperation(Summary = "Gets nearest polling stations for a specific geo point")]
+        [SwaggerResponse(200, "Polling stations found.", typeof(PollingStationsGroupModel[]))]
+        [SwaggerResponse(404, "No polling stations found.", typeof(void))]
+        [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]
+        public async Task<IActionResult> GetNearbyPollingStations([FromQuery] double latitude, [FromQuery] double longitude)
         {
-            var data = await _mediator.Send(new GetPollingStations(latitude, longitude));
+            var data = await _mediator.Send(new GetNearbyPollingStations(latitude, longitude));
 
-            return data;
+            if (data == null || data.Length == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(data);
+        }
+
+        [HttpGet]
+        [Route("polling-stations")]
+        [SwaggerOperation(Summary = "Search polling stations by specific criteria")]
+        [SwaggerResponse(200, "Polling stations found.", typeof(PagedResult<PollingStationModel>))]
+        [SwaggerResponse(404, "No polling stations found.", typeof(void))]
+        [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]
+        public async Task<IActionResult> GetFilteredPollingStations(
+            [FromQuery] PaginationQuery pagination,
+            [FromQuery] PollingStationsQuery query)
+        {
+            var pollingStations = await _mediator.Send(new SearchPollingStation(pagination, query));
+
+            if (pollingStations?.Results == null || pollingStations.Results.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(pollingStations);
+        }
+
+
+        [HttpGet]
+        [Route("polling-station/{id}")]
+        [SwaggerResponse(200, "Polling stations details.", typeof(PagedResult<PollingStationModel>))]
+        [SwaggerResponse(404, "No polling station found.", typeof(void))]
+        [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]
+        public async Task<IActionResult> GetPollingStationAsync([FromRoute] int id)
+        {
+            var pollingStation = await _mediator.Send(new GetPollingStationById(id));
+
+            if (pollingStation == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(pollingStation);
         }
     }
 }

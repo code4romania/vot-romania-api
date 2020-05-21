@@ -7,7 +7,7 @@ using VotRomania.Queries;
 
 namespace VotRomania.QueryHandlers
 {
-    public class DataQueryHandler : IRequestHandler<GetData, ApplicationData>
+    public class DataQueryHandler : IRequestHandler<GetData, ApplicationContent>
     {
         private readonly IDataProvider _dataProvider;
 
@@ -16,9 +16,9 @@ namespace VotRomania.QueryHandlers
             _dataProvider = dataProvider;
         }
 
-        public async Task<ApplicationData> Handle(GetData request, CancellationToken cancellationToken)
+        public async Task<ApplicationContent> Handle(GetData request, CancellationToken cancellationToken)
         {
-            var data = new ApplicationData
+            var data = new ApplicationContent
             {
                 StaticTexts = _dataProvider.LoadStaticData()
             };

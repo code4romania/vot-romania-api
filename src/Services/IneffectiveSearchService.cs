@@ -21,6 +21,7 @@ namespace VotRomania.Services
             var pollingStations = pollingStationsRepository.GetPollingStationsAsync().GetAwaiter().GetResult();
 
             _pollingStations = pollingStations
+                .Results
                 .GroupBy(
                     x => new { lat = x.Latitude, lng = x.Longitude },
                     p => p,

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Net.Mime;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -13,6 +14,7 @@ namespace VotRomania.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet]
         [Route("configuration/appConfig.js")]
         public ContentResult GetConfiguration()
         {
