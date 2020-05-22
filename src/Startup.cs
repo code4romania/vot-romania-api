@@ -11,6 +11,7 @@ using System.Reflection;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
+using VotRomania.Extensions;
 using VotRomania.Options;
 using VotRomania.Providers;
 using VotRomania.Services;
@@ -40,6 +41,8 @@ namespace VotRomania
             services.AddDbContext<VotRomaniaContext>(ServiceLifetime.Singleton);
             services.AddSingleton<IDataProvider, DummyDataProvider>();
             services.AddSingleton<IPollingStationsRepository, PollingStationsRepository>();
+            services.AddSingleton<IApplicationContentRepository, ApplicationContentRepository>();
+
             services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>();
             services.AddControllersWithViews();
             services.AddMediatR(Assembly.GetExecutingAssembly());
@@ -47,6 +50,7 @@ namespace VotRomania
             services.AddSwaggerGen(options =>
             {
                 options.EnableAnnotations();
+                options.DocumentFilter<OrderDefinitionsAlphabeticallyDocumentFilter>();
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
@@ -100,6 +104,7 @@ namespace VotRomania
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
+
                 options.DocumentTitle = "[Code4Ro] VotRomania API";
                 options.SwaggerEndpoint("/swagger/v1/swagger.json", "[Code4Ro] VotRomania API v1");
             });

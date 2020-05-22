@@ -7,7 +7,7 @@ using VotRomania.Stores;
 
 namespace VotRomania.CommandsHandlers
 {
-    public class PollingStationCommandHandler : IRequestHandler<AddNewPollingStation, (bool isSuccess, string errorMessage, int pollingStationId)>,
+    public class PollingStationCommandHandler : IRequestHandler<AddPollingStation, (bool isSuccess, string errorMessage, int pollingStationId)>,
         IRequestHandler<DeletePollingStation, (bool isSuccess, string errorMessage)>,
         IRequestHandler<UpdatePollingStation, (bool isSuccess, string errorMessage)>
     {
@@ -17,7 +17,7 @@ namespace VotRomania.CommandsHandlers
         {
             _repository = repository;
         }
-        public async Task<(bool isSuccess, string errorMessage, int pollingStationId)> Handle(AddNewPollingStation request, CancellationToken cancellationToken)
+        public async Task<(bool isSuccess, string errorMessage, int pollingStationId)> Handle(AddPollingStation request, CancellationToken cancellationToken)
         {
             var pollingStation = new PollingStationModel()
             {

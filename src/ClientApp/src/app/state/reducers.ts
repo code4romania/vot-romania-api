@@ -33,15 +33,15 @@ const initialState: ApplicationState = {
 export function appStateReducer(state: ApplicationState = initialState, action: AppActions | AuthActions): ApplicationState {
     switch (action.type) {
         case ActionTypes.LOAD_DATA_DONE:
-            const languageData = action.payload.data.staticTexts.find(x => x.language === state.selectedLanguage);
+            const languageData = action.payload.data.content.find(x => x.language === state.selectedLanguage);
             if (languageData === undefined) {
                 return state;
             }
 
             return {
                 ...state,
-                languages: action.payload.data.staticTexts.map(x => x.language),
-                staticTexts: action.payload.data.staticTexts,
+                languages: action.payload.data.content.map(x => x.language),
+                staticTexts: action.payload.data.content,
                 generalInfo: languageData.generalInfo,
                 votingGuide: languageData.votersGuide
             };

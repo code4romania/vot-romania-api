@@ -37,7 +37,7 @@ export interface PollingStationGroup {
 }
 
 export interface ApplicationData {
-  staticTexts: StaticData[];
+  content: StaticData[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -45,7 +45,7 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   getData(): Observable<ApplicationData> {
-    return this.http.get<ApplicationData>('api/content')
+    return this.http.get<ApplicationData>('/api/application-content')
       .pipe(catchError(this.handleError));
   }
 
@@ -55,7 +55,7 @@ export class DataService {
     params = params.append('latitude', latitude.toString());
     params = params.append('longitude', longitude.toString());
 
-    return this.http.get<PollingStationGroup[]>('api/search-polling-stations', { params: params })
+    return this.http.get<PollingStationGroup[]>('api/polling-station/near-me', { params: params })
       .pipe(catchError(this.handleError));
   }
 

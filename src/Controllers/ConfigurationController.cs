@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using System.Text;
+﻿using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
