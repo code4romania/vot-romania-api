@@ -13,6 +13,7 @@ namespace VotRomania.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet]
         [Route("configuration/appConfig.js")]
         public ContentResult GetConfiguration()
         {

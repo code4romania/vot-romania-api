@@ -4,7 +4,7 @@ namespace VotRomania.Providers
 {
     public interface IDataProvider
     {
-        StaticData[] LoadStaticData();
+        ApplicationContentModel[] LoadStaticData();
     }
 
     public class DummyDataProvider : IDataProvider
@@ -59,18 +59,18 @@ namespace VotRomania.Providers
             return guide;
         }
 
-        public StaticData[] LoadStaticData()
+        public ApplicationContentModel[] LoadStaticData()
         {
             return new[]
             {
-                new StaticData
+                new ApplicationContentModel
                 {
                     Language = Language.Ro,
                     GeneralInfo =
                         "Pe xx mai au loc alegeri locale în România. Românii cu domiciliul sau reședința pe teritoriul Romaniei au dreptul de a-și alege primarii și consilierii locali. Procedurile sunt diferite în funcție de reședință și statutul fiecărui cetățean. Descoperă cu ajutorul Vot România care sunt procedurile pentru a te înregistra să votezi sau de ce acte ai nevoie pentru a vota.",
                     VotersGuide = GetGuide(Language.Ro)
                 },
-                new StaticData
+                new ApplicationContentModel
                 {
                     Language = Language.Hu,
                     GeneralInfo =

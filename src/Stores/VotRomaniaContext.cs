@@ -21,6 +21,7 @@ namespace VotRomania.Stores
         }
 
         public DbSet<PollingStationEntity> PollingStations { get; set; }
+        public DbSet<ApplicationContentEntity> ApplicationContent { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -68,6 +69,20 @@ namespace VotRomania.Stores
                 entity.Property(m => m.PollingStationNumber)
                     .HasColumnName("PollingStationNumber")
                     .IsRequired();
+            });
+
+            builder.Entity<ApplicationContentEntity>(entity =>
+            {
+                entity.ToTable("ApplicationContent");
+
+                entity.Property(m => m.Language).IsRequired();
+                entity.HasKey(m => m.Language);
+                entity.HasIndex(m => m.Language);
+
+                entity.Property(m => m.Data)
+                    .HasColumnName("Data")
+                    .IsRequired();
+
             });
 
             base.OnModelCreating(builder);
