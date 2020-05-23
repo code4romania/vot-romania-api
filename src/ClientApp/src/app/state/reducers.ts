@@ -3,7 +3,7 @@ import { VotingGuide, StaticData, PollingStationGroup } from '../services/data.s
 import { AuthActions, AuthActionTypes } from './auth';
 
 import { LocationDetails } from '../services/here-address.service';
-import { get } from 'lodash';
+
 export interface ApplicationState {
     languages: string[];
     generalInfo: string;
@@ -59,10 +59,10 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 selectedLanguage: action.payload
             };
         case AuthActionTypes.LOGIN_SUCCEEDED:
-            const { authToken } = action.payload;
+            const { token } = action.payload;
             return {
                 ...state,
-                auth: { token: authToken, error: '' }
+                auth: { token, error: '' }
             };
         case AuthActionTypes.LOGIN_FAILED:
             return {

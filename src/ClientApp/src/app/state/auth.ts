@@ -18,6 +18,7 @@ export class LoginRequested implements Action {
   readonly type = AuthActionTypes.LOGIN_REQUESTED;
 
   constructor(public payload: LoginCredentials) {
+    this.payload = payload;
   }
 }
 
@@ -25,6 +26,7 @@ export class LoginSucceeded implements Action {
   readonly type = AuthActionTypes.LOGIN_SUCCEEDED;
 
   constructor(public payload: LoginResponse) {
+    this.payload = payload;
   }
 }
 
@@ -58,7 +60,7 @@ export class AuthEffects {
     ofType(AuthActionTypes.LOGIN_REQUESTED),
     mergeMap((action: LoginRequested) =>
       this.authService.login(action.payload).pipe(
-        map(data => (new LoginSucceeded(data)),
+        map(res => (new LoginSucceeded(res)),
           catchError(err => of(new LoginFailed(err)))
         )
       )
@@ -68,9 +70,9 @@ export class AuthEffects {
   @Effect({ dispatch: false })
   loginSucceeded$: Observable<any> = this.actions$.pipe(
     ofType(AuthActionTypes.LOGIN_SUCCEEDED),
-    tap((authToken) => {
+    tap((action: LoginSucceeded) => {
       this.router.navigate(['admin']);
-      localStorage.setItem('token', authToken);
+      localStorage.setItem('token', action.payload.token);
     })
   );
 
