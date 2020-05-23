@@ -14,7 +14,7 @@ import { ApplicationState } from '../state/reducers';
 import { Store, select } from '@ngrx/store';
 import { getMapPins } from '../state/selectors';
 import { replace } from 'lodash'
-import { PollingStationGroup } from '../services/data.service';
+import { PollingStationGroup, PollingStation } from '../services/data.service';
 import { LoadLocations } from '../state/actions';
 
 declare var H: any;
@@ -35,6 +35,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
   control = new FormControl();
   filteredAddresses: Observable<AddressSuggestion[]>;
   searchText: string = 'Caută adresa ta pentru a afla la ce secție ești arondat';
+  pollingStations: PollingStation[];
 
   private platform: any;
   private hereMap: any;
@@ -75,7 +76,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         userAddressMarker.setData('locatia ta');
         const mapMarkers: any[] = [];
         mapMarkers.push(userAddressMarker);
-
+        this.pollingStations = [].concat(...pollingStations.map(p => p.pollingStations));
         pollingStations.forEach(p => {
           const pollingStationMarker = new H.map.Marker({ lat: p.latitude, lng: p.longitude }, { icon: this.pollingStationIcon });
           pollingStationMarker.setData(this.getPollingStationinfoBubble(p));
