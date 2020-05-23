@@ -30,7 +30,6 @@ namespace VotRomania.Controllers
         [AllowAnonymous]
         [SwaggerOperation(Summary = "Gets website content")]
         [SwaggerResponse(200, "Content", typeof(StaticTexts))]
-        [SwaggerResponse(401)]
         [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]
         public async Task<IActionResult> Get()
         {
