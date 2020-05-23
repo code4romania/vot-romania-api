@@ -17,9 +17,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { ApplicationEffects } from './state/effects';
 import { appStateReducer } from './state/reducers';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareCardComponent } from './share-card/share-card.component';
 import { DonateCardComponent } from './donate-card/donate-card.component';
+import { PollingStationCardInfoComponent } from './polling-station-card-info/polling-station-card-info.component';
 import { PollingStationSearchComponent } from './polling-station-search/polling-station-search.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HereAddressService } from './services/here-address.service';
@@ -55,6 +57,7 @@ const appRoutes = [
     PrivacyPolicyComponent,
     ShareCardComponent,
     DonateCardComponent,
+    PollingStationCardInfoComponent,
     PollingStationSearchComponent,
     LoginComponent,
     AdminComponent
@@ -68,6 +71,7 @@ const appRoutes = [
     StoreModule.forRoot({ data: appStateReducer }),
     EffectsModule.forRoot([ApplicationEffects, AuthEffects]),
     BsDropdownModule.forRoot(),
+    CollapseModule.forRoot(),
     ReactiveFormsModule,
     ...materialImports
   ],
