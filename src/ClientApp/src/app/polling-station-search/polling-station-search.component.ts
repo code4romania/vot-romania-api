@@ -13,7 +13,7 @@ import { HereAddressService, AddressSuggestion, LocationDetails } from '../servi
 import { ApplicationState } from '../state/reducers';
 import { Store, select } from '@ngrx/store';
 import { getMapPins } from '../state/selectors';
-import { replace } from 'lodash'
+import { replace } from 'lodash';
 import { PollingStationGroup } from '../services/data.service';
 import { LoadLocations } from '../state/actions';
 
@@ -34,7 +34,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
 
   control = new FormControl();
   filteredAddresses: Observable<AddressSuggestion[]>;
-  searchText: string = 'Caută adresa ta pentru a afla la ce secție ești arondat';
+  searchText: 'Caută adresa ta pentru a afla la ce secție ești arondat';
 
   private platform: any;
   private hereMap: any;
@@ -70,7 +70,6 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         const { userAddress, pollingStations } = details;
 
         const position = userAddress.displayPosition;
-        
         const userAddressMarker = new H.map.Marker({ lat: position.latitude, lng: position.longitude }, { icon: this.userIcon });
         userAddressMarker.setData('locatia ta');
         const mapMarkers: any[] = [];
@@ -86,11 +85,11 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         group.addEventListener('tap', (evt) => {
           // event target is the marker itself, group is a parent event target
           // for all objects that it contains
-          var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+          const bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
             // read custom data
             content: evt.target.getData()
           });
-          this.mapUi.removeBubble(this.currentlyOpenedInfoBubble)
+          this.mapUi.removeBubble(this.currentlyOpenedInfoBubble);
           // show info bubble
           this.mapUi.addBubble(bubble);
           this.currentlyOpenedInfoBubble = bubble;
@@ -109,12 +108,14 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
 
   getPollingStationinfoBubble(group: PollingStationGroup): string {
     // TODO: style info bubble text
-    return group.pollingStations.reduce((accumulator, currentValue)=>accumulator+','+currentValue.pollingStationNumber,'');
+    return group.pollingStations.reduce((accumulator, currentValue) =>
+    accumulator + `<div style="width: 472px;">  <div style="font-family: Titillium Web;font-style: normal;font-weight: 600;font-size: 34px;line-height: 52px;display: flex;align-items: center;text-align: center;">Sectia de votare ${currentValue.pollingStationNumber},  ${currentValue.locality}</div>  <div style="font-family: Titillium Web;font-style: normal;font-weight: 600;font-size: 18px;line-height: 27px;display: flex;align-items: center;text-align: center;"> <p style="background: #FFCC00;">Adresa:</p> <u>${currentValue.address}</u></div> <br> ` + '</div>'
+    , '' );
   }
 
   private initializeMap() {
 
-    var pixelRatio = window.devicePixelRatio || 1;
+    const pixelRatio = window.devicePixelRatio || 1;
     const defaultLayers = this.platform.createDefaultLayers({
       tileSize: pixelRatio === 1 ? 256 : 512,
       ppi: pixelRatio === 1 ? undefined : 320
@@ -129,7 +130,6 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
       });
 
     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(this.hereMap));
-
     this.mapUi = H.ui.UI.createDefault(this.hereMap, defaultLayers);
   }
 
