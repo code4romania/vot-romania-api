@@ -1,0 +1,26 @@
+<div class="container">
+
+    <div *ngFor="let item of items" class="pb-4 border-bottom">
+        <div class="d-flex justify-content-between mt-4">
+            <p>{{ item.title }}</p>
+
+            <div>
+                <button class="btn btn-outline-secondary"
+                        type="button" (click)="editing[item.editing] = !editing[item.editing]">
+                    {{ editing[item.editing] ? 'Preview' : 'Edit' }}
+                </button>
+            </div>
+        </div>
+
+        <ng-container *ngIf="editing[item.editing]">
+            <angular-editor [id]="item.field"
+                            [placeholder]="'Enter text here...'"
+                            [(ngModel)]="item.field"
+                            [config]="editorConfig">
+            </angular-editor>
+        </ng-container>
+
+        <div *ngIf="!editing[item.editing]" [innerHTML]="item.field"></div>
+    </div>
+
+</div>
