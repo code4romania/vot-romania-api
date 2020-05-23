@@ -110,7 +110,8 @@ export class LoadLocationDone implements Action {
     constructor(public userLocation: LocationDetails, public pollingStations) { }
 }
 
-export type AppActions = LoadDataAction
+export type AppActions = ClearErrorAction
+    | LoadDataAction
     | LoadDataDoneAction
     | LoadErrorAction
     | UpdateDataAction
