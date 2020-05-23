@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -8,11 +9,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
+using System.Security.Claims;
+using System.Text;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using VotRomania.Extensions;
 using VotRomania.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using VotRomania.Providers;
 using VotRomania.Services;
 using VotRomania.Stores;
@@ -38,20 +43,58 @@ namespace VotRomania
             services.AddHealthChecks();
             services.Configure<DatabaseOptions>(Configuration.GetSection("Database"));
 
+            var authenticationSection = Configuration.GetSection("Authentication");
+            services.Configure<AuthSettingOptions>(authenticationSection);
+            services.Configure<ApplicationUsersOptions>(Configuration.GetSection("UserSettings"));
+
             services.AddDbContext<VotRomaniaContext>(ServiceLifetime.Singleton);
-            services.AddSingleton<IDataProvider, DummyDataProvider>();
             services.AddSingleton<IPollingStationsRepository, PollingStationsRepository>();
             services.AddSingleton<IApplicationContentRepository, ApplicationContentRepository>();
 
             services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>();
+
+            services.AddScoped<IUserProvider, UserProvider>();
+            services.AddScoped<IAuthenticationProvider, AuthenticationProvider>();
+
+            // Authentication
+            var appSettings = authenticationSection.Get<AuthSettingOptions>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("content", policy => policy.RequireClaim(ClaimTypes.NameIdentifier)
+                    .RequireClaim("scope", "content-edit"));
+                options.AddPolicy("polling-stations", policy => policy.RequireClaim(ClaimTypes.NameIdentifier)
+                    .RequireClaim("scope", "polling-stations"));
+            });
+
+
             services.AddControllersWithViews();
             services.AddMediatR(Assembly.GetExecutingAssembly());
 
-            services.AddSwaggerGen(options =>
+
+            services.AddSwaggerGen(c =>
             {
-                options.EnableAnnotations();
-                options.DocumentFilter<OrderDefinitionsAlphabeticallyDocumentFilter>();
-                options.SwaggerDoc("v1", new OpenApiInfo
+                c.EnableAnnotations();
+                c.DocumentFilter<OrderDefinitionsAlphabeticallyDocumentFilter>();
+                c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "[Code4Ro] VotRomania API",
@@ -61,7 +104,36 @@ namespace VotRomania
                         Url = new Uri("https://github.com/code4romania/vot-romania")
                     }
                 });
-                options.SwaggerGeneratorOptions.DescribeAllParametersInCamelCase = true;
+
+                c.SwaggerGeneratorOptions.DescribeAllParametersInCamelCase = true;
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header,
+
+                        },
+                        new List<string>()
+                    }
+                });
             });
             services.AddProblemDetails(ConfigureProblemDetails);
             // In production, the Angular files will be served from this directory
@@ -117,6 +189,8 @@ namespace VotRomania
             }
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

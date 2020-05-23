@@ -10,5 +10,6 @@
         public string PollingStationNumber { get; set; }
         public string Institution { get; set; }
         public string Address { get; set; }
+        public string[] AssignedAddresses { get; set; }
     }
 }

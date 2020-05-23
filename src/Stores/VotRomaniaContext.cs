@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using System;
+using System.IO;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -26,7 +28,7 @@ namespace VotRomania.Stores
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionStringBuilder = new SqliteConnectionStringBuilder();
-            connectionStringBuilder.DataSource = _databaseOptions.DatabasePath;
+            connectionStringBuilder.DataSource = _databaseOptions.DatabasePath.Replace("\\", Path.DirectorySeparatorChar.ToString());
             connectionStringBuilder.Mode = SqliteOpenMode.ReadWriteCreate;
             optionsBuilder.UseSqlite(connectionStringBuilder.ConnectionString);
 
