@@ -109,7 +109,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
   getPollingStationinfoBubble(group: PollingStationGroup): string {
     // TODO: style info bubble text
     return group.pollingStations.reduce((accumulator, currentValue) =>
-    accumulator + `<div style="width: 472px;">  <div style="font-family: Titillium Web;font-style: normal;font-weight: 600;font-size: 34px;line-height: 52px;display: flex;align-items: center;text-align: center;">Sectia de votare ${currentValue.pollingStationNumber},  ${currentValue.locality}</div>  <div style="font-family: Titillium Web;font-style: normal;font-weight: 600;font-size: 18px;line-height: 27px;display: flex;align-items: center;text-align: center;"> <p style="background: #FFCC00;">Adresa:</p> <u>${currentValue.address}</u></div> <br> ` + '</div>'
+    accumulator + `<div style="width: 472px;">  <div style="font-family: Titillium Web;font-style: normal;font-weight: 600;font-size: 34px;line-height: 52px;display: flex;align-items: center;text-align: center;">Sectia de votare ${currentValue.pollingStationNumber},  ${currentValue.locality}</div>  <div style="font-family: Titillium Web;font-style: normal;font-weight: 600;font-size: 18px;line-height: 27px;display: flex;align-items: center;text-align: center;"> <p style="background: #FFCC00;">Adresa:</p> <u>${currentValue.address}</u></div> <br>  <div style="width: 431px;height: 1px;left: 15px;top: 353px;background: #C4C4C4;"></div>` + '</div>'
     , '' );
   }
 
