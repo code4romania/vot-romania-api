@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using VotRomania.Commands;
@@ -8,6 +9,7 @@ using VotRomania.Queries;
 
 namespace VotRomania.Controllers
 {
+    [Authorize(Policy = "polling-stations")]
     [ApiController]
     [Route("api/polling-station")]
     [Consumes("application/json")]
@@ -22,6 +24,7 @@ namespace VotRomania.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [SwaggerOperation(Summary = "Search polling stations by specific criteria")]
         [SwaggerResponse(200, "Polling stations found.", typeof(PagedResult<PollingStationModel>))]
         [SwaggerResponse(404, "No polling stations found.", typeof(void))]
@@ -44,6 +47,7 @@ namespace VotRomania.Controllers
         [HttpGet]
         [Route("polling-station/{id}")]
         [SwaggerResponse(200, "Polling stations details.", typeof(PagedResult<PollingStationModel>))]
+        [SwaggerResponse(401)]
         [SwaggerResponse(404, "No polling station found.", typeof(void))]
         [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]
         public async Task<IActionResult> GetPollingStationAsync([FromRoute] int id)
@@ -61,6 +65,7 @@ namespace VotRomania.Controllers
         [HttpPost]
         [SwaggerOperation(Summary = "Adds a polling station")]
         [SwaggerResponse(200, "Id of new polling station", typeof(int))]
+        [SwaggerResponse(401)]
         [SwaggerResponse(500, "Something went wrong when adding or updating a polling station", typeof(ProblemDetails))]
         public async Task<IActionResult> AddPollingStationAsync([FromBody]PollingStationUploadModel pollingStation)
         {
@@ -78,6 +83,7 @@ namespace VotRomania.Controllers
         [Route("{id}")]
         [SwaggerOperation(Summary = "Updates a polling station")]
         [SwaggerResponse(200, "Latest data", typeof(void))]
+        [SwaggerResponse(401)]
         [SwaggerResponse(500, "Something went wrong when adding or updating a polling station", typeof(ProblemDetails))]
         public async Task<IActionResult> UpdatePollingStationAsync([FromRoute] int id, [FromBody]PollingStationUploadModel pollingStation)
         {
@@ -95,6 +101,7 @@ namespace VotRomania.Controllers
         [Route("{id}")]
         [SwaggerOperation(Summary = "Deletes a polling station")]
         [SwaggerResponse(200, "Operation response", typeof(void))]
+        [SwaggerResponse(401)]
         [SwaggerResponse(500, "Something went wrong when deleting a polling station", typeof(ProblemDetails))]
         public async Task<IActionResult> DeletePollingStationAsync([FromRoute] int id)
         {
@@ -109,6 +116,7 @@ namespace VotRomania.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("near-me")]
         [SwaggerOperation(Summary = "Gets nearest polling stations for a specific geo point")]
         [SwaggerResponse(200, "Polling stations found.", typeof(PollingStationsGroupModel[]))]

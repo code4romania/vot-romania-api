@@ -13,7 +13,7 @@ import { HereAddressService, AddressSuggestion, LocationDetails } from '../servi
 import { ApplicationState } from '../state/reducers';
 import { Store, select } from '@ngrx/store';
 import { getMapPins } from '../state/selectors';
-import { replace } from 'lodash'
+import { replace } from 'lodash';
 import { PollingStationGroup } from '../services/data.service';
 import { LoadLocations } from '../state/actions';
 
@@ -109,7 +109,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
 
   getPollingStationinfoBubble(group: PollingStationGroup): string {
     // TODO: style info bubble text
-    return group.pollingStations.reduce((accumulator, currentValue)=>accumulator+','+currentValue.pollingStationNumber,'');
+    return group.pollingStations.reduce((accumulator, currentValue)=>accumulator+'<br/>'+currentValue.pollingStationNumber,'');
   }
 
   private initializeMap() {

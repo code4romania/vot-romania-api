@@ -1,15 +1,16 @@
 ﻿using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using VotRomania.Commands;
 using VotRomania.Models;
-using VotRomania.Providers;
 using VotRomania.Queries;
 
 namespace VotRomania.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/application-content")]
     [Consumes("application/json")]
@@ -18,18 +19,18 @@ namespace VotRomania.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<ApplicationContentController> _logger;
-        private readonly IDataProvider _delte;
 
-        public ApplicationContentController(IMediator mediator, ILogger<ApplicationContentController> logger, IDataProvider delte)
+        public ApplicationContentController(IMediator mediator, ILogger<ApplicationContentController> logger)
         {
             _mediator = mediator;
             _logger = logger;
-            _delte = delte;
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [SwaggerOperation(Summary = "Gets website content")]
         [SwaggerResponse(200, "Content", typeof(StaticTexts))]
+        [SwaggerResponse(401)]
         [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]
         public async Task<IActionResult> Get()
         {
@@ -47,6 +48,7 @@ namespace VotRomania.Controllers
         [Route("{language}")]
         [SwaggerOperation(Summary = "Adds or updates content")]
         [SwaggerResponse(200, "Operation response", typeof(void))]
+        [SwaggerResponse(401)]
         [SwaggerResponse(500, "Something went wrong when updating content", typeof(ProblemDetails))]
         public async Task<IActionResult> UpdateContentAsync([FromRoute] Language language, [FromBody]ApplicationContentModel content)
         {
@@ -61,6 +63,7 @@ namespace VotRomania.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("{language}")]
         [SwaggerOperation(Summary = "Get content for a specific language")]
         [SwaggerResponse(200, "Content for specific language or all of them", typeof(ApplicationContentModel[]))]
@@ -82,8 +85,5 @@ namespace VotRomania.Controllers
 
             return Ok();
         }
-
-
-
     }
 }
