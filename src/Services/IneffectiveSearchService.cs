@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
@@ -40,11 +41,22 @@ namespace VotRomania.Services
                 {
                     Latitude = x.Coordinates.Latitude,
                     Longitude = x.Coordinates.Longitude,
-                    PollingStations = x.PollingStations
+                    PollingStations = FillRandomAssignedAddresses(x.PollingStations)
                 })
                 .ToArray();
 
             return Task.FromResult(pollingStationsInfos);
+        }
+
+        private PollingStationModel[] FillRandomAssignedAddresses(PollingStationModel[] pollingStations)
+        {
+            return pollingStations.Select((x, index) =>
+                {
+                    x.AssignedAddresses = index == 0
+                        ? new[] { "integral#" }
+                        : Enumerable.Range(0, index).Select(x => $"Strada numerelor nr {x+1}").ToArray();
+                    return x;
+                }).ToArray();
         }
     }
 }

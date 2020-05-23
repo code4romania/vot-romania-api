@@ -1,9 +1,11 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
 namespace VotRomania.Controllers
 {
+    [AllowAnonymous]
     public class ConfigurationController : Controller
     {
         private readonly IConfiguration _configuration;

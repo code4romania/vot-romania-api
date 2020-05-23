@@ -28,6 +28,7 @@ export interface PollingStation {
   pollingStationNumber: string;
   institution: string;
   address: string;
+  assignedAddresses: string[];
 }
 
 export interface PollingStationGroup {
