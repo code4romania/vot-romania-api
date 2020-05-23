@@ -50,6 +50,11 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
+  updateData(data: StaticData): Observable<any> {
+    return this.http.post<any>(`/api/application-content/${data.language}`, data)
+      .pipe(catchError(this.handleError));
+  }
+
   getPollingStations(latitude: number, longitude: number): Observable<PollingStationGroup[]> {
     let params = new HttpParams();
 

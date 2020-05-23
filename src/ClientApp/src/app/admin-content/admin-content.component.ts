@@ -3,7 +3,8 @@ import {VotingGuide} from '../services/data.service';
 import {AngularEditorConfig} from '@kolkov/angular-editor';
 import {select, Store} from '@ngrx/store';
 import {ApplicationState} from '../state/reducers';
-import {getGeneralInfo, getVotingGuide} from '../state/selectors';
+import {getGeneralInfo, getSelectedLanguage, getVotingGuide} from '../state/selectors';
+import {LoadDataAction, UpdateDataAction} from '../state/actions';
 
 @Component({
   selector: 'app-admin-content',
@@ -11,10 +12,11 @@ import {getGeneralInfo, getVotingGuide} from '../state/selectors';
   styleUrls: ['./admin-content.component.scss']
 })
 export class AdminContentComponent implements OnInit {
+  private selectedLanguage: string;
+
   public generalInfo: string;
-  public votingGuide: VotingGuide;
+  public votersGuide: VotingGuide;
   public editing = {};
-  public items = [];
   public editorConfig: AngularEditorConfig = {
     editable: true,
     toolbarHiddenButtons: [
@@ -44,27 +46,31 @@ export class AdminContentComponent implements OnInit {
   constructor(private store: Store<ApplicationState>) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
+    this.store.pipe(select(getSelectedLanguage)).subscribe(value => {
+      this.selectedLanguage = value;
+    });
+
     this.store.pipe(select(getGeneralInfo)).subscribe(value => {
       this.generalInfo = value;
-      this.items[0] = {field: this.generalInfo, editing: 'generalInfo', title: 'General info'};
     });
 
     this.store.pipe(select(getVotingGuide)).subscribe(value => {
-      this.votingGuide = value || {
+      this.votersGuide = value || {
         description: '',
         options: []
       };
-      this.items[1] = {field: this.votingGuide.description, editing: 'votingGuide.description', title: 'Voting guide'};
-      this.votingGuide.options.forEach((option, idx) => {
-        this.items[2 * (idx + 1)] = {field: option.title, editing: `option${idx}Title`, title: `Option ${idx + 1} title`};
-        this.items[2 * (idx + 1) + 1] = {
-          field: option.description,
-          editing: `option${idx}Description`,
-          title: `Option ${idx + 1} description`
-        };
-      });
     });
+  }
+
+  public save() {
+    const data = {
+      language: this.selectedLanguage,
+      generalInfo: this.generalInfo,
+      votersGuide: this.votersGuide,
+    };
+
+    this.store.dispatch(new UpdateDataAction(data, this.selectedLanguage));
   }
 
 }

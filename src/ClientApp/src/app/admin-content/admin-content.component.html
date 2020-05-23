@@ -1,26 +1,104 @@
 <div class="container">
-
-    <div *ngFor="let item of items" class="pb-4 border-bottom">
+    <div class="pb-4 border-bottom">
         <div class="d-flex justify-content-between mt-4">
-            <p>{{ item.title }}</p>
+            <p>General info</p>
 
             <div>
                 <button class="btn btn-outline-secondary"
-                        type="button" (click)="editing[item.editing] = !editing[item.editing]">
-                    {{ editing[item.editing] ? 'Preview' : 'Edit' }}
+                        type="button" (click)="editing['generalInfo'] = !editing['generalInfo']">
+                    {{ editing['generalInfo'] ? 'Preview' : 'Edit' }}
                 </button>
             </div>
         </div>
 
-        <ng-container *ngIf="editing[item.editing]">
-            <angular-editor [id]="item.field"
-                            [placeholder]="'Enter text here...'"
-                            [(ngModel)]="item.field"
+        <ng-container *ngIf="editing['generalInfo']">
+            <angular-editor id='generalInfo'
+                            placeholder='Enter text here...'
+                            [(ngModel)]="generalInfo"
                             [config]="editorConfig">
             </angular-editor>
         </ng-container>
 
-        <div *ngIf="!editing[item.editing]" [innerHTML]="item.field"></div>
+        <div *ngIf="!editing['generalInfo']" [innerHTML]="generalInfo"></div>
     </div>
 
+    <div class="pb-4 border-bottom">
+        <div class="d-flex justify-content-between mt-4">
+            <p>Voter's guide</p>
+
+            <div>
+                <button class="btn btn-outline-secondary"
+                        type="button" (click)="editing['votersGuide'] = !editing['votersGuide']">
+                    {{ editing['votersGuide'] ? 'Preview' : 'Edit' }}
+                </button>
+            </div>
+        </div>
+
+        <ng-container *ngIf="editing['votersGuide']">
+            <angular-editor id='votersGuide'
+                            placeholder='Enter text here...'
+                            [(ngModel)]="votersGuide.description"
+                            [config]="editorConfig">
+            </angular-editor>
+        </ng-container>
+
+        <div *ngIf="!editing['votersGuide']" [innerHTML]="votersGuide.description"></div>
+    </div>
+
+    <ng-container *ngFor="let option of votersGuide.options; let idx = index;">
+        <div class="pb-4 border-bottom">
+            <div class="d-flex justify-content-between mt-4">
+                <p>Option {{idx + 1}} title</p>
+
+                <div>
+                    <button class="btn btn-outline-secondary"
+                            type="button" (click)="editing['option'+idx+'title'] = !editing['option'+idx+'title']">
+                        {{ editing['option' + idx + 'title'] ? 'Preview' : 'Edit' }}
+                    </button>
+                </div>
+            </div>
+
+            <ng-container *ngIf="editing['option'+idx+'title']">
+                <angular-editor [id]="'option'+idx+'title'"
+                                placeholder='Enter text here...'
+                                [(ngModel)]="option.title"
+                                [config]="editorConfig">
+                </angular-editor>
+            </ng-container>
+
+            <div *ngIf="!editing['option'+idx+'title']" [innerHTML]="option.title"></div>
+        </div>
+
+        <div class="pb-4 border-bottom">
+            <div class="d-flex justify-content-between mt-4">
+                <p>Option {{idx + 1}} description</p>
+
+                <div>
+                    <button class="btn btn-outline-secondary"
+                            type="button"
+                            (click)="editing['option'+idx+'description'] = !editing['option'+idx+'description']">
+                        {{ editing['option' + idx + 'description'] ? 'Preview' : 'Edit' }}
+                    </button>
+                </div>
+            </div>
+
+            <ng-container *ngIf="editing['option'+idx+'description']">
+                <angular-editor [id]="'option'+idx+'description'"
+                                placeholder='Enter text here...'
+                                [(ngModel)]="option.description"
+                                [config]="editorConfig">
+                </angular-editor>
+            </ng-container>
+
+            <div *ngIf="!editing['option'+idx+'description']" [innerHTML]="option.description"></div>
+        </div>
+    </ng-container>
+
+
+    <div class="d-flex justify-content-end mt-4">
+        <button class="btn btn-primary"
+                type="button" (click)="save()">
+            Save
+        </button>
+    </div>
 </div>

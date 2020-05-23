@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ApplicationData } from '../services/data.service';
+import {ApplicationData, StaticData} from '../services/data.service';
 import { LocationDetails } from '../services/here-address.service';
 
 const typeCache: { [label: string]: boolean } = {};
@@ -17,6 +17,11 @@ export class ActionTypes {
     static readonly LOAD_DATA = actionType('Load data');
     static readonly LOAD_DATA_DONE = actionType('Load data done');
     static readonly LOAD_ERROR = actionType('Load error');
+
+    static readonly UPDATE_DATA = actionType('Update data');
+    static readonly UPDATE_DATA_DONE = actionType('Update data done');
+    static readonly UPDATE_DATA_ERROR = actionType('Update data error');
+
     static readonly CHANGE_LANGUAGE = actionType('Change language');
 
     static readonly LOAD_LOCATIONS = actionType('Load locations');
@@ -46,6 +51,36 @@ export class LoadDataDoneAction implements Action {
     }
 }
 
+export class UpdateDataAction implements Action {
+    readonly type = ActionTypes.UPDATE_DATA;
+
+    payload: {
+        language: string,
+        data: StaticData
+    };
+
+    constructor(data: StaticData, language: string) {
+        this.payload = {
+            language,
+            data
+        };
+    }
+}
+
+export class UpdateDataErrorAction implements Action {
+    readonly type = ActionTypes.UPDATE_DATA_ERROR;
+    constructor(public payload: string) {
+        this.payload = payload;
+    }
+}
+
+export class UpdateDataDoneAction implements Action {
+    readonly type = ActionTypes.UPDATE_DATA_DONE;
+
+    constructor() {
+    }
+}
+
 export class ChangeSelectedLanguage implements Action {
     readonly type = ActionTypes.CHANGE_LANGUAGE;
 
@@ -71,6 +106,9 @@ export class LoadLocationDone implements Action {
 export type AppActions = LoadDataAction
     | LoadDataDoneAction
     | LoadErrorAction
+    | UpdateDataAction
+    | UpdateDataDoneAction
+    | UpdateDataErrorAction
     | ChangeSelectedLanguage
     | LoadLocationDone;
 
