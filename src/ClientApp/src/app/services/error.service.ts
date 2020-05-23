@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { get } from 'lodash';
 import { throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -16,7 +16,7 @@ export class ErrorService {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      errorMessage = `Backend returned code ${err.status}: ${err.body ? err.body.error : err.message}`;
+      errorMessage = `Backend returned code ${err.status}: ${get(err, 'body.error') || get(err, 'error.detail') || get(err, 'message')}`;
     }
     console.error(err);
     return throwError(errorMessage);

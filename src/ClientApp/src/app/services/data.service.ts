@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import {AuthService} from './auth.service';
-import {ErrorService} from './error.service';
+import { AuthService } from './auth.service';
+import { ErrorService } from './error.service';
 
 export interface Option {
   title: string;
   description: string;
 }
+
 export interface VotingGuide {
   description: string;
   options: Option[];

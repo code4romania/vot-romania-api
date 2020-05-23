@@ -44,7 +44,3 @@ export const getAuthToken = createSelector(
   state => state.auth.token
 );
 
-export const getAuthError = createSelector(
-  getApplicationState,
-  state => state.auth.error
-);

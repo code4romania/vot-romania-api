@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {VotingGuide} from '../services/data.service';
-import {AngularEditorConfig} from '@kolkov/angular-editor';
-import {select, Store} from '@ngrx/store';
-import {ApplicationState} from '../state/reducers';
-import {getGeneralInfo, getSelectedLanguage, getVotingGuide} from '../state/selectors';
-import {LoadDataAction, UpdateDataAction} from '../state/actions';
+import { Component, OnInit } from '@angular/core';
+import { VotingGuide } from '../services/data.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { select, Store } from '@ngrx/store';
+import { ApplicationState } from '../state/reducers';
+import { getError, getGeneralInfo, getSelectedLanguage, getVotingGuide } from '../state/selectors';
+import { ClearErrorAction, UpdateDataAction } from '../state/actions';
 
 @Component({
   selector: 'app-admin-content',
@@ -14,6 +14,7 @@ import {LoadDataAction, UpdateDataAction} from '../state/actions';
 export class AdminContentComponent implements OnInit {
   private selectedLanguage: string;
 
+  public error: string;
   public generalInfo: string;
   public votersGuide: VotingGuide;
   public editing = {};
@@ -47,6 +48,12 @@ export class AdminContentComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.store.dispatch(new ClearErrorAction());
+
+    this.store.pipe(select(getError)).subscribe(value => {
+      this.error = value;
+    });
+
     this.store.pipe(select(getSelectedLanguage)).subscribe(value => {
       this.selectedLanguage = value;
     });
@@ -64,6 +71,8 @@ export class AdminContentComponent implements OnInit {
   }
 
   public save() {
+    this.store.dispatch(new ClearErrorAction());
+
     const data = {
       language: this.selectedLanguage,
       generalInfo: this.generalInfo,

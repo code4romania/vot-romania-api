@@ -1,8 +1,9 @@
 import { Action } from '@ngrx/store';
-import {ApplicationData, StaticData} from '../services/data.service';
+import { ApplicationData, StaticData } from '../services/data.service';
 import { LocationDetails } from '../services/here-address.service';
 
 const typeCache: { [label: string]: boolean } = {};
+
 export function actionType<T extends string>(label: T): T {
     if (typeCache[label as string]) {
         throw new Error(`Action type "${label}" is not unqiue"`);
@@ -14,6 +15,8 @@ export function actionType<T extends string>(label: T): T {
 }
 
 export class ActionTypes {
+    static readonly CLEAR_ERROR = actionType('Clear error');
+
     static readonly LOAD_DATA = actionType('Load data');
     static readonly LOAD_DATA_DONE = actionType('Load data done');
     static readonly LOAD_ERROR = actionType('Load error');
@@ -27,6 +30,10 @@ export class ActionTypes {
     static readonly LOAD_LOCATIONS = actionType('Load locations');
     static readonly LOAD_LOCATIONS_DONE = actionType('Load locations done');
     static readonly LOAD_LOCATIONS_ERROR = actionType('Load locations error');
+}
+
+export class ClearErrorAction implements Action {
+    readonly type = ActionTypes.CLEAR_ERROR;
 }
 
 export class LoadDataAction implements Action {
