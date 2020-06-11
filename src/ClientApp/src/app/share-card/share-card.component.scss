@@ -5,16 +5,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #FFF;
+  color: #fff;
   font-size: 17px;
-  background-color: #4DCB79;
+  background-color: #4dcb79;
   text-decoration: none;
   height: 45px;
   border-radius: 5px;
 }
-.middle{
-    display: flex;
-    justify-content: center;
+.middle {
+  display: flex;
+  justify-content: center;
 }
 
 .box {
@@ -24,7 +24,7 @@
 
   &.box-dark {
     background: #352245;
-    color: #FFFFFF;
+    color: #ffffff;
     font-size: 16px;
   }
 
@@ -74,6 +74,22 @@
         background: #fc0;
         color: #fff;
         text-decoration: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .box {
+    width: 100%;
+
+    .share-actions {
+      display: flex;
+      justify-content: space-between;
+
+      .share-cta {
+        width: 31%;
+        margin: 0;
       }
     }
   }

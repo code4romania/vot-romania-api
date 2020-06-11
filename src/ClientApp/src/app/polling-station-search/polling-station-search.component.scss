@@ -13,3 +13,20 @@
   width: 100%;
   margin-top: 30px;
 }
+
+@media screen and (max-width: 575px) {
+  .search-input {
+    width: 90%;
+    min-width: 90%;
+  }
+
+  .map {
+    height: 70vh;
+  }
+}
+
+@media screen and (max-height: 575px) {
+  .map {
+    height: 70vh;
+  }
+}
