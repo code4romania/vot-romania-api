@@ -3,35 +3,37 @@
 
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>VotRomania</title>
-  <link href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap"
-    rel="stylesheet" />
   <base href="/" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-  <meta name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet"
-    type="text/css"
-    href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
-  <link rel="icon"
-    type="image/x-icon"
-    href="favicon.ico" />
-  <script type="text/javascript"
-    src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
-  <script type="text/javascript"
-    src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
-  <script type="text/javascript"
-    src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
-  <script type="text/javascript"
-    src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
-    rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+  <script type="text/javascript" src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
 </head>
 
 <body>
-  <app-root>Loading...</app-root>
+  <app-root>
+    <style>
+      .splash-wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+    <div class="splash-wrapper">
+      <img src="../../assets/logo.svg" width="90" height="80" alt="Vot Romania" />
+      <p>Loading...</p>
+    </div>
+  </app-root>
   <script src="configuration/appConfig.js"></script>
 </body>
 
