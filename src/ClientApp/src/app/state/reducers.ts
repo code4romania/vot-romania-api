@@ -3,7 +3,7 @@ import { VotingGuide, StaticData, PollingStationGroup } from '../services/data.s
 import { AuthActions, AuthActionTypes } from './auth';
 
 import { LocationDetails } from '../services/here-address.service';
-import { get } from 'lodash';
+
 export interface ApplicationState {
     languages: string[];
     generalInfo: string;
@@ -15,7 +15,6 @@ export interface ApplicationState {
     selectedAddressDetails: LocationDetails;
     auth: {
         token: string;
-        error: string;
     };
 }
 
@@ -28,7 +27,7 @@ const initialState: ApplicationState = {
     selectedLanguage: 'Ro', // change to enum
     pollingStations: [],
     selectedAddressDetails: undefined,
-    auth: { token: '', error: '' },
+    auth: { token: '' },
 };
 export function appStateReducer(state: ApplicationState = initialState, action: AppActions | AuthActions): ApplicationState {
     switch (action.type) {
@@ -58,21 +57,37 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 votingGuide: changedLanguageData.votersGuide,
                 selectedLanguage: action.payload
             };
-        case AuthActionTypes.LOGIN_SUCCEEDED:
-            const { authToken } = action.payload;
+
+        case ActionTypes.CLEAR_ERROR:
             return {
                 ...state,
-                auth: { token: authToken, error: '' }
+                error: '',
+            };
+
+        case ActionTypes.UPDATE_DATA_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            };
+
+        case AuthActionTypes.LOGIN_SUCCEEDED:
+            const { token } = action.payload;
+            return {
+                ...state,
+                error: '',
+                auth: { token }
             };
         case AuthActionTypes.LOGIN_FAILED:
             return {
                 ...state,
-                auth: { token: '', error: action.payload }
+                error: action.payload,
+                auth: { token: '' }
             };
         case AuthActionTypes.LOGOUT:
             return {
                 ...state,
-                auth: { token: '', error: '' }
+                error: '',
+                auth: { token: '' }
             };
 
         case ActionTypes.LOAD_LOCATIONS_DONE:

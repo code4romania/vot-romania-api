@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { LoginRequested } from '../state/auth';
-import { getAuthError } from '../state/selectors';
+import { getError } from '../state/selectors';
+import { ClearErrorAction } from '../state/actions';
 
 @Component({
   selector: 'app-login',
@@ -11,16 +12,18 @@ import { getAuthError } from '../state/selectors';
 })
 export class LoginComponent {
   public form: FormGroup;
-  public authError: string;
+  public error: string;
 
   constructor(private store: Store<any>) {
-    this.store.pipe(select(getAuthError))
-      .subscribe(authError => {
-        this.authError = authError;
+    this.store.dispatch(new ClearErrorAction());
+
+    this.store.pipe(select(getError))
+      .subscribe(error => {
+        this.error = error;
       });
 
     this.form = new FormGroup({
-      username: new FormControl('', [
+      userName: new FormControl('', [
         Validators.required,
       ]),
       password: new FormControl('', [

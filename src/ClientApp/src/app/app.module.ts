@@ -26,9 +26,11 @@ import { HereAddressService } from './services/here-address.service';
 import { DataService } from './services/data.service';
 import { MatInputModule } from '@angular/material';
 import { AuthEffects } from './state/auth';
-import {LoginComponent} from './login/login.component';
-import {AdminComponent} from './admin/admin.component';
-import {AuthGuard} from './services/auth.guard';
+import { LoginComponent } from './login/login.component';
+import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './services/auth.guard';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { AdminContentComponent } from './admin-content/admin-content.component';
 
 const materialImports = [
   MatAutocompleteModule,
@@ -40,6 +42,7 @@ const appRoutes = [
   { path: 'termeni-si-conditii', component: TermsAndConditionsComponent, pathMatch: 'full' },
   { path: 'politica-de-confidentialitate', component: PrivacyPolicyComponent, pathMatch: 'full' },
   { path: 'admin', component: AdminComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'admin/content', component: AdminContentComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'admin/login', component: LoginComponent, pathMatch: 'full' },
 ];
 
@@ -57,7 +60,8 @@ const appRoutes = [
     DonateCardComponent,
     PollingStationSearchComponent,
     LoginComponent,
-    AdminComponent
+    AdminComponent,
+    AdminContentComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -69,7 +73,8 @@ const appRoutes = [
     EffectsModule.forRoot([ApplicationEffects, AuthEffects]),
     BsDropdownModule.forRoot(),
     ReactiveFormsModule,
-    ...materialImports
+    ...materialImports,
+    AngularEditorModule,
   ],
   providers: [
     HereAddressService,

@@ -4,7 +4,7 @@
         <div class="flex-column d-flex my-3">
             <mat-form-field appearance="outline">
                 <mat-label>Username</mat-label>
-                <input autocomplete="username" matInput formControlName="username">
+                <input autocomplete="username" matInput formControlName="userName">
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Password</mat-label>
@@ -14,9 +14,9 @@
 
         <div class="justify-content-center d-flex">
             <button class="btn btn-outline-secondary"
-                     type="button" (click)="login()">Login</button>
+                     type="submit" (click)="login()">Login</button>
         </div>
 
-        {{ authError }}
+        <div *ngIf="error" class="error">{{ error }}.</div>
     </form>
 </div>

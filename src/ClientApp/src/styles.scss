@@ -56,3 +56,11 @@ h2 {
 .cursor-pointer {
   cursor: pointer;
 }
+
+html, body { height: 100%; }
+body { margin: 0;  }
+
+.error {
+  color: red;
+}
+
