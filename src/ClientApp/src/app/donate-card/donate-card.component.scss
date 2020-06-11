@@ -39,3 +39,9 @@
     text-rendering: optimizeLegibility;
   }
 }
+
+@media screen and (max-width: 575px) {
+  .box{
+    width: 100%;
+  }
+}
