@@ -4,7 +4,8 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  OnDestroy
+  OnDestroy,
+  ViewEncapsulation
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
@@ -25,7 +26,8 @@ export enum PinType {
 @Component({
   selector: 'app-polling-station-search',
   templateUrl: './polling-station-search.component.html',
-  styleUrls: ['./polling-station-search.component.scss']
+  styleUrls: ['./polling-station-search.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly svgIcon: string = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="%%fill%%" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3" fill="%%fill%%" ></circle></svg>`;
@@ -108,13 +110,12 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
 
   getPollingStationinfoBubble(group: PollingStationGroup): string {
     return group.pollingStations.reduce((accumulator, currentValue) =>
-      accumulator + `<div style="width: 472px;">
-     <div style="font-family: Titillium Web;font-style: normal;font-weight: 600;font-size: 34px;line-height: 52px;display: flex;align-items: center;text-align: center;"> Sectia de votare ${currentValue.pollingStationNumber},  ${currentValue.locality}</div> 
-      <div style="font-family: Titillium Web;font-style: normal;font-weight: 600;font-size: 18px;line-height: 27px;display: flex;align-items: center;text-align: center;">
-       <p style="background: #FFCC00;font-family: Titillium Web;
-      font-style: normal;font-weight: normal;font-size: 14px;line-height: 21px;">Adresa:</p>
+      accumulator + `<div class="ps-card">
+      <div class="ps-title"> Sectia de votare ${currentValue.pollingStationNumber},  ${currentValue.locality}</div> 
+      <div class="ps-description">
+          <p class="ps-address-label">Adresa:</p>
       <u>${currentValue.address}</u></div>
-      <br>  <div style="width: 431px;height: 1px;left: 15px;top: 353px;background: #C4C4C4;"></div>` + '</div>'
+      <hr></div>` + '</div>'
       , '');
 
   }
