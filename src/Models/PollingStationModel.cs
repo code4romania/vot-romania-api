@@ -10,6 +10,17 @@
         public string PollingStationNumber { get; set; }
         public string Institution { get; set; }
         public string Address { get; set; }
-        public string[] AssignedAddresses { get; set; }
+        public AssignedAddresses[] AssignedAddresses { get; set; }
+    }
+
+    public class AssignedAddresses
+    {
+        public int Id { get; set; }
+        public int PollingStationId { get; set; }
+        public string Locality { get; set; }
+        public string StreetCode { get; set; }
+        public string Street { get; set; }
+        public string HouseNumbers { get; set; }
+        public string Remarks { get; set; }
     }
 }

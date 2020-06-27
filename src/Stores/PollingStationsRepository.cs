@@ -34,7 +34,8 @@ namespace VotRomania.Stores
                     County = pollingStation.County,
                     PollingStationNumber = pollingStation.PollingStationNumber,
                     Locality = pollingStation.Locality,
-                    Institution = pollingStation.Institution
+                    Institution = pollingStation.Institution,
+                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(x=>MapToAssignedAddresses(x)).ToArray()
                 });
 
             if (query != null)
@@ -65,10 +66,25 @@ namespace VotRomania.Stores
                     County = pollingStation.County,
                     PollingStationNumber = pollingStation.PollingStationNumber,
                     Locality = pollingStation.Locality,
-                    Institution = pollingStation.Institution
+                    Institution = pollingStation.Institution,
+                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(x=>MapToAssignedAddresses(x)).ToArray()
                 });
 
             return await pollingStationsQuery.SingleOrDefaultAsync();
+        }
+
+        private static AssignedAddresses MapToAssignedAddresses(PollingStationAddressEntity x)
+        {
+            return new AssignedAddresses()
+            {
+                Id = x.Id,
+                PollingStationId = x.PollingStationId,
+                HouseNumbers = x.HouseNumbers,
+                Remarks = x.Remarks,
+                Street = x.Street,
+                Locality = x.Locality,
+                StreetCode = x.StreetCode
+            };
         }
 
         public async Task<(bool isSuccess, string errorMessage, int pollingStationId)> AddPollingStationAsync(PollingStationModel pollingStation)
