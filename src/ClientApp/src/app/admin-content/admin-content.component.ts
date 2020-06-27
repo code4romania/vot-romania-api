@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VotingGuide } from '../services/data.service';
+import { VotingGuide, Option } from '../services/data.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { select, Store } from '@ngrx/store';
 import { ApplicationState } from '../state/reducers';
@@ -17,7 +17,13 @@ export class AdminContentComponent implements OnInit {
   public error: string;
   public generalInfo: string;
   public votersGuide: VotingGuide;
+  public newVotersGuideOption: Option = {
+    title: '',
+    description: ''
+  };
   public editing = {};
+  public deleting = {};
+  public adding = {};
   public editorConfig: AngularEditorConfig = {
     editable: true,
     toolbarHiddenButtons: [
@@ -80,6 +86,20 @@ export class AdminContentComponent implements OnInit {
     };
 
     this.store.dispatch(new UpdateDataAction(data, this.selectedLanguage));
+  }
+
+  public deleteVotersGuideOption(idx: number) {
+    this.votersGuide.options.splice(idx, 1);
+  }
+
+  public saveNewVotersGuideOption() {
+    if(this.newVotersGuideOption.title != '' && this.newVotersGuideOption.description != ''){
+      this.votersGuide.options.push(this.newVotersGuideOption);
+      this.newVotersGuideOption = {
+        title: '',
+        description: ''
+      }
+    }
   }
 
 }

@@ -28,9 +28,13 @@
         <div class="d-flex justify-content-between mt-4">
             <p>Voter's guide</p>
 
-            <div>
+            <div class="d-flex align-items-center">
+                <button class="btn btn-outline-success mr-2"
+                        type="button" (click)="adding['votersGuideOption'] = !adding['votersGuideOption']; editing['votersGuide'] = false; saveNewVotersGuideOption()">
+                    {{ newVotersGuideOption.title == '' || newVotersGuideOption.description == ''? 'New option' : 'Add new option' }}
+                </button>
                 <button class="btn btn-outline-secondary"
-                        type="button" (click)="editing['votersGuide'] = !editing['votersGuide']">
+                        type="button" (click)="editing['votersGuide'] = !editing['votersGuide']; adding['votersGuideOption'] = false;">
                     {{ editing['votersGuide'] ? 'Preview' : 'Edit' }}
                 </button>
             </div>
@@ -45,6 +49,24 @@
         </ng-container>
 
         <div *ngIf="!editing['votersGuide']" [innerHTML]="votersGuide.description"></div>
+
+        <ng-container *ngIf="adding['votersGuideOption']">
+            <h5 class="mb-2 mt-2">Title</h5>
+            <angular-editor id='newVotersGuideOptionTitle'
+                            placeholder='Enter title here...'
+                            [(ngModel)]="newVotersGuideOption.title"
+                            [config]="editorConfig">
+            </angular-editor>
+        </ng-container>
+
+        <ng-container *ngIf="adding['votersGuideOption']">
+            <h5 class="mb-2 mt-2">Description</h5>
+            <angular-editor id='newVotersGuideOptionDescription'
+                            placeholder='Enter description here...'
+                            [(ngModel)]="newVotersGuideOption.description"
+                            [config]="editorConfig">
+            </angular-editor>
+        </ng-container>
     </div>
 
     <ng-container *ngFor="let option of votersGuide.options; let idx = index;">
@@ -52,10 +74,29 @@
             <div class="d-flex justify-content-between mt-4">
                 <p>Option {{idx + 1}} title</p>
 
-                <div>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-outline-danger mr-2"
+                            type="button" (click)="deleting['option'+idx+'title'] = !deleting['option'+idx+'title']; editing['option'+idx+'title'] = false;">
+                        Delete
+                    </button>
                     <button class="btn btn-outline-secondary"
-                            type="button" (click)="editing['option'+idx+'title'] = !editing['option'+idx+'title']">
+                            type="button" (click)="editing['option'+idx+'title'] = !editing['option'+idx+'title']; deleting['option'+idx+'title'] = false;">
                         {{ editing['option' + idx + 'title'] ? 'Preview' : 'Edit' }}
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="deleting['option'+idx+'title']" class="d-flex justify-content-between mt-4">
+                <h5 class="red">Are you sure you want to delete this record?</h5>
+
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-outline-danger mr-2"
+                            type="button" (click)="deleteVotersGuideOption(idx); deleting['option'+idx+'title'] = false;">
+                        Yes
+                    </button>
+                    <button class="btn btn-outline-secondary"
+                            type="button" (click)="deleting['option'+idx+'title'] = !deleting['option'+idx+'title']">
+                        No
                     </button>
                 </div>
             </div>
