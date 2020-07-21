@@ -1,27 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { ErrorService } from './error.service';
 
 export interface LoginCredentials {
-  username: string;
-  password: string;
+    userName: string;
+    password: string;
 }
 
 export interface LoginResponse {
-  authToken: string;
+    token: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthService {
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient,
+                private errorService: ErrorService) {
+    }
 
-  getToken(): string {
-    return localStorage.getItem('token');
-  }
+    public getToken(): string {
+        return localStorage.getItem('token');
+    }
 
-  login(credentials: LoginCredentials): Observable<LoginResponse> {
-    // TODO
-    return of({ authToken: 'token'});
-  }
+    public login(credentials: LoginCredentials): Observable<LoginResponse> {
+        return this.http.post<LoginResponse>(`/api/admin/login`, credentials)
+            .pipe(catchError(this.errorService.handleError));
+    }
 }

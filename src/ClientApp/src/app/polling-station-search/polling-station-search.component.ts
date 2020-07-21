@@ -4,7 +4,8 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  OnDestroy
+  OnDestroy,
+  ViewEncapsulation
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
@@ -25,7 +26,8 @@ export enum PinType {
 @Component({
   selector: 'app-polling-station-search',
   templateUrl: './polling-station-search.component.html',
-  styleUrls: ['./polling-station-search.component.scss']
+  styleUrls: ['./polling-station-search.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly svgIcon: string = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="%%fill%%" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3" fill="%%fill%%" ></circle></svg>`;
@@ -71,7 +73,6 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         const { userAddress, pollingStations } = details;
 
         const position = userAddress.displayPosition;
-        
         const userAddressMarker = new H.map.Marker({ lat: position.latitude, lng: position.longitude }, { icon: this.userIcon });
         userAddressMarker.setData('locatia ta');
         const mapMarkers: any[] = [];
@@ -87,11 +88,11 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         group.addEventListener('tap', (evt) => {
           // event target is the marker itself, group is a parent event target
           // for all objects that it contains
-          var bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
+          const bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
             // read custom data
             content: evt.target.getData()
           });
-          this.mapUi.removeBubble(this.currentlyOpenedInfoBubble)
+          this.mapUi.removeBubble(this.currentlyOpenedInfoBubble);
           // show info bubble
           this.mapUi.addBubble(bubble);
           this.currentlyOpenedInfoBubble = bubble;
@@ -109,13 +110,20 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
   }
 
   getPollingStationinfoBubble(group: PollingStationGroup): string {
-    // TODO: style info bubble text
-    return group.pollingStations.reduce((accumulator, currentValue)=>accumulator+'<br/>'+currentValue.pollingStationNumber,'');
+    return group.pollingStations.reduce((accumulator, currentValue) =>
+      accumulator + `<div class="ps-card">
+      <div class="ps-title"> Sectia de votare ${currentValue.pollingStationNumber},  ${currentValue.locality}</div> 
+      <div class="ps-description">
+          <p class="ps-address-label">Adresa:</p>
+      <u>${currentValue.address}</u></div>
+      <hr></div>` + '</div>'
+      , '');
+
   }
 
   private initializeMap() {
 
-    var pixelRatio = window.devicePixelRatio || 1;
+    const pixelRatio = window.devicePixelRatio || 1;
     const defaultLayers = this.platform.createDefaultLayers({
       tileSize: pixelRatio === 1 ? 256 : 512,
       ppi: pixelRatio === 1 ? undefined : 320
@@ -130,7 +138,6 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
       });
 
     const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(this.hereMap));
-
     this.mapUi = H.ui.UI.createDefault(this.hereMap, defaultLayers);
   }
 

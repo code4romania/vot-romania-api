@@ -1,7 +1,6 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 
 // Include the common styles for Angular Material. We include this here so that you only
@@ -19,7 +18,11 @@ $VotRomania-accent: mat-palette($mat-pink, A200, A100, A400);
 $VotRomania-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$VotRomania-theme: mat-light-theme($VotRomania-primary, $VotRomania-accent, $VotRomania-warn);
+$VotRomania-theme: mat-light-theme(
+  $VotRomania-primary,
+  $VotRomania-accent,
+  $VotRomania-warn
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -30,11 +33,13 @@ $VotRomania-theme: mat-light-theme($VotRomania-primary, $VotRomania-accent, $Vot
 @import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins";
 
-$font-family-sans-serif: "Titilium Web", sans-serif;
+$font-family-sans-serif: "Titillium Web", sans-serif;
 
 html,
 body {
-  font-family: "Titilium Web", sans-serif;
+  height: 100%;
+  margin: 0;
+  font-family: $font-family-sans-serif;
 }
 
 p {
@@ -44,12 +49,18 @@ p {
   line-height: 37px;
 }
 
-h2{
-  color: #FFCC00;
+h2 {
+  color: #ffcc00;
 }
 
 .cursor-pointer {
   cursor: pointer;
 }
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0;  }
+
+.error {
+  color: red;
+}
+

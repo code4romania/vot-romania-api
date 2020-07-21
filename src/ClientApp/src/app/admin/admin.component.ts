@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginRequested, Logout} from '../state/auth';
-import {Store} from '@ngrx/store';
+import { Logout } from '../state/auth';
+import { Store } from '@ngrx/store';
+import { ApplicationState } from '../state/reducers';
 
 @Component({
   selector: 'app-admin',
@@ -8,14 +9,14 @@ import {Store} from '@ngrx/store';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-
-  constructor(private store: Store<any>) { }
-
-  ngOnInit() {
+  constructor(private store: Store<ApplicationState>) {
   }
 
-  logout() {
+  public logout() {
     this.store.dispatch(new Logout());
+  }
+
+  public ngOnInit(): void {
   }
 
 }
