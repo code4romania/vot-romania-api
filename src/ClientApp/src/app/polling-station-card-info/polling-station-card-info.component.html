@@ -23,8 +23,7 @@
       La această secție pot vota persoanele care locuiesc pe următoarele străzi:
     </p>
     <ul>
-      <li>Strada x</li>
-      <li>Strada y</li>
+      <li *ngFor="let address of pollingStation.assignedAddresses">{{address.street}}</li>
     </ul>
   </div>
 </div>
