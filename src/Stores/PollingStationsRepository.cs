@@ -25,6 +25,7 @@ namespace VotRomania.Stores
         public async Task<PagedResult<PollingStationModel>> GetPollingStationsAsync(PollingStationsQuery query = null, PaginationQuery pagination = null)
         {
             var pollingStationsQuery = _context.PollingStations
+                .Include(x => x.PollingStationAddresses)
                 .Select(pollingStation => new PollingStationModel
                 {
                     Id = pollingStation.Id,
@@ -35,17 +36,17 @@ namespace VotRomania.Stores
                     PollingStationNumber = pollingStation.PollingStationNumber,
                     Locality = pollingStation.Locality,
                     Institution = pollingStation.Institution,
-                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(x=>MapToAssignedAddresses(x)).ToArray()
+                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a))
                 });
 
             if (query != null)
             {
                 pollingStationsQuery = pollingStationsQuery.Where(x => query.PollingStationId == null || x.Id == query.PollingStationId)
-                    .Where(x => string.IsNullOrEmpty(query.County) || x.County.StartsWith(query.County, StringComparison.InvariantCultureIgnoreCase))
-                    .Where(x => string.IsNullOrEmpty(query.Locality) || x.Locality.StartsWith(query.Locality, StringComparison.InvariantCultureIgnoreCase))
-                    .Where(x => string.IsNullOrEmpty(query.Address) || x.Address.StartsWith(query.Address, StringComparison.InvariantCultureIgnoreCase))
-                    .Where(x => string.IsNullOrEmpty(query.PollingStationNumber) || x.PollingStationNumber.StartsWith(query.PollingStationNumber, StringComparison.InvariantCultureIgnoreCase))
-                    .Where(x => string.IsNullOrEmpty(query.Institution) || x.Institution.StartsWith(query.Institution, StringComparison.InvariantCultureIgnoreCase));
+                    .Where(x => string.IsNullOrEmpty(query.County) || x.County.StartsWith(query.County))
+                    .Where(x => string.IsNullOrEmpty(query.Locality) || x.Locality.StartsWith(query.Locality))
+                    .Where(x => string.IsNullOrEmpty(query.Address) || x.Address.StartsWith(query.Address))
+                    .Where(x => string.IsNullOrEmpty(query.PollingStationNumber) || x.PollingStationNumber.StartsWith(query.PollingStationNumber))
+                    .Where(x => string.IsNullOrEmpty(query.Institution) || x.Institution.StartsWith(query.Institution));
             }
 
 
@@ -56,6 +57,7 @@ namespace VotRomania.Stores
         public async Task<PollingStationModel> GetPollingStationAsync(int pollingStationId)
         {
             var pollingStationsQuery = _context.PollingStations
+                .Include(x => x.PollingStationAddresses)
                 .Where(x => x.Id == pollingStationId)
                 .Select(pollingStation => new PollingStationModel
                 {
@@ -67,23 +69,28 @@ namespace VotRomania.Stores
                     PollingStationNumber = pollingStation.PollingStationNumber,
                     Locality = pollingStation.Locality,
                     Institution = pollingStation.Institution,
-                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(x=>MapToAssignedAddresses(x)).ToArray()
+                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(x => MapToAssignedAddresses(x))
                 });
 
             return await pollingStationsQuery.SingleOrDefaultAsync();
         }
 
-        private static AssignedAddresses MapToAssignedAddresses(PollingStationAddressEntity x)
+        private static AssignedAddresses MapToAssignedAddresses(PollingStationAddressEntity pollingStationAssignedAddress)
         {
-            return new AssignedAddresses()
+            if (pollingStationAssignedAddress == null)
             {
-                Id = x.Id,
-                PollingStationId = x.PollingStationId,
-                HouseNumbers = x.HouseNumbers,
-                Remarks = x.Remarks,
-                Street = x.Street,
-                Locality = x.Locality,
-                StreetCode = x.StreetCode
+                return null;
+            }
+
+            return new AssignedAddresses
+            {
+                Id = pollingStationAssignedAddress.Id,
+                PollingStationId = pollingStationAssignedAddress.PollingStationId,
+                HouseNumbers = pollingStationAssignedAddress.HouseNumbers,
+                Remarks = pollingStationAssignedAddress.Remarks,
+                Street = pollingStationAssignedAddress.Street,
+                Locality = pollingStationAssignedAddress.Locality,
+                StreetCode = pollingStationAssignedAddress.StreetCode
             };
         }
 
@@ -103,7 +110,7 @@ namespace VotRomania.Stores
                         County = pollingStation.County,
                         PollingStationNumber = pollingStation.PollingStationNumber,
                         Locality = pollingStation.Locality,
-                        Institution = pollingStation.Institution
+                        Institution = pollingStation.Institution,
                     };
 
                     await _context.PollingStations.AddAsync(entity);
@@ -119,7 +126,6 @@ namespace VotRomania.Stores
                 return (false, e.Message, -1);
             }
         }
-
         public async Task<(bool isSuccess, string errorMessage)> DeletePollingStationAsync(int pollingStationId)
         {
             try
@@ -130,7 +136,6 @@ namespace VotRomania.Stores
                     if (entity == null)
                     {
                         return (false, $"Could not find polling station with id = {pollingStationId}");
-
                     }
 
                     _context.PollingStations.Remove(entity);
@@ -138,7 +143,6 @@ namespace VotRomania.Stores
 
                     transaction.Commit();
                     return (true, string.Empty);
-
                 }
             }
             catch (Exception e)
@@ -154,12 +158,14 @@ namespace VotRomania.Stores
             {
                 using (var transaction = _context.Database.BeginTransaction())
                 {
-                    var entity = await _context.PollingStations.FirstOrDefaultAsync(x => x.Id == pollingStation.Id);
+                    var entity = await _context.PollingStations
+                        .FirstOrDefaultAsync(x => x.Id == pollingStation.Id);
+
                     if (entity == null)
                     {
                         return (false, $"Could not find polling station with id = {pollingStation.Id}");
-
                     }
+
                     entity.Address = pollingStation.Address;
                     entity.Longitude = pollingStation.Longitude;
                     entity.Latitude = pollingStation.Latitude;

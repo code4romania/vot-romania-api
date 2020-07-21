@@ -1,4 +1,6 @@
-﻿namespace VotRomania.Models
+﻿using System.Collections.Generic;
+
+namespace VotRomania.Models
 {
     public class PollingStationModel
     {
@@ -10,7 +12,7 @@
         public string PollingStationNumber { get; set; }
         public string Institution { get; set; }
         public string Address { get; set; }
-        public AssignedAddresses[] AssignedAddresses { get; set; }
+        public IEnumerable<AssignedAddresses> AssignedAddresses { get; set; }
     }
 
     public class AssignedAddresses
