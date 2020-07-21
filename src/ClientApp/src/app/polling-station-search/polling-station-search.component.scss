@@ -30,3 +30,36 @@
     height: 70vh;
   }
 }
+
+.ps-card {
+  width: 472px;
+
+    .ps-title {
+      font-family: "Titillium Web";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    .ps-description {
+      font-family: Titillium Web;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      
+      .ps-address-label {
+        background: #FFCC00;
+        font-family: Titillium Web;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+      }
+    }
+
+}
