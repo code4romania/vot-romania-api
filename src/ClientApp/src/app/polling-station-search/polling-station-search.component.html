@@ -6,30 +6,56 @@
     <div class="w-100 centered-items">
       <div class="input-group search-input">
         <input type="text"
-          class="form-control"
-          [formControl]="control"
-          [matAutocomplete]="auto"
-          [attr.placeholder]="searchText"
-          [attr.aria-label]="searchText">
+               class="form-control"
+               [formControl]="control"
+               [matAutocomplete]="auto"
+               [attr.placeholder]="searchText"
+               [attr.aria-label]="searchText">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary"
-            type="button">
+                  type="button">
             <i class="fas fa-search"></i>
           </button>
         </div>
         <mat-autocomplete #auto="matAutocomplete"
-          [displayWith]="getDisplayFn()"
-          (optionSelected)=onSelectingSuggestion($event.option.value)>
+                          [displayWith]="getDisplayFn()"
+                          (optionSelected)=onSelectingSuggestion($event.option.value)>
           <mat-option *ngFor="let address of filteredAddresses | async"
-            [value]="address">
+                      [value]="address">
             {{address.label}}
           </mat-option>
         </mat-autocomplete>
       </div>
     </div>
   </form>
+
+  <div class="container" *ngIf="pollingStations">
+    <div class="centered-items mt-3">
+      <p>Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este secția dedicată unde poți vota:</p>
+    </div>
+    <div class="row">
+      <app-polling-station-card-info [pollingStation]="pollingStations[0]"
+                                     [distance]="1"
+                                     [lightTheme]="true"
+                                     class="col-6">
+      </app-polling-station-card-info>
+    </div>
+    <div class="centered-items mt-3">
+      <p>Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș. Cele mai apropiate secții de tine sunt:</p>
+    </div>
+    <div class="row">
+      <app-polling-station-card-info *ngFor="let pollingStation of pollingStations | slice:1"
+                                     [pollingStation]="pollingStation"
+                                     [lightTheme]="false"
+                                     [distance]="1"
+                                     class="col-md-6">
+      </app-polling-station-card-info>
+    </div>
+  </div>
+
   <div #map
-    id="map"
-    style="height: 596px;"
-    class="map"></div>
+       id="map"
+       style="height: 596px;"
+       class="map">
+  </div>
 </div>
