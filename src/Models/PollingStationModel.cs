@@ -12,7 +12,7 @@ namespace VotRomania.Models
         public string PollingStationNumber { get; set; }
         public string Institution { get; set; }
         public string Address { get; set; }
-        public IEnumerable<AssignedAddresses> AssignedAddresses { get; set; }
+        public IList<AssignedAddresses> AssignedAddresses { get; set; }
     }
 
     public class AssignedAddresses

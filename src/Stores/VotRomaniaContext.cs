@@ -24,6 +24,7 @@ namespace VotRomania.Stores
         public DbSet<PollingStationEntity> PollingStations { get; set; }
         public DbSet<ApplicationContentEntity> ApplicationContent { get; set; }
         public DbSet<PollingStationAddressEntity> PollingStationAddresses { get; set; }
+        public DbSet<UploadJobsEntity> UploadJobs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -120,7 +121,32 @@ namespace VotRomania.Stores
                 entity.Property(m => m.Data)
                     .HasColumnName("Data")
                     .IsRequired();
+            });
 
+
+            builder.Entity<UploadJobsEntity>(entity =>
+            {
+                entity.ToTable("UploadJobs");
+
+                entity.Property(m => m.Id).IsRequired();
+                entity.HasKey(m => m.Id);
+                entity.HasIndex(m => m.Id);
+
+                entity.Property(m => m.JobId)
+                    .HasColumnName("FileName")
+                    .IsRequired();
+
+                entity.Property(m => m.FileName)
+                    .HasColumnName("FileName")
+                    .IsRequired();
+
+                entity.Property(m => m.Base64File)
+                    .HasColumnName("Base64File")
+                    .IsRequired();
+
+                entity.Property(m => m.JobStatus)
+                    .HasColumnName("JobStatus")
+                    .IsRequired();
             });
 
             base.OnModelCreating(builder);

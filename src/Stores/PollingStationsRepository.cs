@@ -36,7 +36,7 @@ namespace VotRomania.Stores
                     PollingStationNumber = pollingStation.PollingStationNumber,
                     Locality = pollingStation.Locality,
                     Institution = pollingStation.Institution,
-                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a))
+                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a)).ToList()
                 });
 
             if (query != null)
@@ -69,7 +69,7 @@ namespace VotRomania.Stores
                     PollingStationNumber = pollingStation.PollingStationNumber,
                     Locality = pollingStation.Locality,
                     Institution = pollingStation.Institution,
-                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(x => MapToAssignedAddresses(x))
+                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(x => MapToAssignedAddresses(x)).ToList()
                 });
 
             return await pollingStationsQuery.SingleOrDefaultAsync();

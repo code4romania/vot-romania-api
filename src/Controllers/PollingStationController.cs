@@ -45,7 +45,7 @@ namespace VotRomania.Controllers
 
 
         [HttpGet]
-        [Route("polling-station/{id}")]
+        [Route("{id}")]
         [SwaggerResponse(200, "Polling stations details.", typeof(PagedResult<PollingStationModel>))]
         [SwaggerResponse(401)]
         [SwaggerResponse(404, "No polling station found.", typeof(void))]

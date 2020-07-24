@@ -13,6 +13,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="CSharpFunctionalExtensions" Version="2.11.0" />
+        <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+        <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
         <PackageReference Include="GeoCoordinate.NetStandard1" Version="1.0.1" />
         <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="5.1.0" />
         <PackageReference Include="MediatR" Version="8.0.0" />

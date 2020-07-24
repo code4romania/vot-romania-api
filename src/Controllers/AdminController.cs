@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using VotRomania.Commands;
 using VotRomania.Models;
 using VotRomania.Providers;
 
@@ -32,10 +33,15 @@ namespace VotRomania.Controllers
         [SwaggerOperation(Summary = "Upload polling stations from excel file")]
         [SwaggerResponse(200, "Operation response", typeof(void))]
         [SwaggerResponse(500, "Something went wrong when updating or adding static texts", typeof(ProblemDetails))]
-        public IActionResult Upload(IFormFile file)
+        public async Task<IActionResult> Upload(IFormFile file)
         {
-            // todo implement
-            return Ok();
+            var result = await _mediator.Send(new StartUploadNewPollingStations(file));
+            if (result.IsSuccess)
+            {
+                return Ok(new { jobId = result.Value });
+            }
+
+            return Problem(result.Error);
         }
 
 
