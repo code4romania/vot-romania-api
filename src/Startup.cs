@@ -39,6 +39,14 @@ namespace VotRomania
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("CorsPolicy", builder => {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:4200");
+            }));
+
             services.AddOptions();
             services.AddHealthChecks();
             services.Configure<DatabaseOptions>(Configuration.GetSection("Database"));
@@ -191,6 +199,8 @@ namespace VotRomania
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {

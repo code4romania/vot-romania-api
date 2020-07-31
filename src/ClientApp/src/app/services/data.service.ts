@@ -51,7 +51,7 @@ export class DataService {
               private errorService: ErrorService) { }
 
   getData(): Observable<ApplicationData> {
-    return this.http.get<ApplicationData>('/api/application-content')
+    return this.http.get<ApplicationData>('https://localhost:44307/api/application-content')
       .pipe(catchError(this.errorService.handleError));
   }
 
