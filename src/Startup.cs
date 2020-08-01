@@ -44,7 +44,8 @@ namespace VotRomania
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials()
-                    .WithOrigins("http://localhost:4200");
+                    .WithOrigins("http://localhost:4200", 
+                    "https://vot-romania-6hmhp27pb.vercel.app/");
             }));
 
             services.AddOptions();
