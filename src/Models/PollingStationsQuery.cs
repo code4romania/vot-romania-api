@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using VotRomania.Stores.Entities;
 
 namespace VotRomania.Models
 {
@@ -10,5 +12,11 @@ namespace VotRomania.Models
         [FromQuery(Name = "pollingStationNumber")] public string PollingStationNumber { get; set; }
         [FromQuery(Name = "institution")] public string Institution { get; set; }
         [FromQuery(Name = "address")] public string Address { get; set; }
+    }
+
+    public class ImportedPollingStationsQuery : PollingStationsQuery
+    {
+        [FromQuery(Name = "jobId")] public Guid? JobId { get; set; }
+        [FromQuery(Name = "resolvedAddressStatus")] public ResolvedAddressStatusType? ResolvedAddressStatus { get; set; }
     }
 }

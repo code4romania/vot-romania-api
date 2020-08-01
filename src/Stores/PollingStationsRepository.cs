@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using VotRomania.Extensions;
 using VotRomania.Models;
 using VotRomania.Stores.Entities;
 
@@ -22,7 +24,7 @@ namespace VotRomania.Stores
             _context.Database.EnsureCreated();
         }
 
-        public async Task<PagedResult<PollingStationModel>> GetPollingStationsAsync(PollingStationsQuery query = null, PaginationQuery pagination = null)
+        public async Task<PagedResult<PollingStationModel>> GetPollingStationsAsync(PollingStationsQuery? query = null, PaginationQuery? pagination = null)
         {
             var pollingStationsQuery = _context.PollingStations
                 .Include(x => x.PollingStationAddresses)
@@ -36,7 +38,7 @@ namespace VotRomania.Stores
                     PollingStationNumber = pollingStation.PollingStationNumber,
                     Locality = pollingStation.Locality,
                     Institution = pollingStation.Institution,
-                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a)).ToList()
+                    //AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a)).ToList()
                 });
 
             if (query != null)
@@ -49,9 +51,7 @@ namespace VotRomania.Stores
                     .Where(x => string.IsNullOrEmpty(query.Institution) || x.Institution.StartsWith(query.Institution));
             }
 
-
             return await pollingStationsQuery.GetPaged(pagination?.PageNumber, pagination?.PageSize);
-
         }
 
         public async Task<PollingStationModel> GetPollingStationAsync(int pollingStationId)
@@ -69,10 +69,28 @@ namespace VotRomania.Stores
                     PollingStationNumber = pollingStation.PollingStationNumber,
                     Locality = pollingStation.Locality,
                     Institution = pollingStation.Institution,
-                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(x => MapToAssignedAddresses(x)).ToList()
+                    //AssignedAddresses = pollingStation.PollingStationAddresses.Select(x => MapToAssignedAddresses(x)).ToList()
                 });
 
             return await pollingStationsQuery.SingleOrDefaultAsync();
+        }
+
+        public async Task<Result> RemoveAllPollingStations()
+        {
+            var result = await Result.Try(async () =>
+            {
+                _context.PollingStations.RemoveRange(_context.PollingStations);
+                await _context.SaveChangesAsync();
+            }, e => LogException(e));
+
+            return result;
+        }
+
+        private string LogException(Exception exception, string? message = null)
+        {
+            var exceptionMessage = string.IsNullOrWhiteSpace(message) ? exception.Message : message;
+            _logger.LogError(exception, exceptionMessage);
+            return exceptionMessage;
         }
 
         private static AssignedAddresses MapToAssignedAddresses(PollingStationAddressEntity pollingStationAssignedAddress)

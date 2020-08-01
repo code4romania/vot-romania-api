@@ -1,4 +1,8 @@
 ﻿
+using System;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
+
 namespace VotRomania.Stores.Entities
 {
     public class UploadJobsEntity
@@ -8,13 +12,17 @@ namespace VotRomania.Stores.Entities
         public string FileName { get; set; }
         public string Base64File { get; set; }
         public JobStatus JobStatus { get; set; }
+        public DateTime? Started { get; set; }
+        public DateTime? Ended { get; set; }
     }
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum JobStatus
     {
-        NotStarted = 1,
-        Started = 2,
-        Finished = 3,
-        Failed = 4
+        [EnumMember(Value = "notStarted")] NotStarted = 1,
+        [EnumMember(Value = "started")] Started = 2,
+        [EnumMember(Value = "finished")] Finished = 3,
+        [EnumMember(Value = "canceled")] Canceled = 4,
+        [EnumMember(Value = "imported")] Imported = 4,
     }
 }

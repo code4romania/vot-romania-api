@@ -1,25 +1,27 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using VotRomania.Options;
 
 namespace VotRomania.Controllers
 {
     [AllowAnonymous]
     public class ConfigurationController : Controller
     {
-        private readonly IConfiguration _configuration;
+        private readonly HereMapsOptions _hereOptions;
 
-        public ConfigurationController(IConfiguration configuration)
+        public ConfigurationController(IOptions<HereMapsOptions> hereOptions)
         {
-            _configuration = configuration;
+            _hereOptions = hereOptions?.Value ?? throw new ArgumentNullException(nameof(hereOptions));
         }
 
         [HttpGet]
         [Route("configuration/appConfig.js")]
         public ContentResult GetConfiguration()
         {
-            string hereMapsToken = _configuration["HereMaps:Token"];
+            string hereMapsToken = _hereOptions.Token;
 
             var sb = new StringBuilder();
             sb.Append($"var hereMapsToken = '{hereMapsToken}'");

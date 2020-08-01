@@ -4,8 +4,8 @@ namespace VotRomania.Models
 {
     public class PollingStationUploadModel
     {
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
+        [Required] public double Latitude { get; set; }
+        [Required] public double Longitude { get; set; }
         [Required] public string County { get; set; }
         [Required] public string Locality { get; set; }
         [Required] public string PollingStationNumber { get; set; }
