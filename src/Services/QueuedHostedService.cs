@@ -65,7 +65,9 @@ namespace VotRomania.Services
                         ResolvedAddressStatus = ResolvedAddressStatusType.NotProcessed
                     };
 
-                    var pollingStations = await _importedPollingStationsRepository.GetImportedPollingStationsAsync(query);
+                    var defaultPagination = new PaginationQuery();
+
+                    var pollingStations = await _importedPollingStationsRepository.GetImportedPollingStationsAsync(query, defaultPagination);
 
                     if (pollingStations.IsFailure)
                     {
