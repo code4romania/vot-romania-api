@@ -8,26 +8,40 @@ import {
     LoadLocations,
     UpdateDataAction,
     UpdateDataDoneAction,
-    UpdateDataErrorAction
+    UpdateDataErrorAction,
+    LoadImportedPollingStationsAction,
+    LoadImportedPollingStationsSuccessAction,
+    LoadImportedPollingStationsFailAction,
+    LoadImportJobDetailsAction,
+    LoadImportJobDetailsSuccessAction,
+    LoadImportJobDetailsFailAction,
+    DeleteImportedPollingStationAction,
+    DeleteImportedPollingStationFailAction,
+    DeleteImportedPollingStationSuccessAction,
+    DisplayToasterMessage
 } from './actions';
 import { Observable, of } from 'rxjs';
-import { mergeMap, map, catchError, switchMap, tap } from 'rxjs/operators';
+import { mergeMap, map, catchError, switchMap, tap, withLatestFrom, filter, distinctUntilChanged } from 'rxjs/operators';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { DataService } from '../services/data.service';
+import { DataService, PaginatedResponse, ImportedPollingStation, ImportJobDetails, ImportedPollingStationsFilter, PaginationDetails } from '../services/data.service';
 import { HereAddressService } from '../services/here-address.service';
 
-import { ApplicationState } from './reducers';
 import { Router } from '@angular/router';
+import { ApplicationState } from './reducers';
+import { getCurrentImportedPollingStationsFilter, getCurrentImportJobDetails, getCurrentImportedPollingStationsPagination } from './selectors';
+import { isEqual } from 'lodash';
+import { ToasterService } from '../services/toaster.service';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class ApplicationEffects {
 
     constructor(private dataService: DataService,
-                private addressService: HereAddressService,
-                private router: Router,
-                private actions$: Actions,
-                private store$: Store<ApplicationState>) {
+        private addressService: HereAddressService,
+        private router: Router,
+        private actions$: Actions,
+        private toasterService: ToasterService,
+        private store$: Store<ApplicationState>) {
     }
 
     @Effect()
@@ -46,14 +60,14 @@ export class ApplicationEffects {
         ofType(ActionTypes.UPDATE_DATA),
         mergeMap((action: UpdateDataAction) =>
             this.dataService.updateData(action.payload.data).pipe(
-                map(data => (new UpdateDataDoneAction())),
+                map(() => (new UpdateDataDoneAction())),
                 catchError(err => of(new UpdateDataErrorAction(err))
                 )
             )
         )
     );
 
-    @Effect({dispatch: false})
+    @Effect({ dispatch: false })
     updateDataSuccessful$: Observable<any> = this.actions$.pipe(
         ofType(ActionTypes.UPDATE_DATA_DONE),
         tap(() => {
@@ -62,12 +76,12 @@ export class ApplicationEffects {
     );
 
     @Effect()
-    getUserTypeUserPermissions$: Observable<Action> = this.actions$.pipe(
+    getLocations$: Observable<Action> = this.actions$.pipe(
         ofType<LoadLocations>(ActionTypes.LOAD_LOCATIONS),
 
         switchMap((action) => this.addressService.getLocationDetails(action.locationId)),
         switchMap((userLocation) => {
-            const {displayPosition} = userLocation.response.view[0].result[0].location;
+            const { displayPosition } = userLocation.response.view[0].result[0].location;
             return this.dataService.getPollingStations(displayPosition.latitude, displayPosition.longitude).pipe(map(result => {
                 return {
                     userLocation: userLocation.response.view[0].result[0].location,
@@ -79,5 +93,57 @@ export class ApplicationEffects {
             return new LoadLocationDone(res.userLocation, res.pollingStations);
         }),
         catchError(error => of(new LoadLocationError(error)))
+    );
+
+    @Effect()
+    public loadImportedPollingStations$ = this.actions$.pipe(
+        ofType<LoadImportedPollingStationsAction>(ActionTypes.LOAD_IPS),
+        withLatestFrom(
+            this.store$.select(getCurrentImportJobDetails),
+            this.store$.select(getCurrentImportedPollingStationsFilter),
+            this.store$.select(getCurrentImportedPollingStationsPagination)
+        ),
+        filter(([, jobDetails,]) => jobDetails !== undefined && jobDetails.jobId !== ''),
+        switchMap(([, jobDetails, filter, pagination]) =>
+            this.dataService.getImportedPollingStations(jobDetails.jobId, filter, pagination).pipe(
+                map((response: PaginatedResponse<ImportedPollingStation>) => new LoadImportedPollingStationsSuccessAction(response)),
+                catchError((error) => of(new LoadImportedPollingStationsFailAction(error)))
+            )
+        )
+    );
+
+    @Effect()
+    loadImportJobDetails$: Observable<Action> = this.actions$.pipe(
+        ofType<LoadImportJobDetailsAction>(ActionTypes.LOAD_IMPORT_JOB_DETAILS),
+        mergeMap(() =>
+            this.dataService.getImportJobDetails().pipe(
+                switchMap((data) => [new LoadImportJobDetailsSuccessAction(data), new LoadImportedPollingStationsAction()]),
+                catchError(err => of(new LoadImportJobDetailsFailAction(err)))
+            )
+        )
+    );
+
+    @Effect()
+    deleteImportedPollingStation$: Observable<Action> = this.actions$.pipe(
+        ofType<DeleteImportedPollingStationAction>(ActionTypes.DELETE_IMPORTED_POLLING_STATION),
+        map((action) => ({ jobId: action.jobId, importedPollingStationId: action.importedPollingStationId })),
+        mergeMap(({ jobId, importedPollingStationId }) =>
+            this.dataService.deleteImportedPollingStationId(jobId, importedPollingStationId).pipe(
+                switchMap(() => [new DeleteImportedPollingStationSuccessAction(), new LoadImportedPollingStationsAction(), new DisplayToasterMessage("Delete successfull", 'success')]),
+                catchError(err => of(new DeleteImportedPollingStationFailAction(err)))
+            )
+        )
+    );
+
+    @Effect()
+    fetchImportedPollingStations$: Observable<Action> = this.actions$.pipe(
+        ofType(ActionTypes.RESET_FILTER, ActionTypes.UPDATE_FILTER, ActionTypes.UPDATE_PAGINATION),
+        switchMap(() => of(new LoadImportedPollingStationsAction()))
+    );
+
+    @Effect({dispatch: false})
+    displayToasterMessage$: Observable<Action> = this.actions$.pipe(
+        ofType<DisplayToasterMessage>(ActionTypes.DISPLAY_TOASTER_MESSAGE),
+        tap((action: DisplayToasterMessage) => this.toasterService.show(action.text, action.severity))
     );
 }

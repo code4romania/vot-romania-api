@@ -23,7 +23,8 @@ namespace VotRomania.CommandsHandlers
         IRequestHandler<StartImportNewPollingStations, Result<Guid>>,
         IRequestHandler<CancelImportJob, Result>,
         IRequestHandler<CompleteImportJob, Result>,
-        IRequestHandler<GetImportJobStatus, Result<JobStatusModel>>
+        IRequestHandler<GetImportJobStatus, Result<JobStatusModel>>,
+        IRequestHandler<GetCurrentImportJob, Result<JobStatusModel>>
 
     {
         private readonly VotRomaniaContext _context;
@@ -32,6 +33,7 @@ namespace VotRomania.CommandsHandlers
         private readonly IImportedPollingStationsRepository _importedPollingStationsRepository;
         private readonly ILogger<ImportPollingStationsCommandsHandler> _logger;
         private readonly IBackgroundJobsQueue _backgroundJobsQueue;
+        private readonly IPollingStationSearchService _pollingStationSearchService;
 
         public ImportPollingStationsCommandsHandler(
             VotRomaniaContext context,
@@ -39,6 +41,7 @@ namespace VotRomania.CommandsHandlers
             IPollingStationsRepository pollingStationsRepository,
             IImportedPollingStationsRepository importedPollingStationsRepository,
             IBackgroundJobsQueue backgroundJobsQueue,
+            IPollingStationSearchService pollingStationSearchService,
             ILogger<ImportPollingStationsCommandsHandler> logger)
         {
             _context = context;
@@ -46,6 +49,7 @@ namespace VotRomania.CommandsHandlers
             _pollingStationsRepository = pollingStationsRepository;
             _importedPollingStationsRepository = importedPollingStationsRepository;
             _backgroundJobsQueue = backgroundJobsQueue;
+            _pollingStationSearchService = pollingStationSearchService;
             _logger = logger;
         }
 
@@ -214,6 +218,7 @@ namespace VotRomania.CommandsHandlers
                     .Tap(() => AddImportedPollingStationsToPollingStations(request.JobId, cancellationToken))
                     .Tap(() => _importedPollingStationsRepository.RemoveImportedPollingStations(request.JobId))
                     .Tap(() => _importJobsRepository.UpdateJobStatus(request.JobId, JobStatus.Imported))
+                    .Tap(() => _pollingStationSearchService.BustCache())
                     .OnFailure(() => transaction.RollbackAsync(cancellationToken))
                     .OnSuccessTry(_ => transaction.CommitAsync(cancellationToken));
             }
@@ -241,6 +246,11 @@ namespace VotRomania.CommandsHandlers
                 await _context.SaveChangesAsync(cancellationToken);
             }, e => LogException(e));
             return result;
+        }
+
+        public async Task<Result<JobStatusModel>> Handle(GetCurrentImportJob request, CancellationToken cancellationToken)
+        {
+            return await _importJobsRepository.GetCurrentImportJob();
         }
     }
 }

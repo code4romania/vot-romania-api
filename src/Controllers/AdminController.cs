@@ -9,6 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using VotRomania.Commands;
 using VotRomania.Models;
 using VotRomania.Providers;
+using VotRomania.Queries;
 
 namespace VotRomania.Controllers
 {
@@ -49,7 +50,7 @@ namespace VotRomania.Controllers
 
         // TODO: remove anonymous
         [AllowAnonymous]
-        [HttpGet, DisableRequestSizeLimit]
+        [HttpGet]
         [Route("import/job-status")]
         [SwaggerOperation(Summary = "Get details for a specific job")]
         [SwaggerResponse(200, "Import job details", typeof(JobStatusModel))]
@@ -67,7 +68,25 @@ namespace VotRomania.Controllers
 
         // TODO: remove anonymous
         [AllowAnonymous]
-        [HttpGet, DisableRequestSizeLimit]
+        [HttpGet]
+        [Route("import/current-job")]
+        [SwaggerOperation(Summary = "Get current job that is being processed.")]
+        [SwaggerResponse(200, "Import job details", typeof(JobStatusModel))]
+        [SwaggerResponse(500, "Something went wrong when getting job details.", typeof(ProblemDetails))]
+        public async Task<IActionResult> GetCurrentJob()
+        {
+            var result = await _mediator.Send(new GetCurrentImportJob());
+            if (result.IsSuccess)
+            {
+                return Ok(result.Value);
+            }
+
+            return Problem(result.Error);
+        }
+
+        // TODO: remove anonymous
+        [AllowAnonymous]
+        [HttpGet]
         [Route("import/cancel-job")]
         [SwaggerOperation(Summary = "Cancels a specific job")]
         [SwaggerResponse(200, "Successfully cancelled a job", typeof(void))]
@@ -101,6 +120,107 @@ namespace VotRomania.Controllers
             return Problem(result.Error);
         }
 
+
+        // TODO: remove anonymous
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("import/{jobId:guid}/imported-polling-stations")]
+        [SwaggerOperation(Summary = "Search imported polling stations by specific criteria")]
+        [SwaggerResponse(200, "Imported polling stations found.", typeof(PagedResult<PollingStationModel>))]
+        [SwaggerResponse(404, "No polling stations found.", typeof(void))]
+        [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]
+        public async Task<IActionResult> GetFilteredImportedPollingStations(
+              [FromRoute]Guid jobId,
+              [FromQuery] PaginationQuery pagination,
+              [FromQuery] ImportedPollingStationsQuery query)
+        {
+
+            var result = await _mediator.Send(new SearchImportedPollingStations(jobId, pagination, query));
+
+            if (result.IsFailure)
+            {
+                return Problem(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+
+        [HttpGet]
+        [Route("import/{jobId:guid}/imported-polling-stations/{id}")]
+        [SwaggerResponse(200, "Imported polling station details.", typeof(PagedResult<PollingStationModel>))]
+        [SwaggerResponse(401)]
+        [SwaggerResponse(404, "No polling station found.", typeof(void))]
+        [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]
+        public async Task<IActionResult> GetImportedPollingStationAsync([FromRoute]Guid jobId, [FromRoute] int id)
+        {
+            var result = await _mediator.Send(new GetImportedPollingStationById(jobId, id));
+
+
+            if (result.IsFailure)
+            {
+                return Problem(result.Error);
+            }
+
+            if (result.Value == null) return NotFound();
+
+            return Ok(result.Value);
+        }
+
+        [HttpPost]
+        [Route("import/{jobId:guid}/imported-polling-stations")]
+        [SwaggerOperation(Summary = "Adds an imported polling station")]
+        [SwaggerResponse(200, "Id of new imported polling station", typeof(int))]
+        [SwaggerResponse(401)]
+        [SwaggerResponse(500, "Something went wrong when adding an imported polling station", typeof(ProblemDetails))]
+        public async Task<IActionResult> AddPollingStationAsync([FromRoute]Guid jobId, [FromBody]ImportedPollingStationUploadModel pollingStation)
+        {
+            var result = await _mediator.Send(new AddImportedPollingStation(jobId, pollingStation));
+
+            if (result.IsFailure)
+            {
+                return Problem(result.Error);
+            }
+
+            return Ok(result.Value);
+        }
+
+        [HttpPost]
+        [Route("import/{jobId:guid}/imported-polling-stations/{id}")]
+        [SwaggerOperation(Summary = "Updates an imported polling station")]
+        [SwaggerResponse(200, "Latest data", typeof(void))]
+        [SwaggerResponse(401)]
+        [SwaggerResponse(500, "Something went wrong when adding or updating an Imported polling station", typeof(ProblemDetails))]
+        public async Task<IActionResult> UpdateImportedPollingStationAsync([FromRoute]Guid jobId, [FromRoute] int id, [FromBody]ImportedPollingStationUploadModel pollingStation)
+        {
+            var result = await _mediator.Send(new UpdateImportedPollingStation(jobId, id, pollingStation));
+
+            if (result.IsFailure)
+            {
+                return Problem(result.Error);
+            }
+
+            return Ok();
+        }
+
+        [HttpDelete]
+        [AllowAnonymous]
+        [Route("import/{jobId:guid}/imported-polling-stations/{id}")]
+        [SwaggerOperation(Summary = "Deletes an imported polling station")]
+        [SwaggerResponse(200, "Operation response", typeof(void))]
+        [SwaggerResponse(401)]
+        [SwaggerResponse(500, "Something went wrong when deleting an imported polling station", typeof(ProblemDetails))]
+        public async Task<IActionResult> DeleteImportedPollingStationAsync([FromRoute]Guid jobId, [FromRoute] int id)
+        {
+            var result = await _mediator.Send(new DeleteImportedPollingStation(jobId, id));
+
+            if (result.IsFailure)
+            {
+                return Problem(result.Error);
+            }
+
+            return Ok();
+        }
 
         [AllowAnonymous]
         [HttpPost("login")]

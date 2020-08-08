@@ -1,8 +1,19 @@
 import { AppActions, ActionTypes } from './actions';
-import { VotingGuide, StaticData, PollingStationGroup } from '../services/data.service';
+import { VotingGuide, StaticData, PollingStationGroup, ImportedPollingStation, PaginatedResponse, ImportJobDetails, PaginationDetails, ImportedPollingStationsFilter as ImportedPollingStationsFilter } from '../services/data.service';
 import { AuthActions, AuthActionTypes } from './auth';
 
 import { LocationDetails } from '../services/here-address.service';
+import { isEqual } from 'lodash';
+
+export interface ImportPollingStationsState {
+    importedPollingStationsPagination: PaginationDetails;
+    importedPollingStationsFilter: ImportedPollingStationsFilter;
+    errorMessage: string;
+    hasError: boolean;
+    importJobDetails: ImportJobDetails;
+    isLoading: boolean;
+    importedPollingStations: PaginatedResponse<ImportedPollingStation>;
+}
 
 export interface ApplicationState {
     languages: string[];
@@ -16,7 +27,22 @@ export interface ApplicationState {
     auth: {
         token: string;
     };
+    import: ImportPollingStationsState
 }
+
+const DEFAULT_IPS_FILTER: ImportedPollingStationsFilter = {
+    address: '',
+    county: '',
+    institution: '',
+    locality: '',
+    pollingStationNumber: '',
+    status: ''
+};
+
+const DEFAULT_PAGINATION: PaginationDetails = {
+    pageNumber: 0,
+    pageSize: 5
+};
 
 const initialState: ApplicationState = {
     languages: [],
@@ -28,6 +54,15 @@ const initialState: ApplicationState = {
     pollingStations: [],
     selectedAddressDetails: undefined,
     auth: { token: '' },
+    import: {
+        importJobDetails: undefined,
+        importedPollingStations: undefined,
+        errorMessage: '',
+        hasError: false,
+        isLoading: true,
+        importedPollingStationsFilter: DEFAULT_IPS_FILTER,
+        importedPollingStationsPagination: DEFAULT_PAGINATION
+    }
 };
 export function appStateReducer(state: ApplicationState = initialState, action: AppActions | AuthActions): ApplicationState {
     switch (action.type) {
@@ -97,6 +132,82 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 selectedAddressDetails: action.userLocation
             };
 
+        case ActionTypes.LOAD_IMPORT_JOB_DETAILS_DONE:
+            if (action.importJobDetails) {
+                return {
+                    ...state,
+                    import: {
+                        ...state.import,
+                        importJobDetails: action.importJobDetails
+                    },
+                };
+            } else {
+                return state;
+            }
+
+        case ActionTypes.LOAD_IMPORT_JOB_DETAILS_ERROR:
+            return {
+                ...state,
+                import: {
+                    ...state.import,
+                    importJobDetails: undefined,
+                    errorMessage: action.error
+                },
+            };
+
+        case ActionTypes.LOAD_IPS_DONE:
+            return {
+                ...state,
+                import: {
+                    ...state.import,
+                    importedPollingStations: action.payload,
+                    errorMessage: '',
+                    isLoading: false,
+                    hasError: false,
+                },
+            };
+        case ActionTypes.LOAD_IPS_ERROR:
+            return {
+                ...state,
+                import: {
+                    ...state.import,
+                    importedPollingStations: undefined,
+                    errorMessage: action.error,
+                    isLoading: false,
+                    hasError: true,
+                },
+            };
+
+        case ActionTypes.RESET_FILTER:
+            return {
+                ...state,
+                import: {
+                    ...state.import,
+                    importedPollingStationsFilter: DEFAULT_IPS_FILTER
+                }
+            }
+
+        case ActionTypes.UPDATE_FILTER:
+            if (isEqual(state.import.importedPollingStationsFilter, action.payload)) {
+                return state;
+            }
+
+            return {
+                ...state,
+                import: {
+                    ...state.import,
+                    importedPollingStationsFilter: action.payload
+                }
+            }
+
+            case ActionTypes.UPDATE_PAGINATION:
+                return {
+                    ...state,
+                    import: {
+                        ...state.import,
+                        importedPollingStationsPagination: action.payload
+                    }
+                }
         default:
             return state;
     }

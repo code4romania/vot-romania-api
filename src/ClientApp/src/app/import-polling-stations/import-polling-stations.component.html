@@ -1,0 +1,25 @@
+<div class="container">
+
+    <div class="new-job" *ngIf="currentJob=== undefined">
+
+    </div>
+
+    <div class="in-progress-job" *ngIf="currentJob!== undefined">
+        <div class="container py-2">
+            <div class="row">
+                <div class="col">
+                    <p><b>JobId:</b> {{currentJob.jobId}}</p>
+                    <p><b>File name:</b> {{currentJob.fileName}}</p>
+                    <p><b>Status:</b> {{currentJob.status}}</p>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-danger btn-block">Cancel current job</button>
+                    <button type="button" class="btn btn-warning btn-block">Restart current job</button>
+                    <button type="button" class="btn btn-success btn-block">Finish import</button>
+                </div>
+            </div>
+        </div>
+
+        <app-imported-polling-stations-table></app-imported-polling-stations-table>
+    </div>
+</div>

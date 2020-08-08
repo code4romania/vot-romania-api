@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using VotRomania.Models;
@@ -16,7 +17,7 @@ namespace VotRomania.Extensions
             if (page == null || pageSize == null)
             {
                 var singlePagedResult = new PagedResult<T>();
-                singlePagedResult.CurrentPage = 1;
+                singlePagedResult.CurrentPage = 0;
                 singlePagedResult.PageSize = resultRowCount;
                 singlePagedResult.RowCount = resultRowCount;
                 singlePagedResult.Results = await query.ToListAsync();
@@ -33,10 +34,23 @@ namespace VotRomania.Extensions
             var pageCount = (double)result.RowCount / pageSize.Value;
             result.PageCount = (int)Math.Ceiling(pageCount);
 
-            var skip = (page.Value - 1) * pageSize.Value;
+            var skip = page.Value * pageSize.Value;
             result.Results = await query.Skip(skip).Take(pageSize.Value).ToListAsync();
 
             return result;
+        }
+
+        public static IQueryable<T> ConditionalWhere<T>(
+            this IQueryable<T> source,
+            Func<bool> condition,
+            Expression<Func<T, bool>> predicate)
+        {
+            if (condition())
+            {
+                return source.Where(predicate);
+            }
+
+            return source;
         }
     }
 }

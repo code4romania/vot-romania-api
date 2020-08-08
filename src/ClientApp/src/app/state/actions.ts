@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ApplicationData, StaticData } from '../services/data.service';
+import { ApplicationData, StaticData, ImportedPollingStation, PaginatedResponse, ImportedPollingStationsFilter, PaginationDetails, ImportJobDetails } from '../services/data.service';
 import { LocationDetails } from '../services/here-address.service';
 
 const typeCache: { [label: string]: boolean } = {};
@@ -30,6 +30,25 @@ export class ActionTypes {
     static readonly LOAD_LOCATIONS = actionType('Load locations');
     static readonly LOAD_LOCATIONS_DONE = actionType('Load locations done');
     static readonly LOAD_LOCATIONS_ERROR = actionType('Load locations error');
+
+    static readonly LOAD_IPS = actionType('[ImportedPollingStations] Loading');
+    static readonly LOAD_IPS_DONE = actionType('[ImportedPollingStations] Load success');
+    static readonly LOAD_IPS_ERROR = actionType('[ImportedPollingStations] Load failure');
+
+
+    static readonly LOAD_IMPORT_JOB_DETAILS = actionType('[ImportJobDetails] Loading');
+    static readonly LOAD_IMPORT_JOB_DETAILS_DONE = actionType('[ImportDetails] Load success');
+    static readonly LOAD_IMPORT_JOB_DETAILS_ERROR = actionType('[ImportDetails] Load failure');
+
+    static readonly DELETE_IMPORTED_POLLING_STATION = actionType('[ImportedPollingStation] Delete');
+    static readonly DELETE_IMPORTED_POLLING_STATION_DONE = actionType('[ImportedPollingStation] Delete success');
+    static readonly DELETE_IMPORTED_POLLING_STATION_ERROR = actionType('[ImportedPollingStation] Delete failure');
+
+    static readonly UPDATE_PAGINATION = actionType('[ImportedPollingStation] Update pagination');
+    static readonly UPDATE_FILTER = actionType('[ImportedPollingStation] Update filter');
+    static readonly RESET_FILTER = actionType('[ImportedPollingStation] Reset filter');
+
+    static readonly DISPLAY_TOASTER_MESSAGE = actionType('[ToasterService] Show message');
 }
 
 export class ClearErrorAction implements Action {
@@ -110,6 +129,73 @@ export class LoadLocationDone implements Action {
     constructor(public userLocation: LocationDetails, public pollingStations) { }
 }
 
+export class LoadImportedPollingStationsAction implements Action {
+    public readonly type = ActionTypes.LOAD_IPS;
+    constructor() { }
+}
+
+export class LoadImportedPollingStationsSuccessAction implements Action {
+    public readonly type = ActionTypes.LOAD_IPS_DONE;
+    constructor(public payload: PaginatedResponse<ImportedPollingStation>) { }
+}
+
+export class LoadImportedPollingStationsFailAction implements Action {
+    public readonly type = ActionTypes.LOAD_IPS_ERROR;
+    constructor(public error: any) { }
+}
+
+export class LoadImportJobDetailsAction implements Action {
+    public readonly type = ActionTypes.LOAD_IMPORT_JOB_DETAILS;
+    constructor() { }
+}
+
+export class LoadImportJobDetailsSuccessAction implements Action {
+    public readonly type = ActionTypes.LOAD_IMPORT_JOB_DETAILS_DONE;
+    constructor(public importJobDetails: ImportJobDetails) { }
+}
+
+export class LoadImportJobDetailsFailAction implements Action {
+    public readonly type = ActionTypes.LOAD_IMPORT_JOB_DETAILS_ERROR;
+    constructor(public error: any) { }
+}
+
+export class DeleteImportedPollingStationAction implements Action {
+    public readonly type = ActionTypes.DELETE_IMPORTED_POLLING_STATION;
+    constructor(public jobId: string, public importedPollingStationId: number) { }
+}
+
+export class DeleteImportedPollingStationSuccessAction implements Action {
+    public readonly type = ActionTypes.DELETE_IMPORTED_POLLING_STATION_DONE;
+    constructor() { }
+}
+
+export class DeleteImportedPollingStationFailAction implements Action {
+    public readonly type = ActionTypes.DELETE_IMPORTED_POLLING_STATION_ERROR;
+    constructor(public error: any) { }
+}
+
+
+export class UpdatePagination implements Action {
+    public readonly type = ActionTypes.UPDATE_PAGINATION;
+    constructor(public payload: PaginationDetails) { }
+}
+
+export class UpdateFilter implements Action {
+    public readonly type = ActionTypes.UPDATE_FILTER;
+    constructor(public payload: ImportedPollingStationsFilter) { }
+}
+
+export class ResetFilter implements Action {
+    public readonly type = ActionTypes.RESET_FILTER;
+    constructor() { }
+}
+
+export class DisplayToasterMessage implements Action {
+    public readonly type = ActionTypes.DISPLAY_TOASTER_MESSAGE;
+    constructor(public text: string, public severity: 'success' | 'warning' | 'error') { }
+}
+
+
 export type AppActions = ClearErrorAction
     | LoadDataAction
     | LoadDataDoneAction
@@ -118,5 +204,19 @@ export type AppActions = ClearErrorAction
     | UpdateDataDoneAction
     | UpdateDataErrorAction
     | ChangeSelectedLanguage
-    | LoadLocationDone;
+    | LoadLocationDone
+    | LoadImportedPollingStationsAction
+    | LoadImportedPollingStationsSuccessAction
+    | LoadImportedPollingStationsFailAction
+    | LoadImportJobDetailsAction
+    | LoadImportJobDetailsSuccessAction
+    | LoadImportJobDetailsFailAction
+    | DeleteImportedPollingStationAction
+    | DeleteImportedPollingStationSuccessAction
+    | DeleteImportedPollingStationFailAction
+    | UpdateFilter
+    | ResetFilter
+    | UpdatePagination
+    | DisplayToasterMessage;
+
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
@@ -12,21 +13,32 @@ namespace VotRomania.Services
         private readonly IPollingStationsRepository _pollingStationsRepository;
 
 
-        private readonly List<(GeoCoordinate Coordinates, PollingStationModel[] PollingStations)> _pollingStations;
+        private List<(GeoCoordinate Coordinates, PollingStationModel[] PollingStations)>? _pollingStations;
 
         // TODO: Change to KDTree
         public IneffectiveSearchService(IPollingStationsRepository pollingStationsRepository)
         {
             _pollingStationsRepository = pollingStationsRepository;
-            var pollingStations = pollingStationsRepository.GetPollingStationsAsync().GetAwaiter().GetResult();
+            PrefillPollingStationsCache().GetAwaiter().GetResult();
+        }
 
-            _pollingStations = pollingStations
+        private async Task PrefillPollingStationsCache()
+        {
+            var pollingStationsResult = await _pollingStationsRepository.GetPollingStationsAsync();
+
+            if (pollingStationsResult.IsFailure)
+            {
+                throw new ApplicationException("could not load polling stations");
+            }
+
+            _pollingStations = pollingStationsResult
+                .Value
                 .Results
                 .GroupBy(
                     x => new { lat = x.Latitude, lng = x.Longitude },
                     p => p,
                     (key, pollingStationsInfos) => (new GeoCoordinate(key.lat, key.lng), pollingStationsInfos.ToArray())
-                    )
+                )
                 .ToList();
         }
 
@@ -45,6 +57,11 @@ namespace VotRomania.Services
                 .ToArray();
 
             return Task.FromResult(pollingStationsInfos);
+        }
+
+        public async Task BustCache()
+        {
+            await PrefillPollingStationsCache();
         }
     }
 }

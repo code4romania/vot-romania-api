@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using MediatR;
 using VotRomania.Models;
 using VotRomania.Queries;
@@ -9,7 +10,7 @@ using VotRomania.Stores;
 namespace VotRomania.QueryHandlers
 {
     public class PollingStationsQueryHandler : IRequestHandler<GetNearbyPollingStations, PollingStationsGroupModel[]>,
-        IRequestHandler<SearchPollingStation, PagedResult<PollingStationModel>>,
+        IRequestHandler<SearchPollingStations, Result<PagedResult<PollingStationModel>>>,
         IRequestHandler<GetPollingStationById, PollingStationModel>
     {
         private readonly IPollingStationSearchService _searchService;
@@ -27,7 +28,7 @@ namespace VotRomania.QueryHandlers
             return pollingStations;
         }
 
-        public async Task<PagedResult<PollingStationModel>> Handle(SearchPollingStation request, CancellationToken cancellationToken)
+        public async Task<Result<PagedResult<PollingStationModel>>> Handle(SearchPollingStations request, CancellationToken cancellationToken)
         {
             var pollingStations = await _repository.GetPollingStationsAsync(request.Query, request.Pagination);
 

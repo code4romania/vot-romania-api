@@ -21,37 +21,45 @@ namespace VotRomania.Stores
         {
             _logger = logger;
             _context = context;
-            _context.Database.EnsureCreated();
         }
 
-        public async Task<PagedResult<PollingStationModel>> GetPollingStationsAsync(PollingStationsQuery? query = null, PaginationQuery? pagination = null)
+        public async Task<Result<PagedResult<PollingStationModel>>> GetPollingStationsAsync(PollingStationsQuery? query = null, PaginationQuery? pagination = null)
         {
-            var pollingStationsQuery = _context.PollingStations
-                .Include(x => x.PollingStationAddresses)
-                .Select(pollingStation => new PollingStationModel
-                {
-                    Id = pollingStation.Id,
-                    Address = pollingStation.Address,
-                    Longitude = pollingStation.Longitude,
-                    Latitude = pollingStation.Latitude,
-                    County = pollingStation.County,
-                    PollingStationNumber = pollingStation.PollingStationNumber,
-                    Locality = pollingStation.Locality,
-                    Institution = pollingStation.Institution,
-                    //AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a)).ToList()
-                });
-
-            if (query != null)
+            var result = await Result.Try(async () =>
             {
-                pollingStationsQuery = pollingStationsQuery.Where(x => query.PollingStationId == null || x.Id == query.PollingStationId)
-                    .Where(x => string.IsNullOrEmpty(query.County) || x.County.StartsWith(query.County))
-                    .Where(x => string.IsNullOrEmpty(query.Locality) || x.Locality.StartsWith(query.Locality))
-                    .Where(x => string.IsNullOrEmpty(query.Address) || x.Address.StartsWith(query.Address))
-                    .Where(x => string.IsNullOrEmpty(query.PollingStationNumber) || x.PollingStationNumber.StartsWith(query.PollingStationNumber))
-                    .Where(x => string.IsNullOrEmpty(query.Institution) || x.Institution.StartsWith(query.Institution));
-            }
 
-            return await pollingStationsQuery.GetPaged(pagination?.PageNumber, pagination?.PageSize);
+
+                var pollingStationsQuery = _context.PollingStations
+                    .Include(x => x.PollingStationAddresses)
+                    .Select(pollingStation => new PollingStationModel
+                    {
+                        Id = pollingStation.Id,
+                        Address = pollingStation.Address,
+                        Longitude = pollingStation.Longitude,
+                        Latitude = pollingStation.Latitude,
+                        County = pollingStation.County,
+                        PollingStationNumber = pollingStation.PollingStationNumber,
+                        Locality = pollingStation.Locality,
+                        Institution = pollingStation.Institution,
+                        //AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a)).ToList()
+                    });
+
+                if (query != null)
+                {
+                    pollingStationsQuery = pollingStationsQuery
+                        .Where(x => string.IsNullOrEmpty(query.County) || x.County.StartsWith(query.County))
+                        .Where(x => string.IsNullOrEmpty(query.Locality) || x.Locality.StartsWith(query.Locality))
+                        .Where(x => string.IsNullOrEmpty(query.Address) || x.Address.StartsWith(query.Address))
+                        .Where(x => string.IsNullOrEmpty(query.PollingStationNumber) ||
+                                    x.PollingStationNumber.StartsWith(query.PollingStationNumber))
+                        .Where(x => string.IsNullOrEmpty(query.Institution) ||
+                                    x.Institution.StartsWith(query.Institution));
+                }
+
+                return await pollingStationsQuery.GetPaged(pagination?.PageNumber, pagination?.PageSize);
+            });
+
+            return result;
         }
 
         public async Task<PollingStationModel> GetPollingStationAsync(int pollingStationId)

@@ -96,7 +96,6 @@ namespace VotRomania.Stores
                     Status = job.JobStatus,
                     Started = job.Started,
                     Ended = job.Ended,
-                    FileName = job.FileName
                 };
             }, e => LogException(e));
 
@@ -117,6 +116,32 @@ namespace VotRomania.Stores
 
                 job.JobStatus = jobJobStatus;
                 await _context.SaveChangesAsync();
+
+            }, e => LogException(e));
+
+            return result;
+        }
+
+        public async Task<Result<JobStatusModel>> GetCurrentImportJob()
+        {
+            var result = await Result.Try(async () =>
+            {
+                var job = await _context.ImportJobs
+                    .FirstOrDefaultAsync(x => x.JobStatus == JobStatus.NotStarted || x.JobStatus == JobStatus.Started || x.JobStatus == JobStatus.Finished);
+
+                if (job == null)
+                {
+                    return null;
+                }
+                
+                return new JobStatusModel
+                {
+                    JobId = job.JobId,
+                    Status = job.JobStatus,
+                    Started = job.Started,
+                    Ended = job.Ended,
+                    FileName = job.FileName
+                };
 
             }, e => LogException(e));
 

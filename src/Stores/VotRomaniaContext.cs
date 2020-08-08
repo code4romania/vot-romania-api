@@ -2,6 +2,8 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.Logging.Debug;
 using Microsoft.Extensions.Options;
 using VotRomania.Options;
 using VotRomania.Stores.Entities;
@@ -12,10 +14,17 @@ namespace VotRomania.Stores
     {
         private readonly ILogger _logger;
         private readonly DatabaseOptions _databaseOptions;
+        private static readonly ILoggerFactory _loggerFactory
+            = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+                builder.AddDebug();
+            });
 
         public VotRomaniaContext(
             ILogger<VotRomaniaContext> logger,
-            IOptions<DatabaseOptions> databaseOptions)
+            IOptions<DatabaseOptions> databaseOptions,
+            ILoggerFactory loggerFactory)
         {
             _logger = logger;
             _databaseOptions = databaseOptions.Value;
@@ -36,6 +45,7 @@ namespace VotRomania.Stores
             optionsBuilder.UseSqlite(connectionStringBuilder.ConnectionString);
             optionsBuilder.EnableDetailedErrors();
             optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.UseLoggerFactory(_loggerFactory);
             base.OnConfiguring(optionsBuilder);
         }
 

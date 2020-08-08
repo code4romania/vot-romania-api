@@ -61,13 +61,12 @@ namespace VotRomania.Services
 
                     var query = new ImportedPollingStationsQuery
                     {
-                        JobId = jobId,
                         ResolvedAddressStatus = ResolvedAddressStatusType.NotProcessed
                     };
 
                     var defaultPagination = new PaginationQuery();
 
-                    var pollingStations = await _importedPollingStationsRepository.GetImportedPollingStationsAsync(query, defaultPagination);
+                    var pollingStations = await _importedPollingStationsRepository.GetImportedPollingStationsAsync(jobId, query, defaultPagination);
 
                     if (pollingStations.IsFailure)
                     {
@@ -91,7 +90,7 @@ namespace VotRomania.Services
                         ps.Longitude = locationSearchResult.Longitude;
                         ps.FailMessage = locationSearchResult.ErrorMessage;
 
-                        await _importedPollingStationsRepository.UpdateImportedPollingStation(ps);
+                        await _importedPollingStationsRepository.UpdateImportedPollingStation(jobId, ps);
                     }
 
                     _jobsQueue.QueueBackgroundWorkItem(jobId);

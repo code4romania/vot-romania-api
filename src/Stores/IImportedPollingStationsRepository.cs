@@ -15,11 +15,15 @@ namespace VotRomania.Stores
     {
         Task<Result> CleanPreviouslyImportedData();
         Task<Result> InsertPollingStations(Guid jobId, List<PollingStationModel> pollingStations);
+        Task<Result<int>> AddPollingStation(Guid jobId, ImportedPollingStationModel pollingStation);
         Task<Result> RemoveImportedPollingStations(Guid jobId);
         Task<Result<int>> GetNumberOfImportedAddresses(Guid jobId);
         Task<Result<int>> GetNumberOfUnresolvedAddresses(Guid jobId);
-        Task<Result<PagedResult<ImportedPollingStationModel>>> GetImportedPollingStationsAsync(ImportedPollingStationsQuery? query = null, PaginationQuery? pagination = null);
-        Task<Result> UpdateImportedPollingStation(ImportedPollingStationModel importedPollingStation);
+        Task<Result<PagedResult<ImportedPollingStationModel>>> GetImportedPollingStationsAsync(Guid jobId,
+            ImportedPollingStationsQuery? query = null, PaginationQuery? pagination = null);
+        Task<Result> UpdateImportedPollingStation(Guid requestJobId, ImportedPollingStationModel importedPollingStation);
+        Task<Result> DeleteImportedPollingStation(Guid jobId, int pollingStationId);
+        Task<Result<ImportedPollingStationModel>> GetImportedPollingStationById(Guid jobId, int importedPollingStationId);
     }
 
     public class ImportedPollingStationsRepository : IImportedPollingStationsRepository
@@ -49,6 +53,33 @@ namespace VotRomania.Stores
             {
                 await _context.ImportedPollingStations.AddRangeAsync(pollingStations.Select(ps => MapToImportEntity(ps, jobId)));
                 await _context.SaveChangesAsync();
+            }, exception => LogException(exception));
+
+            return result;
+        }
+
+        public async Task<Result<int>> AddPollingStation(Guid jobId, ImportedPollingStationModel pollingStation)
+        {
+            var result = await Result.Try(async () =>
+            {
+                var entity = new ImportedPollingStationEntity
+                {
+                    Address = pollingStation.Address,
+                    County = pollingStation.County,
+                    Institution = pollingStation.Institution,
+                    Locality = pollingStation.Locality,
+                    PollingStationNumber = pollingStation.PollingStationNumber,
+                    ResolvedAddressStatus = pollingStation.ResolvedAddressStatus,
+                    FailMessage = pollingStation.FailMessage,
+                    Latitude = pollingStation.Latitude,
+                    Longitude = pollingStation.Longitude,
+                    JobId = jobId.ToString()
+                };
+
+                await _context.ImportedPollingStations.AddAsync(entity);
+                await _context.SaveChangesAsync();
+
+                return entity.Id;
             }, exception => LogException(exception));
 
             return result;
@@ -90,11 +121,12 @@ namespace VotRomania.Stores
             return result;
         }
 
-        public async Task<Result<PagedResult<ImportedPollingStationModel>>> GetImportedPollingStationsAsync(ImportedPollingStationsQuery? query = null, PaginationQuery? pagination = null)
+        public async Task<Result<PagedResult<ImportedPollingStationModel>>> GetImportedPollingStationsAsync(Guid jobId, ImportedPollingStationsQuery? query = null, PaginationQuery? pagination = null)
         {
             var result = await Result.Try(async () =>
               {
                   var pollingStationsQuery = _context.ImportedPollingStations
+                      .Where(x => x.JobId == jobId.ToString())
                       .Select(pollingStation => new ImportedPollingStationModel
                       {
                           Id = pollingStation.Id,
@@ -112,17 +144,12 @@ namespace VotRomania.Stores
                   if (query != null)
                   {
                       pollingStationsQuery = pollingStationsQuery
-                          .Where(x => query.PollingStationId == null || x.Id == query.PollingStationId)
-                          .Where(x => string.IsNullOrEmpty(query.County) || x.County.StartsWith(query.County))
-                          .Where(x => string.IsNullOrEmpty(query.Locality) || x.Locality.StartsWith(query.Locality))
-                          .Where(x => string.IsNullOrEmpty(query.Address) || x.Address.StartsWith(query.Address))
-                          .Where(x => string.IsNullOrEmpty(query.PollingStationNumber) ||
-                                      x.PollingStationNumber.StartsWith(query.PollingStationNumber))
-                          .Where(x => string.IsNullOrEmpty(query.Institution) ||
-                                      x.Institution.StartsWith(query.Institution))
-                          .Where(x => query.JobId != null || x.JobId == query.JobId.ToString())
-                          .Where(x => query.ResolvedAddressStatus == null ||
-                                      x.ResolvedAddressStatus == query.ResolvedAddressStatus);
+                          .ConditionalWhere(() => !string.IsNullOrWhiteSpace(query.County), q => EF.Functions.Like(q.County, AddStartsWithPattern(query.County)))
+                              .ConditionalWhere(() => !string.IsNullOrWhiteSpace(query.Locality), q => EF.Functions.Like(q.Locality, AddStartsWithPattern(query.Locality)))
+                              .ConditionalWhere(() => !string.IsNullOrWhiteSpace(query.Address), q => EF.Functions.Like(q.Address, AddStartsWithPattern(query.Address)))
+                              .ConditionalWhere(() => !string.IsNullOrWhiteSpace(query.PollingStationNumber), q => EF.Functions.Like(q.PollingStationNumber, AddStartsWithPattern(query.PollingStationNumber)))
+                              .ConditionalWhere(() => !string.IsNullOrWhiteSpace(query.Institution), q => EF.Functions.Like(q.Institution, AddStartsWithPattern(query.Institution)))
+                              .ConditionalWhere(() => query.ResolvedAddressStatus != null, q => q.ResolvedAddressStatus == query.ResolvedAddressStatus);
                   }
 
                   return await pollingStationsQuery.GetPaged(pagination?.PageNumber, pagination?.PageSize);
@@ -132,18 +159,85 @@ namespace VotRomania.Stores
             return result;
         }
 
-        public async Task<Result> UpdateImportedPollingStation(ImportedPollingStationModel importedPollingStation)
+        private static string AddStartsWithPattern(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return value;
+            }
+
+            return $"{value}%";
+        }
+
+        public async Task<Result> UpdateImportedPollingStation(Guid jobId, ImportedPollingStationModel importedPollingStation)
         {
             var result = await Result.Try(async () =>
             {
                 var pollingStation = await _context.ImportedPollingStations
                     .Where(x => x.Id == importedPollingStation.Id)
+                    .Where(x => x.JobId == jobId.ToString())
                     .FirstAsync();
 
-                pollingStation.ResolvedAddressStatus = importedPollingStation.ResolvedAddressStatus;
+                pollingStation.County = importedPollingStation.County;
+                pollingStation.Locality = importedPollingStation.Locality;
+                pollingStation.PollingStationNumber = importedPollingStation.PollingStationNumber;
+                pollingStation.Address = importedPollingStation.Address;
+                pollingStation.Institution = importedPollingStation.Institution;
                 pollingStation.Latitude = importedPollingStation.Latitude;
                 pollingStation.Longitude = importedPollingStation.Longitude;
+                pollingStation.ResolvedAddressStatus = importedPollingStation.ResolvedAddressStatus;
                 pollingStation.FailMessage = importedPollingStation.FailMessage;
+                pollingStation.JobId = jobId.ToString();
+
+                await _context.SaveChangesAsync();
+            });
+
+            return result;
+        }
+
+        public async Task<Result<ImportedPollingStationModel>> GetImportedPollingStationById(Guid jobId, int importedPollingStationId)
+        {
+            var result = await Result.Try(async () =>
+            {
+                var pollingStation = await _context.ImportedPollingStations
+                    .Where(x => x.Id == importedPollingStationId)
+                    .Where(x => x.JobId == jobId.ToString())
+                    .Select(ps => new ImportedPollingStationModel
+                    {
+                        Id = ps.Id,
+                        Address = ps.Address,
+                        Longitude = ps.Longitude,
+                        Latitude = ps.Latitude,
+                        County = ps.County,
+                        PollingStationNumber = ps.PollingStationNumber,
+                        Locality = ps.Locality,
+                        Institution = ps.Institution,
+                        JobId = ps.JobId,
+                        ResolvedAddressStatus = ps.ResolvedAddressStatus
+                    })
+                    .FirstOrDefaultAsync();
+
+                return pollingStation;
+            });
+
+            return result;
+        }
+
+        public async Task<Result> DeleteImportedPollingStation(Guid jobId, int pollingStationId)
+        {
+            var result = await Result.Try(async () =>
+            {
+                var pollingStation = await _context.ImportedPollingStations
+                    .Where(x => x.Id == pollingStationId && x.JobId == jobId.ToString())
+                    .FirstOrDefaultAsync();
+
+
+                if (pollingStation == null)
+                {
+                    throw new Exception($"Could not find specified imported polling station for jobId={jobId} and psId = {pollingStationId}");
+                }
+
+                _context.ImportedPollingStations.Remove(pollingStation);
 
                 await _context.SaveChangesAsync();
             });

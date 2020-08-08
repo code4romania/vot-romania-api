@@ -33,20 +33,20 @@ namespace VotRomania.Controllers
             [FromQuery] PaginationQuery pagination,
             [FromQuery] PollingStationsQuery query)
         {
-            var pollingStations = await _mediator.Send(new SearchPollingStation(pagination, query));
+            var result = await _mediator.Send(new SearchPollingStations(pagination, query));
 
-            if (pollingStations?.Results == null || pollingStations.Results.Count == 0)
+            if (result.IsFailure)
             {
-                return NotFound();
+                return Problem(result.Error);
             }
 
-            return Ok(pollingStations);
+            return Ok(result.Value);
         }
 
 
         [HttpGet]
         [Route("{id}")]
-        [SwaggerResponse(200, "Polling stations details.", typeof(PagedResult<PollingStationModel>))]
+        [SwaggerResponse(200, "Polling station details.", typeof(PagedResult<PollingStationModel>))]
         [SwaggerResponse(401)]
         [SwaggerResponse(404, "No polling station found.", typeof(void))]
         [SwaggerResponse(500, "Something went wrong when searching.", typeof(ProblemDetails))]

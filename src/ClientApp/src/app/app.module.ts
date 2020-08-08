@@ -26,17 +26,23 @@ import { PollingStationSearchComponent } from './polling-station-search/polling-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HereAddressService } from './services/here-address.service';
 import { DataService } from './services/data.service';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatPaginatorModule, MatTableModule, MatSelect, MatSelectModule } from '@angular/material';
 import { AuthEffects } from './state/auth';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './services/auth.guard';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AdminContentComponent } from './admin-content/admin-content.component';
+import { ImportPollingStationsComponent } from './import-polling-stations/import-polling-stations.component';
+import { ImportedPollingStationsTableComponent } from './import-polling-stations/imported-polling-stations-table/imported-polling-stations-table.component';
+import { ToasterService } from './services/toaster.service';
 
 const materialImports = [
   MatAutocompleteModule,
-  MatInputModule
+  MatInputModule,
+  MatPaginatorModule,
+  MatTableModule,
+  MatSelectModule
 ];
 
 const appRoutes = [
@@ -45,6 +51,7 @@ const appRoutes = [
   { path: 'politica-de-confidentialitate', component: PrivacyPolicyComponent, pathMatch: 'full' },
   { path: 'admin', component: AdminComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'admin/content', component: AdminContentComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'admin/import', component: ImportPollingStationsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'admin/login', component: LoginComponent, pathMatch: 'full' },
 ];
 
@@ -65,6 +72,8 @@ const appRoutes = [
     LoginComponent,
     AdminComponent,
     AdminContentComponent,
+    ImportPollingStationsComponent,
+    ImportedPollingStationsTableComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -82,7 +91,8 @@ const appRoutes = [
   ],
   providers: [
     HereAddressService,
-    DataService
+    DataService,
+    ToasterService
   ],
   bootstrap: [AppComponent]
 })

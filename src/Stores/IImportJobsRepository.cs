@@ -14,5 +14,6 @@ namespace VotRomania.Stores
         Task<Result> CancelImportJob(Guid jobId);
         Task<Result<JobStatusModel>> GetImportJobStatus(Guid jobId);
         Task<Result> UpdateJobStatus(Guid jobId, JobStatus jobJobStatus);
+        Task<Result<JobStatusModel>> GetCurrentImportJob();
     }
 }
