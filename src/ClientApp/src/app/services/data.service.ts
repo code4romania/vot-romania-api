@@ -46,7 +46,7 @@ export interface ImportedPollingStationsFilter {
   pollingStationNumber?: string;
   institution?: string;
   address?: string;
-  status?: string;
+  resolvedAddressStatus?: string;
 }
 
 export interface ImportedPollingStation {
@@ -58,8 +58,16 @@ export interface ImportedPollingStation {
   pollingStationNumber: string;
   institution: string;
   address: string;
-  status: string;
+  resolvedAddressStatus: string; // change to enum
   failMessage: string;
+  assignedAddresses: AssignedAddress[];
+}
+
+export interface AssignedAddress {
+  streetCode: string;
+  street: string;
+  houseNumbers: string;
+  remarks: string;
 }
 
 export interface PollingStationGroup {
@@ -122,7 +130,7 @@ export class DataService {
       .append('institution', filter.institution)
       .append('locality', filter.locality)
       .append('pollingStationNumber', filter.pollingStationNumber)
-      .append('resolvedAddressStatus', filter.status)
+      .append('resolvedAddressStatus', filter.resolvedAddressStatus)
       .append('pageNumber', pagination.pageNumber)
       .append('pageSize', pagination.pageSize)
       .please();
@@ -138,6 +146,28 @@ export class DataService {
 
   deleteImportedPollingStationId(jobId: string, importedPollingStationId: number): Observable<any> {
     return this.http.delete<PaginatedResponse<ImportedPollingStation>>(`/api/admin/import/${jobId}/imported-polling-stations/${importedPollingStationId}`)
+      .pipe(catchError(this.errorService.handleError));
+  }
+
+  addImportedPollingStation(jobId: string, importedPollingStation: ImportedPollingStation, adddresses: AssignedAddress[]): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const data = {
+      ...importedPollingStation,
+      assignedAddresses: adddresses
+    }
+    return this.http.post(`/api/admin/import/${jobId}/imported-polling-stations`, data, { headers })
+      .pipe(catchError(this.errorService.handleError));
+  }
+
+  updateImportedPollingStation(jobId: string, pollingStationId: number, importedPollingStation: ImportedPollingStation, adddresses: AssignedAddress[]): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    const data = {
+      ...importedPollingStation,
+      assignedAddresses: adddresses
+    }
+    return this.http.post(`/api/admin/import/${jobId}/imported-polling-stations/${pollingStationId}`, data, { headers })
       .pipe(catchError(this.errorService.handleError));
   }
 }

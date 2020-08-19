@@ -15,5 +15,7 @@ namespace VotRomania.Models
         public string JobId { get; set; }
         public ResolvedAddressStatusType ResolvedAddressStatus { get; set; }
         public string? FailMessage { get; set; }
+
+        public AssignedAddressModel[]? AssignedAddresses;
     }
 }

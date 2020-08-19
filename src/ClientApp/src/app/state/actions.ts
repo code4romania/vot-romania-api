@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ApplicationData, StaticData, ImportedPollingStation, PaginatedResponse, ImportedPollingStationsFilter, PaginationDetails, ImportJobDetails } from '../services/data.service';
+import { ApplicationData, StaticData, ImportedPollingStation, PaginatedResponse, ImportedPollingStationsFilter, PaginationDetails, ImportJobDetails, AssignedAddress } from '../services/data.service';
 import { LocationDetails } from '../services/here-address.service';
 
 const typeCache: { [label: string]: boolean } = {};
@@ -43,6 +43,27 @@ export class ActionTypes {
     static readonly DELETE_IMPORTED_POLLING_STATION = actionType('[ImportedPollingStation] Delete');
     static readonly DELETE_IMPORTED_POLLING_STATION_DONE = actionType('[ImportedPollingStation] Delete success');
     static readonly DELETE_IMPORTED_POLLING_STATION_ERROR = actionType('[ImportedPollingStation] Delete failure');
+
+    static readonly CREATE_IMPORTED_POLLING_STATION = actionType('[ImportedPollingStation] Create');
+    static readonly CREATE_IMPORTED_POLLING_STATION_DONE = actionType('[ImportedPollingStation] Create success');
+    static readonly CREATE_IMPORTED_POLLING_STATION_ERROR = actionType('[ImportedPollingStation] Create failure');
+
+    static readonly UPDATE_IMPORTED_POLLING_STATION = actionType('[ImportedPollingStation] Update');
+    static readonly UPDATE_IMPORTED_POLLING_STATION_DONE = actionType('[ImportedPollingStation] Update success');
+    static readonly UPDATE_IMPORTED_POLLING_STATION_ERROR = actionType('[ImportedPollingStation] Update failure');
+
+    static readonly RESTART_JOB = actionType('[ImportJob] Restart job');
+    static readonly RESTART_JOB_DONE = actionType('[ImportJob] Restart job success');
+    static readonly RESTART_JOB_ERROR = actionType('[ImportJob] Restart job failure');
+
+    static readonly CANCEL_JOB = actionType('[ImportJob]  Cancel job');
+    static readonly CANCEL_JOB_DONE = actionType('[ImportJob] Cancel job success');
+    static readonly CANCEL_JOB_ERROR = actionType('[ImportJob] Cancel job failure');
+
+    static readonly FINISH_JOB = actionType('[ImportJob] Finish job');
+    static readonly FINISH_JOB_DONE = actionType('[ImportJob] Finish job success');
+    static readonly FINISH_JOB_ERROR = actionType('[ImportJob] Finish job failure');
+
 
     static readonly UPDATE_PAGINATION = actionType('[ImportedPollingStation] Update pagination');
     static readonly UPDATE_FILTER = actionType('[ImportedPollingStation] Update filter');
@@ -192,9 +213,86 @@ export class ResetFilter implements Action {
 
 export class DisplayToasterMessage implements Action {
     public readonly type = ActionTypes.DISPLAY_TOASTER_MESSAGE;
-    constructor(public text: string, public severity: 'success' | 'warning' | 'error') { }
+    constructor(public text: string, public severity: 'success' | 'warning') { }
 }
 
+
+export class CreateImportedPollingStationAction implements Action {
+    public readonly type = ActionTypes.CREATE_IMPORTED_POLLING_STATION;
+    constructor(public jobId: string, public importedPollingStation: ImportedPollingStation, public adddresses: AssignedAddress[]) { }
+}
+
+export class CreateImportedPollingStationSuccessAction implements Action {
+    public readonly type = ActionTypes.CREATE_IMPORTED_POLLING_STATION_DONE;
+    constructor() { }
+}
+
+export class CreateImportedPollingStationFailAction implements Action {
+    public readonly type = ActionTypes.CREATE_IMPORTED_POLLING_STATION_ERROR;
+    constructor(public error: any) { }
+}
+
+
+export class UpdateImportedPollingStationAction implements Action {
+    public readonly type = ActionTypes.UPDATE_IMPORTED_POLLING_STATION;
+    constructor(public jobId: string, public pollingStationId: number, public importedPollingStation: ImportedPollingStation, public adddresses: AssignedAddress[]) { }
+}
+
+export class UpdateImportedPollingStationSuccessAction implements Action {
+    public readonly type = ActionTypes.UPDATE_IMPORTED_POLLING_STATION_DONE;
+    constructor() { }
+}
+
+export class UpdateImportedPollingStationFailAction implements Action {
+    public readonly type = ActionTypes.UPDATE_IMPORTED_POLLING_STATION_ERROR;
+    constructor(public error: any) { }
+}
+
+export class CancelImportJobAction implements Action {
+    public readonly type = ActionTypes.CANCEL_JOB;
+    constructor(public jobId: string) { }
+}
+
+export class CancelImportJobSuccessAction implements Action {
+    public readonly type = ActionTypes.CANCEL_JOB_DONE;
+    constructor() { }
+}
+
+export class CancelImportJobFailAction implements Action {
+    public readonly type = ActionTypes.CANCEL_JOB_ERROR;
+    constructor(public error: any) { }
+}
+
+
+export class FinishImportJobAction implements Action {
+    public readonly type = ActionTypes.FINISH_JOB;
+    constructor(public jobId: string) { }
+}
+
+export class FinishImportJobSuccessAction implements Action {
+    public readonly type = ActionTypes.FINISH_JOB_DONE;
+    constructor() { }
+}
+
+export class FinishImportJobFailAction implements Action {
+    public readonly type = ActionTypes.FINISH_JOB_ERROR;
+    constructor(public error: any) { }
+}
+
+export class RestartImportJobAction implements Action {
+    public readonly type = ActionTypes.RESTART_JOB;
+    constructor(public jobId: string) { }
+}
+
+export class RestartImportJobSuccessAction implements Action {
+    public readonly type = ActionTypes.RESTART_JOB_DONE;
+    constructor() { }
+}
+
+export class RestartImportJobFailAction implements Action {
+    public readonly type = ActionTypes.RESTART_JOB_ERROR;
+    constructor(public error: any) { }
+}
 
 export type AppActions = ClearErrorAction
     | LoadDataAction
@@ -217,6 +315,25 @@ export type AppActions = ClearErrorAction
     | UpdateFilter
     | ResetFilter
     | UpdatePagination
-    | DisplayToasterMessage;
+    | DisplayToasterMessage
+    | CreateImportedPollingStationAction
+    | CreateImportedPollingStationFailAction
+    | CreateImportedPollingStationSuccessAction
+    | UpdateImportedPollingStationAction
+    | UpdateImportedPollingStationFailAction
+    | UpdateImportedPollingStationSuccessAction
+
+    | CancelImportJobAction
+    | CancelImportJobSuccessAction
+    | CancelImportJobFailAction
+
+    | RestartImportJobAction
+    | RestartImportJobSuccessAction
+    | RestartImportJobFailAction
+
+    | FinishImportJobAction
+    | FinishImportJobSuccessAction
+    | FinishImportJobFailAction
+    ;
 
 

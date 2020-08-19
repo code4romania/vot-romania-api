@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { ApplicationState } from '../state/reducers';
 import { getCurrentImportJobDetails } from '../state/selectors';
 import { ImportJobDetails } from '../services/data.service';
-import { LoadImportJobDetailsAction } from '../state/actions';
+import { LoadImportJobDetailsAction, RestartImportJobAction, FinishImportJobAction, CancelImportJobAction } from '../state/actions';
 
 @Component({
   selector: 'app-import-polling-stations',
@@ -27,5 +27,17 @@ export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
     if (jobDetails) {
       this.currentJob = jobDetails;
     }
+  }
+
+  restartCurrentJob():void{
+    this.store.dispatch(new RestartImportJobAction(this.currentJob.jobId));
+  }
+
+  finishImport():void{
+    this.store.dispatch(new FinishImportJobAction(this.currentJob.jobId));
+  }
+
+  cancelCurrentJob():void{
+    this.store.dispatch(new CancelImportJobAction(this.currentJob.jobId));
   }
 }

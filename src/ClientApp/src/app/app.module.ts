@@ -26,7 +26,7 @@ import { PollingStationSearchComponent } from './polling-station-search/polling-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HereAddressService } from './services/here-address.service';
 import { DataService } from './services/data.service';
-import { MatInputModule, MatPaginatorModule, MatTableModule, MatSelect, MatSelectModule } from '@angular/material';
+import { MatInputModule, MatPaginatorModule, MatTableModule, MatSelect, MatSelectModule, MatSnackBarModule, MatDialogModule, MatToolbarModule, MatGridListModule, MatFormFieldModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatSortModule } from '@angular/material';
 import { AuthEffects } from './state/auth';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
@@ -36,13 +36,26 @@ import { AdminContentComponent } from './admin-content/admin-content.component';
 import { ImportPollingStationsComponent } from './import-polling-stations/import-polling-stations.component';
 import { ImportedPollingStationsTableComponent } from './import-polling-stations/imported-polling-stations-table/imported-polling-stations-table.component';
 import { ToasterService } from './services/toaster.service';
+import { PollingStationEditorComponent } from './imported-polling-station-editor/polling-station-editor.component';
 
 const materialImports = [
   MatAutocompleteModule,
   MatInputModule,
   MatPaginatorModule,
   MatTableModule,
-  MatSelectModule
+  MatSelectModule,
+  MatSnackBarModule,
+  MatDialogModule,
+  MatToolbarModule,
+  MatGridListModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatSelectModule,
+  MatCheckboxModule,
+  MatNativeDateModule,
+  MatButtonModule,
+  MatIconModule,
+  MatSortModule,
 ];
 
 const appRoutes = [
@@ -74,6 +87,7 @@ const appRoutes = [
     AdminContentComponent,
     ImportPollingStationsComponent,
     ImportedPollingStationsTableComponent,
+    PollingStationEditorComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -93,6 +107,9 @@ const appRoutes = [
     HereAddressService,
     DataService,
     ToasterService
+  ],
+  entryComponents: [
+    PollingStationEditorComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -77,7 +77,7 @@ namespace VotRomania.Stores
                     PollingStationNumber = pollingStation.PollingStationNumber,
                     Locality = pollingStation.Locality,
                     Institution = pollingStation.Institution,
-                    //AssignedAddresses = pollingStation.PollingStationAddresses.Select(x => MapToAssignedAddresses(x)).ToList()
+                    //AssignedAddressesModel = pollingStation.PollingStationAddresses.Select(x => MapToAssignedAddresses(x)).ToList()
                 });
 
             return await pollingStationsQuery.SingleOrDefaultAsync();
@@ -101,21 +101,20 @@ namespace VotRomania.Stores
             return exceptionMessage;
         }
 
-        private static AssignedAddresses MapToAssignedAddresses(PollingStationAddressEntity pollingStationAssignedAddress)
+        private static AssignedAddressModel? MapToAssignedAddresses(PollingStationAddressEntity pollingStationAssignedAddress)
         {
             if (pollingStationAssignedAddress == null)
             {
                 return null;
             }
 
-            return new AssignedAddresses
+            return new AssignedAddressModel
             {
                 Id = pollingStationAssignedAddress.Id,
                 PollingStationId = pollingStationAssignedAddress.PollingStationId,
                 HouseNumbers = pollingStationAssignedAddress.HouseNumbers,
                 Remarks = pollingStationAssignedAddress.Remarks,
                 Street = pollingStationAssignedAddress.Street,
-                Locality = pollingStationAssignedAddress.Locality,
                 StreetCode = pollingStationAssignedAddress.StreetCode
             };
         }

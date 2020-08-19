@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -99,7 +98,6 @@ namespace VotRomania.CommandsHandlers
                     entity.PollingStationAddresses.Add(new PollingStationAddressEntity
                     {
                         HouseNumbers = assignedAddress.HouseNumbers,
-                        Locality = assignedAddress.Locality,
                         Remarks = assignedAddress.Remarks,
                         Street = assignedAddress.Street,
                         StreetCode = assignedAddress.StreetCode
@@ -135,10 +133,9 @@ namespace VotRomania.CommandsHandlers
                     {
                         do
                         {
-                            AssignedAddresses assignedAddress = new AssignedAddresses
+                            AssignedAddressModel assignedAddress = new AssignedAddressModel
                             {
                                 HouseNumbers = GetString(pollingStationsData.Rows[index][12]),
-                                Locality = GetString(pollingStationsData.Rows[index][9]),
                                 Remarks = GetString(pollingStationsData.Rows[index][13]),
                                 Street = GetString(pollingStationsData.Rows[index][11]),
                                 StreetCode = GetString(pollingStationsData.Rows[index][10]),
@@ -161,7 +158,7 @@ namespace VotRomania.CommandsHandlers
                             Locality = GetString(row[9]),
                             Institution = GetString(row[6]),
                             Address = GetString(row[7]),
-                            AssignedAddresses = new List<AssignedAddresses>()
+                            AssignedAddresses = new List<AssignedAddressModel>()
                         };
 
                         pollingStations.Add(currentPollingStation);

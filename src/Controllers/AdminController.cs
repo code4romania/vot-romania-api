@@ -147,6 +147,7 @@ namespace VotRomania.Controllers
 
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("import/{jobId:guid}/imported-polling-stations/{id}")]
         [SwaggerResponse(200, "Imported polling station details.", typeof(PagedResult<PollingStationModel>))]
         [SwaggerResponse(401)]
@@ -168,6 +169,7 @@ namespace VotRomania.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("import/{jobId:guid}/imported-polling-stations")]
         [SwaggerOperation(Summary = "Adds an imported polling station")]
         [SwaggerResponse(200, "Id of new imported polling station", typeof(int))]
@@ -186,6 +188,7 @@ namespace VotRomania.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("import/{jobId:guid}/imported-polling-stations/{id}")]
         [SwaggerOperation(Summary = "Updates an imported polling station")]
         [SwaggerResponse(200, "Latest data", typeof(void))]

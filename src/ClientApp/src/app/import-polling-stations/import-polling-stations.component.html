@@ -12,10 +12,10 @@
                     <p><b>File name:</b> {{currentJob.fileName}}</p>
                     <p><b>Status:</b> {{currentJob.status}}</p>
                 </div>
-                <div class="col">
-                    <button type="button" class="btn btn-danger btn-block">Cancel current job</button>
-                    <button type="button" class="btn btn-warning btn-block">Restart current job</button>
-                    <button type="button" class="btn btn-success btn-block">Finish import</button>
+                <div class="col-xs">
+                    <button type="button" class="btn btn-danger btn-block" (click)="cancelCurrentJob()">Cancel current job</button>
+                    <button type="button" class="btn btn-warning btn-block" (click)="restartCurrentJob()">Restart current job</button>
+                    <button type="button" class="btn btn-success btn-block" (click)="finishImport()">Finish import</button>
                 </div>
             </div>
         </div>

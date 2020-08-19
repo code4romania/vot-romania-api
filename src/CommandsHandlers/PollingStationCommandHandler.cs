@@ -1,10 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using MediatR;
 using VotRomania.Commands;
 using VotRomania.Models;
-using VotRomania.Queries;
 using VotRomania.Stores;
 
 namespace VotRomania.CommandsHandlers

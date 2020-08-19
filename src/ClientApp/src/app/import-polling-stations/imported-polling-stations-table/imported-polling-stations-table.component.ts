@@ -10,6 +10,8 @@ import { ApplicationState } from 'src/app/state/reducers';
 import { LoadImportedPollingStationsAction, DeleteImportedPollingStationAction, UpdatePagination, ResetFilter, UpdateFilter } from 'src/app/state/actions';
 import { getImportedPollingStations, getImportedPollingStationsTotal, getImportedPollingStationsLoading, getImportedPollingStationsError, getCurrentImportJobDetails, getCurrentImportedPollingStationsFilter as getImportedPollingStationsFilter } from 'src/app/state/selectors';
 import { get } from 'lodash';
+import { MatDialog } from '@angular/material';
+import { PollingStationEditorComponent } from 'src/app/imported-polling-station-editor/polling-station-editor.component';
 
 @Component({
   selector: 'app-imported-polling-stations-table',
@@ -42,7 +44,8 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
   private subscription: Subscription = new Subscription();
   currentJob: ImportJobDetails;
 
-  constructor(public store: Store<ApplicationState>) { }
+  constructor(public store: Store<ApplicationState>,
+    public dialog: MatDialog) { }
 
   public ngOnInit(): void {
     this.store.pipe(select(getImportedPollingStations)).subscribe(ps => this.initializeData(ps));
@@ -52,7 +55,7 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
 
     this.store.pipe(select(getImportedPollingStationsFilter)).subscribe(filter => this.filter = filter);
     this.store.pipe(select(getImportedPollingStationsTotal)).subscribe(total => this.importedPollingStationsTotal = total);
-    
+
     this.subscription.add(this.store.pipe(select(getImportedPollingStationsLoading)).subscribe(loading => {
       if (loading) {
         this.dataSource = new MatTableDataSource(this.noData);
@@ -65,14 +68,15 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
 
   public ngAfterViewInit(): void {
     this.subscription.add(merge(this.paginator.page).pipe(
-      map(()=>({
-        pageNumber: get(this.paginator, 'pageIndex'), 
+      map(() => ({
+        pageNumber: get(this.paginator, 'pageIndex'),
         pageSize: get(this.paginator, 'pageSize')
       })),
       tap(pagination => this.store.dispatch(new UpdatePagination(pagination)))
     ).subscribe());
   }
-  updateFilter(){
+
+  updateFilter() {
     this.store.dispatch(new UpdateFilter(this.filter))
   }
 
@@ -81,9 +85,8 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
     this.store.dispatch(new ResetFilter());
   }
 
-
   deleteImportedPollingStation(pollingStation: ImportedPollingStation) {
-    if (get(this.currentJob, 'jobId')) {
+    if (confirm("Are you sure you want to delete this polling station?")) {
       this.store.dispatch(new DeleteImportedPollingStationAction(
         this.currentJob.jobId,
         pollingStation.id
@@ -91,10 +94,16 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
     }
   }
 
-  editImportedPollingStation() {
+  editImportedPollingStation(pollingStation: ImportedPollingStation) {
+    this.dialog.open(PollingStationEditorComponent, {
+      data: {
+        pollingStation: pollingStation,
+        jobId: this.currentJob.jobId,
+      }
+    });
+
 
   }
-
 
   private initializeData(pollingStations: ImportedPollingStation[]): void {
     this.dataSource = new MatTableDataSource(pollingStations.length ? pollingStations : this.noData);
@@ -107,4 +116,9 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
   public retry(): void {
     this.store.dispatch(new LoadImportedPollingStationsAction());
   }
+
+  public addNewPollingStation(): void {
+    this.dialog.open(PollingStationEditorComponent, { data: { jobId: this.currentJob.jobId } });
+  }
+
 }

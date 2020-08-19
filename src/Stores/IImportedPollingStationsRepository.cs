@@ -73,8 +73,10 @@ namespace VotRomania.Stores
                     FailMessage = pollingStation.FailMessage,
                     Latitude = pollingStation.Latitude,
                     Longitude = pollingStation.Longitude,
-                    JobId = jobId.ToString()
+                    JobId = jobId.ToString(),
                 };
+                entity.AssignedAddresses = pollingStation.AssignedAddresses
+                    .Select(x => MapToAssignedAddresses(entity, x)).ToList();
 
                 await _context.ImportedPollingStations.AddAsync(entity);
                 await _context.SaveChangesAsync();
@@ -138,7 +140,16 @@ namespace VotRomania.Stores
                           Locality = pollingStation.Locality,
                           Institution = pollingStation.Institution,
                           JobId = pollingStation.JobId,
-                          ResolvedAddressStatus = pollingStation.ResolvedAddressStatus
+                          ResolvedAddressStatus = pollingStation.ResolvedAddressStatus,
+                          AssignedAddresses = pollingStation.AssignedAddresses.Select(x => new AssignedAddressModel()
+                          {
+                              HouseNumbers = x.HouseNumbers,
+                              Remarks = x.Remarks,
+                              Street = x.Street,
+                              PollingStationId = x.ImportedPollingStationId,
+                              StreetCode = x.StreetCode,
+                              Id = x.Id
+                          }).ToArray()
                       });
 
                   if (query != null)
@@ -189,10 +200,35 @@ namespace VotRomania.Stores
                 pollingStation.FailMessage = importedPollingStation.FailMessage;
                 pollingStation.JobId = jobId.ToString();
 
+
+                if (importedPollingStation.AssignedAddresses != null)
+                {
+                    if (pollingStation.AssignedAddresses != null)
+                    {
+                        _context.ImportedPollingStationAddresses.RemoveRange(pollingStation.AssignedAddresses);
+                    }
+
+                    pollingStation.AssignedAddresses = importedPollingStation.AssignedAddresses.Select(x => MapToAssignedAddresses(pollingStation, x)).ToList();
+                }
+
                 await _context.SaveChangesAsync();
             });
 
             return result;
+        }
+
+        private static ImportedPollingStationAddressEntity MapToAssignedAddresses(ImportedPollingStationEntity pollingStation, AssignedAddressModel assignedAddress)
+        {
+            return new ImportedPollingStationAddressEntity
+            {
+                Id = assignedAddress.Id,
+                ImportedPollingStationId = pollingStation.Id,
+                ImportedPollingStation = pollingStation,
+                HouseNumbers = assignedAddress.HouseNumbers,
+                Remarks = assignedAddress.Remarks,
+                Street = assignedAddress.Street,
+                StreetCode = assignedAddress.StreetCode
+            };
         }
 
         public async Task<Result<ImportedPollingStationModel>> GetImportedPollingStationById(Guid jobId, int importedPollingStationId)
@@ -267,7 +303,6 @@ namespace VotRomania.Stores
                     entity.AssignedAddresses.Add(new ImportedPollingStationAddressEntity
                     {
                         HouseNumbers = assignedAddress.HouseNumbers,
-                        Locality = assignedAddress.Locality,
                         Remarks = assignedAddress.Remarks,
                         Street = assignedAddress.Street,
                         StreetCode = assignedAddress.StreetCode

@@ -1,0 +1,27 @@
+.mat-form-field + .mat-form-field {
+  margin-left: 8px;
+}
+
+.mat-form-field {
+  width: 220px;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+form > * {
+  margin: 5px 0;
+}
+.mat-radio-button {
+  margin: 0 12px;
+}
+
+.mat-column-delete {
+  flex: none;
+  width: 50px;
+  align-items: center;
+}
+.btn {
+  margin: 5px;
+}

@@ -32,7 +32,6 @@ namespace VotRomania.Stores.Entities
     public class ImportedPollingStationAddressEntity
     {
         public int Id { get; set; }
-        public string? Locality { get; set; }
         public string? StreetCode { get; set; }
         public string? Street { get; set; }
         public string? HouseNumbers { get; set; }

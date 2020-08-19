@@ -18,7 +18,11 @@ import {
     DeleteImportedPollingStationAction,
     DeleteImportedPollingStationFailAction,
     DeleteImportedPollingStationSuccessAction,
-    DisplayToasterMessage
+    DisplayToasterMessage,
+    CreateImportedPollingStationAction,
+    CreateImportedPollingStationSuccessAction,
+    CreateImportedPollingStationFailAction,
+    UpdateImportedPollingStationAction
 } from './actions';
 import { Observable, of } from 'rxjs';
 import { mergeMap, map, catchError, switchMap, tap, withLatestFrom, filter, distinctUntilChanged } from 'rxjs/operators';
@@ -141,7 +145,31 @@ export class ApplicationEffects {
         switchMap(() => of(new LoadImportedPollingStationsAction()))
     );
 
-    @Effect({dispatch: false})
+    @Effect()
+    createImportedPollingStation$: Observable<Action> = this.actions$.pipe(
+        ofType<CreateImportedPollingStationAction>(ActionTypes.CREATE_IMPORTED_POLLING_STATION),
+        map((action) => ({ jobId: action.jobId, importedPollingStation: action.importedPollingStation, addresses: action.adddresses })),
+        mergeMap(({ jobId, importedPollingStation, addresses }) =>
+            this.dataService.addImportedPollingStation(jobId, importedPollingStation, addresses).pipe(
+                switchMap(() => [new CreateImportedPollingStationSuccessAction(), new LoadImportedPollingStationsAction(), new DisplayToasterMessage("Create successfull", 'success')]),
+                catchError(err => of(new CreateImportedPollingStationFailAction(err)))
+            )
+        )
+    );
+
+    @Effect()
+    updateImportedPollingStation$: Observable<Action> = this.actions$.pipe(
+        ofType<UpdateImportedPollingStationAction>(ActionTypes.UPDATE_IMPORTED_POLLING_STATION),
+        map((action) => ({ jobId: action.jobId, pollingStaionId: action.pollingStationId, importedPollingStation: action.importedPollingStation, addresses: action.adddresses })),
+        mergeMap(({ jobId, pollingStaionId, importedPollingStation, addresses }) =>
+            this.dataService.updateImportedPollingStation(jobId, pollingStaionId, importedPollingStation, addresses).pipe(
+                switchMap(() => [new CreateImportedPollingStationSuccessAction(), new LoadImportedPollingStationsAction(), new DisplayToasterMessage("Update successfull", 'success')]),
+                catchError(err => of(new CreateImportedPollingStationFailAction(err)))
+            )
+        )
+    );
+
+    @Effect({ dispatch: false })
     displayToasterMessage$: Observable<Action> = this.actions$.pipe(
         ofType<DisplayToasterMessage>(ActionTypes.DISPLAY_TOASTER_MESSAGE),
         tap((action: DisplayToasterMessage) => this.toasterService.show(action.text, action.severity))

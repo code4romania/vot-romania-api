@@ -2,8 +2,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using Microsoft.Extensions.Logging.Debug;
 using Microsoft.Extensions.Options;
 using VotRomania.Options;
 using VotRomania.Stores.Entities;
@@ -96,10 +94,6 @@ namespace VotRomania.Stores
                 entity.Property(m => m.Id).IsRequired();
                 entity.HasKey(m => m.Id);
                 entity.HasIndex(m => m.Id);
-
-                entity.Property(m => m.Locality)
-                      .HasColumnName("Locality")
-                      .IsRequired();
 
                 entity.Property(m => m.StreetCode)
                     .HasColumnName("StreetCode")
@@ -225,9 +219,6 @@ namespace VotRomania.Stores
                 entity.Property(m => m.Id).IsRequired();
                 entity.HasKey(m => m.Id);
                 entity.HasIndex(m => m.Id);
-
-                entity.Property(m => m.Locality)
-                    .HasColumnName("Locality");
 
                 entity.Property(m => m.StreetCode)
                     .HasColumnName("StreetCode");

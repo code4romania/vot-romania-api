@@ -18,11 +18,13 @@ using Microsoft.OpenApi.Models;
 using VotRomania.Extensions;
 using VotRomania.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Newtonsoft.Json;
 using VotRomania.Providers;
 using VotRomania.Services;
 using VotRomania.Services.Location;
 using VotRomania.Services.Location.HereMaps;
 using VotRomania.Stores;
+using Newtonsoft.Json.Converters;
 
 namespace VotRomania
 {
@@ -97,10 +99,14 @@ namespace VotRomania
                     .RequireClaim("scope", "polling-stations"));
             });
 
+            services.AddControllersWithViews().
+                AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                });
 
-            services.AddControllersWithViews();
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
 
             services.AddSwaggerGen(c =>
             {

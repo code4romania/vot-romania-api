@@ -32,7 +32,8 @@ namespace VotRomania.CommandsHandlers
                 ResolvedAddressStatus = request.PollingStation.ResolvedAddressStatus ?? ResolvedAddressStatusType.NotProcessed,
                 Latitude = request.PollingStation.Latitude,
                 Longitude = request.PollingStation.Longitude,
-                JobId = request.JobId.ToString()
+                JobId = request.JobId.ToString(),
+                AssignedAddresses = request.PollingStation.AssignedAddresses
             };
 
             return await _repository.AddPollingStation(request.JobId, pollingStation);
@@ -58,10 +59,11 @@ namespace VotRomania.CommandsHandlers
                 Longitude = request.PollingStation.Longitude,
                 ResolvedAddressStatus = request.PollingStation.ResolvedAddressStatus ?? ResolvedAddressStatusType.NotProcessed,
                 FailMessage = request.PollingStation.FailMessage,
-                JobId = request.JobId.ToString()
+                JobId = request.JobId.ToString(),
+                AssignedAddresses = request.PollingStation.AssignedAddresses
             };
-            return await _repository.UpdateImportedPollingStation(request.JobId, pollingStation);
 
+            return await _repository.UpdateImportedPollingStation(request.JobId, pollingStation);
         }
     }
 }

@@ -27,7 +27,7 @@
 
     <mat-form-field class="filter-field">
       <mat-label>Status</mat-label>
-      <mat-select [(value)]="filter.status">
+      <mat-select [(value)]="filter.resolvedAddressStatus">
         <mat-option>All</mat-option>
         <mat-option value="notProcessed">Not processed</mat-option>
         <mat-option value="success">Success</mat-option>
@@ -37,14 +37,17 @@
     </mat-form-field>
   </div>
 
-  <div class="d-flex flex-row-reverse">
-    <button class="btn btn-outline-primary filter-field" type="button" (click)="updateFilter()">
-      <i class="fas fa-search"></i>
-    </button>
+  <div class="action-group">
+    <button class="btn btn-outline-primary filter-field" (click)="addNewPollingStation()">Add</button>
+    <div>
+      <button class="btn btn-outline-primary filter-field" type="button" (click)="updateFilter()">
+        <i class="fas fa-search"></i>
+      </button>
 
-    <button class="btn btn-outline-danger filter-field" type="button" (click)="resetFilter()">
-      <i class="fas fa-times"></i>
-    </button>
+      <button class="btn btn-outline-danger filter-field" type="button" (click)="resetFilter()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
   </div>
 
   <div class="table-container">
@@ -101,7 +104,6 @@
         </td>
       </ng-container>
 
-
       <ng-container matColumnDef="noData">
         <td mat-cell class="dc-label no-data-cell" *matCellDef="let pollingStation"
           [attr.colspan]="displayedColumns.length">
@@ -121,7 +123,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></tr>
       <ng-container *ngIf="importedPollingStationsTotal && !loading">
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="customer-row"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="ps-row"></tr>
       </ng-container>
       <ng-container *ngIf="!importedPollingStationsTotal || loading">
         <tr mat-row *matRowDef="let row; columns: ['noData'];" class="no-data-row"></tr>

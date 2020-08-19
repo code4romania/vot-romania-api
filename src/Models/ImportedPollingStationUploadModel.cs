@@ -14,6 +14,7 @@ namespace VotRomania.Models
         public double? Longitude { get; set; }
         public ResolvedAddressStatusType? ResolvedAddressStatus { get; set; }
         public string? FailMessage { get; set; }
+        public AssignedAddressModel[]? AssignedAddresses { get; set; }
 
 
     }

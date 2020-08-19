@@ -36,7 +36,7 @@ const DEFAULT_IPS_FILTER: ImportedPollingStationsFilter = {
     institution: '',
     locality: '',
     pollingStationNumber: '',
-    status: ''
+    resolvedAddressStatus: ''
 };
 
 const DEFAULT_PAGINATION: PaginationDetails = {
