@@ -22,6 +22,7 @@ namespace VotRomania.CommandsHandlers
         IRequestHandler<StartImportNewPollingStations, Result<Guid>>,
         IRequestHandler<CancelImportJob, Result>,
         IRequestHandler<CompleteImportJob, Result>,
+        IRequestHandler<RestartImportJob, Result>,
         IRequestHandler<GetImportJobStatus, Result<JobStatusModel>>,
         IRequestHandler<GetCurrentImportJob, Result<JobStatusModel>>
 
@@ -222,7 +223,6 @@ namespace VotRomania.CommandsHandlers
         }
 
 
-
         // TODO: if we will use different db move this operation to a stored procedure
         private async Task<Result> AddImportedPollingStationsToPollingStations(Guid jobId, CancellationToken cancellationToken)
         {
@@ -248,6 +248,11 @@ namespace VotRomania.CommandsHandlers
         public async Task<Result<JobStatusModel>> Handle(GetCurrentImportJob request, CancellationToken cancellationToken)
         {
             return await _importJobsRepository.GetCurrentImportJob();
+        }
+
+        public Task<Result> Handle(RestartImportJob request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,10 +8,7 @@ import { isEqual } from 'lodash';
 export interface ImportPollingStationsState {
     importedPollingStationsPagination: PaginationDetails;
     importedPollingStationsFilter: ImportedPollingStationsFilter;
-    errorMessage: string;
-    hasError: boolean;
     importJobDetails: ImportJobDetails;
-    isLoading: boolean;
     importedPollingStations: PaginatedResponse<ImportedPollingStation>;
 }
 
@@ -57,9 +54,6 @@ const initialState: ApplicationState = {
     import: {
         importJobDetails: undefined,
         importedPollingStations: undefined,
-        errorMessage: '',
-        hasError: false,
-        isLoading: true,
         importedPollingStationsFilter: DEFAULT_IPS_FILTER,
         importedPollingStationsPagination: DEFAULT_PAGINATION
     }
@@ -102,7 +96,7 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
         case ActionTypes.UPDATE_DATA_ERROR:
             return {
                 ...state,
-                error: action.payload
+                error: action.error.detail
             };
 
         case AuthActionTypes.LOGIN_SUCCEEDED:
@@ -133,17 +127,13 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
             };
 
         case ActionTypes.LOAD_IMPORT_JOB_DETAILS_DONE:
-            if (action.importJobDetails) {
-                return {
-                    ...state,
-                    import: {
-                        ...state.import,
-                        importJobDetails: action.importJobDetails
-                    },
-                };
-            } else {
-                return state;
-            }
+            return {
+                ...state,
+                import: {
+                    ...state.import,
+                    importJobDetails: action.importJobDetails
+                },
+            };
 
         case ActionTypes.LOAD_IMPORT_JOB_DETAILS_ERROR:
             return {
@@ -151,7 +141,6 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 import: {
                     ...state.import,
                     importJobDetails: undefined,
-                    errorMessage: action.error
                 },
             };
 
@@ -161,9 +150,6 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 import: {
                     ...state.import,
                     importedPollingStations: action.payload,
-                    errorMessage: '',
-                    isLoading: false,
-                    hasError: false,
                 },
             };
         case ActionTypes.LOAD_IPS_ERROR:
@@ -172,9 +158,6 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 import: {
                     ...state.import,
                     importedPollingStations: undefined,
-                    errorMessage: action.error,
-                    isLoading: false,
-                    hasError: true,
                 },
             };
 
@@ -200,14 +183,14 @@ export function appStateReducer(state: ApplicationState = initialState, action: 
                 }
             }
 
-            case ActionTypes.UPDATE_PAGINATION:
-                return {
-                    ...state,
-                    import: {
-                        ...state.import,
-                        importedPollingStationsPagination: action.payload
-                    }
+        case ActionTypes.UPDATE_PAGINATION:
+            return {
+                ...state,
+                import: {
+                    ...state.import,
+                    importedPollingStationsPagination: action.payload
                 }
+            }
         default:
             return state;
     }

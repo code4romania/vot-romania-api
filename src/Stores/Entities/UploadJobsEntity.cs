@@ -23,6 +23,6 @@ namespace VotRomania.Stores.Entities
         [EnumMember(Value = "started")] Started = 2,
         [EnumMember(Value = "finished")] Finished = 3,
         [EnumMember(Value = "canceled")] Canceled = 4,
-        [EnumMember(Value = "imported")] Imported = 4,
+        [EnumMember(Value = "imported")] Imported = 5,
     }
 }

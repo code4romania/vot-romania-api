@@ -107,14 +107,6 @@
       <ng-container matColumnDef="noData">
         <td mat-cell class="dc-label no-data-cell" *matCellDef="let pollingStation"
           [attr.colspan]="displayedColumns.length">
-          <ng-container *ngIf="!(error$ | async) && !loading">
-            <span class="dc-content">No imported polling stations</span>
-          </ng-container>
-          <ng-container *ngIf="(error$ | async) && !loading">
-            <span class="dc-label">System Failure</span>
-            <span class="dc-content">Error</span>
-            <span class="retry" (click)="retry()">Retry</span>
-          </ng-container>
           <ng-container *ngIf="loading">
             <span class="dc-label">Retrieving data...</span>
           </ng-container>

@@ -94,8 +94,17 @@ export interface ImportJobDetails {
   status: string;
 }
 
+export interface ProblemDetails {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class DataService {
+
   constructor(private http: HttpClient,
     private authService: AuthService,
     private errorService: ErrorService) { }
@@ -168,6 +177,30 @@ export class DataService {
       assignedAddresses: adddresses
     }
     return this.http.post(`/api/admin/import/${jobId}/imported-polling-stations/${pollingStationId}`, data, { headers })
+      .pipe(catchError(this.errorService.handleError));
+  }
+
+  restartJob(jobId: string): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    return this.http.post(`/api/admin/import/restart-job/${jobId}`, { headers })
+      .pipe(catchError(this.errorService.handleError));
+  }
+
+  cancelJob(jobId: string): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    return this.http.post(`/api/admin/import/cancel-job/${jobId}`, { headers })
+      .pipe(catchError(this.errorService.handleError));
+  }
+
+  completeJob(jobId: string): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    return this.http.post(`/api/admin/import/complete-job/${jobId}`, { headers })
       .pipe(catchError(this.errorService.handleError));
   }
 }

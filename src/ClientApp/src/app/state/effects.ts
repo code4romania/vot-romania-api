@@ -22,9 +22,19 @@ import {
     CreateImportedPollingStationAction,
     CreateImportedPollingStationSuccessAction,
     CreateImportedPollingStationFailAction,
-    UpdateImportedPollingStationAction
+    UpdateImportedPollingStationAction,
+    RestartImportJobAction,
+    RestartImportJobSuccessAction,
+    RestartImportJobFailAction,
+    CancelImportJobFailAction,
+    CancelImportJobSuccessAction,
+    CancelImportJobAction,
+    FinishImportJobAction,
+    FinishImportJobSuccessAction,
+    FinishImportJobFailAction,
+    FailedAction
 } from './actions';
-import { Observable, of } from 'rxjs';
+import { Observable, of, empty } from 'rxjs';
 import { mergeMap, map, catchError, switchMap, tap, withLatestFrom, filter, distinctUntilChanged } from 'rxjs/operators';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -34,7 +44,7 @@ import { HereAddressService } from '../services/here-address.service';
 import { Router } from '@angular/router';
 import { ApplicationState } from './reducers';
 import { getCurrentImportedPollingStationsFilter, getCurrentImportJobDetails, getCurrentImportedPollingStationsPagination } from './selectors';
-import { isEqual } from 'lodash';
+import { isEqual, setWith, merge } from 'lodash';
 import { ToasterService } from '../services/toaster.service';
 
 @Injectable({ providedIn: 'root' })
@@ -107,7 +117,7 @@ export class ApplicationEffects {
             this.store$.select(getCurrentImportedPollingStationsFilter),
             this.store$.select(getCurrentImportedPollingStationsPagination)
         ),
-        filter(([, jobDetails,]) => jobDetails !== undefined && jobDetails.jobId !== ''),
+        filter(([, jobDetails,]) => jobDetails ? true : false),
         switchMap(([, jobDetails, filter, pagination]) =>
             this.dataService.getImportedPollingStations(jobDetails.jobId, filter, pagination).pipe(
                 map((response: PaginatedResponse<ImportedPollingStation>) => new LoadImportedPollingStationsSuccessAction(response)),
@@ -163,8 +173,44 @@ export class ApplicationEffects {
         map((action) => ({ jobId: action.jobId, pollingStaionId: action.pollingStationId, importedPollingStation: action.importedPollingStation, addresses: action.adddresses })),
         mergeMap(({ jobId, pollingStaionId, importedPollingStation, addresses }) =>
             this.dataService.updateImportedPollingStation(jobId, pollingStaionId, importedPollingStation, addresses).pipe(
-                switchMap(() => [new CreateImportedPollingStationSuccessAction(), new LoadImportedPollingStationsAction(), new DisplayToasterMessage("Update successfull", 'success')]),
+                switchMap(() => [new CreateImportedPollingStationSuccessAction(), new LoadImportedPollingStationsAction(), new DisplayToasterMessage("Create successfull", 'success')]),
                 catchError(err => of(new CreateImportedPollingStationFailAction(err)))
+            )
+        )
+    );
+
+    @Effect()
+    restartCurrentJob$: Observable<Action> = this.actions$.pipe(
+        ofType<RestartImportJobAction>(ActionTypes.RESTART_JOB),
+        map((action) => ({ jobId: action.jobId })),
+        mergeMap(({ jobId }) =>
+            this.dataService.restartJob(jobId).pipe(
+                switchMap(() => [new RestartImportJobSuccessAction(), new LoadImportJobDetailsAction(), new DisplayToasterMessage("Restart successfull", 'success')]),
+                catchError(err => of(new RestartImportJobFailAction(err)))
+            )
+        )
+    );
+
+    @Effect()
+    cancelCurrentJob$: Observable<Action> = this.actions$.pipe(
+        ofType<CancelImportJobAction>(ActionTypes.CANCEL_JOB),
+        map((action) => ({ jobId: action.jobId })),
+        mergeMap(({ jobId }) =>
+            this.dataService.cancelJob(jobId).pipe(
+                switchMap(() => [new CancelImportJobSuccessAction(), new LoadImportJobDetailsAction(), new DisplayToasterMessage("Cancel successfull", 'success')]),
+                catchError(err => of(new CancelImportJobFailAction(err)))
+            )
+        )
+    );
+
+    @Effect()
+    finishCurrentJob$: Observable<Action> = this.actions$.pipe(
+        ofType<FinishImportJobAction>(ActionTypes.FINISH_JOB),
+        map((action) => ({ jobId: action.jobId })),
+        mergeMap(({ jobId }) =>
+            this.dataService.completeJob(jobId).pipe(
+                switchMap(() => [new FinishImportJobSuccessAction(), new LoadImportJobDetailsAction(), new DisplayToasterMessage("Finish successfull", 'success')]),
+                catchError(err => of(new CancelImportJobFailAction(err)))
             )
         )
     );
@@ -174,4 +220,20 @@ export class ApplicationEffects {
         ofType<DisplayToasterMessage>(ActionTypes.DISPLAY_TOASTER_MESSAGE),
         tap((action: DisplayToasterMessage) => this.toasterService.show(action.text, action.severity))
     );
+
+    @Effect({ dispatch: false })
+    displayErrorToasterMessage$: Observable<FailedAction> = this.actions$.pipe(
+        ofType<FailedAction>(
+            ActionTypes.LOAD_IPS_ERROR,
+            ActionTypes.LOAD_IMPORT_JOB_DETAILS_ERROR,
+            ActionTypes.DELETE_IMPORTED_POLLING_STATION_ERROR,
+            ActionTypes.CREATE_IMPORTED_POLLING_STATION_ERROR ,
+            ActionTypes.UPDATE_IMPORTED_POLLING_STATION_ERROR,
+            ActionTypes.RESTART_JOB_ERROR,
+            ActionTypes.CANCEL_JOB_ERROR,
+            ActionTypes.FINISH_JOB_ERROR
+        ),
+        tap(details => {this.toasterService.show(details.error.detail , 'warning'); return empty();})
+    );
 }
+

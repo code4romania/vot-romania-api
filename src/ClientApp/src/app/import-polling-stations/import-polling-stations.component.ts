@@ -24,9 +24,7 @@ export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
 
 
   initializeData(jobDetails: ImportJobDetails): void {
-    if (jobDetails) {
-      this.currentJob = jobDetails;
-    }
+    this.currentJob = jobDetails;
   }
 
   restartCurrentJob():void{

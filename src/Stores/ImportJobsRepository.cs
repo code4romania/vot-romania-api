@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Http;
@@ -127,7 +128,9 @@ namespace VotRomania.Stores
             var result = await Result.Try(async () =>
             {
                 var job = await _context.ImportJobs
-                    .FirstOrDefaultAsync(x => x.JobStatus == JobStatus.NotStarted || x.JobStatus == JobStatus.Started || x.JobStatus == JobStatus.Finished);
+                    .Where(x => x.JobStatus == JobStatus.NotStarted || x.JobStatus == JobStatus.Started ||
+                                x.JobStatus == JobStatus.Finished)
+                    .FirstOrDefaultAsync();
 
                 if (job == null)
                 {

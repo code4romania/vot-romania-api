@@ -8,7 +8,7 @@ import { tap, map } from 'rxjs/operators';
 import { ImportedPollingStation, ImportJobDetails, ImportedPollingStationsFilter } from 'src/app/services/data.service';
 import { ApplicationState } from 'src/app/state/reducers';
 import { LoadImportedPollingStationsAction, DeleteImportedPollingStationAction, UpdatePagination, ResetFilter, UpdateFilter } from 'src/app/state/actions';
-import { getImportedPollingStations, getImportedPollingStationsTotal, getImportedPollingStationsLoading, getImportedPollingStationsError, getCurrentImportJobDetails, getCurrentImportedPollingStationsFilter as getImportedPollingStationsFilter } from 'src/app/state/selectors';
+import { getImportedPollingStations, getImportedPollingStationsTotal, getCurrentImportJobDetails, getCurrentImportedPollingStationsFilter as getImportedPollingStationsFilter } from 'src/app/state/selectors';
 import { get } from 'lodash';
 import { MatDialog } from '@angular/material';
 import { PollingStationEditorComponent } from 'src/app/imported-polling-station-editor/polling-station-editor.component';
@@ -39,7 +39,6 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
   public importedPollingStationsTotal: number;
   public noData: ImportedPollingStation[] = [];
   public loading: boolean;
-  public error$: Observable<{ hasError: boolean, errorMessage: string }>;
   public filter: ImportedPollingStationsFilter;
   private subscription: Subscription = new Subscription();
   currentJob: ImportJobDetails;
@@ -56,14 +55,6 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
     this.store.pipe(select(getImportedPollingStationsFilter)).subscribe(filter => this.filter = filter);
     this.store.pipe(select(getImportedPollingStationsTotal)).subscribe(total => this.importedPollingStationsTotal = total);
 
-    this.subscription.add(this.store.pipe(select(getImportedPollingStationsLoading)).subscribe(loading => {
-      if (loading) {
-        this.dataSource = new MatTableDataSource(this.noData);
-      }
-      this.loading = loading;
-    }));
-
-    this.error$ = this.store.pipe(select(getImportedPollingStationsError));
   }
 
   public ngAfterViewInit(): void {

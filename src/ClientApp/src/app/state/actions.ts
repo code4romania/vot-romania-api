@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { ApplicationData, StaticData, ImportedPollingStation, PaginatedResponse, ImportedPollingStationsFilter, PaginationDetails, ImportJobDetails, AssignedAddress } from '../services/data.service';
+import { ApplicationData, StaticData, ImportedPollingStation, PaginatedResponse, ImportedPollingStationsFilter, PaginationDetails, ImportJobDetails, AssignedAddress, ProblemDetails } from '../services/data.service';
 import { LocationDetails } from '../services/here-address.service';
 
 const typeCache: { [label: string]: boolean } = {};
@@ -35,7 +35,6 @@ export class ActionTypes {
     static readonly LOAD_IPS_DONE = actionType('[ImportedPollingStations] Load success');
     static readonly LOAD_IPS_ERROR = actionType('[ImportedPollingStations] Load failure');
 
-
     static readonly LOAD_IMPORT_JOB_DETAILS = actionType('[ImportJobDetails] Loading');
     static readonly LOAD_IMPORT_JOB_DETAILS_DONE = actionType('[ImportDetails] Load success');
     static readonly LOAD_IMPORT_JOB_DETAILS_ERROR = actionType('[ImportDetails] Load failure');
@@ -64,13 +63,21 @@ export class ActionTypes {
     static readonly FINISH_JOB_DONE = actionType('[ImportJob] Finish job success');
     static readonly FINISH_JOB_ERROR = actionType('[ImportJob] Finish job failure');
 
-
     static readonly UPDATE_PAGINATION = actionType('[ImportedPollingStation] Update pagination');
     static readonly UPDATE_FILTER = actionType('[ImportedPollingStation] Update filter');
     static readonly RESET_FILTER = actionType('[ImportedPollingStation] Reset filter');
 
     static readonly DISPLAY_TOASTER_MESSAGE = actionType('[ToasterService] Show message');
 }
+
+export interface FailedAction extends Action{
+    error: ProblemDetails;
+}
+
+export interface SuccessAction extends Action{
+    message: string;
+}
+
 
 export class ClearErrorAction implements Action {
     readonly type = ActionTypes.CLEAR_ERROR;
@@ -80,9 +87,9 @@ export class LoadDataAction implements Action {
     readonly type = ActionTypes.LOAD_DATA;
 }
 
-export class LoadErrorAction implements Action {
+export class LoadErrorAction implements FailedAction {
     readonly type = ActionTypes.LOAD_ERROR;
-    constructor(public payload: string) { }
+    constructor(public error: ProblemDetails) { }    ;
 }
 
 export class LoadDataDoneAction implements Action {
@@ -114,11 +121,9 @@ export class UpdateDataAction implements Action {
     }
 }
 
-export class UpdateDataErrorAction implements Action {
+export class UpdateDataErrorAction implements FailedAction {
     readonly type = ActionTypes.UPDATE_DATA_ERROR;
-    constructor(public payload: string) {
-        this.payload = payload;
-    }
+    constructor(public error: ProblemDetails) {}
 }
 
 export class UpdateDataDoneAction implements Action {
@@ -140,9 +145,9 @@ export class LoadLocations implements Action {
     constructor(public locationId: string) { }
 }
 
-export class LoadLocationError implements Action {
+export class LoadLocationError implements FailedAction {
     readonly type = ActionTypes.LOAD_LOCATIONS_ERROR;
-    constructor(public error: any) { }
+    constructor(public error: ProblemDetails) { }
 }
 
 export class LoadLocationDone implements Action {
@@ -160,9 +165,9 @@ export class LoadImportedPollingStationsSuccessAction implements Action {
     constructor(public payload: PaginatedResponse<ImportedPollingStation>) { }
 }
 
-export class LoadImportedPollingStationsFailAction implements Action {
+export class LoadImportedPollingStationsFailAction implements FailedAction {
     public readonly type = ActionTypes.LOAD_IPS_ERROR;
-    constructor(public error: any) { }
+    constructor(public error: ProblemDetails) { }
 }
 
 export class LoadImportJobDetailsAction implements Action {
@@ -175,9 +180,9 @@ export class LoadImportJobDetailsSuccessAction implements Action {
     constructor(public importJobDetails: ImportJobDetails) { }
 }
 
-export class LoadImportJobDetailsFailAction implements Action {
+export class LoadImportJobDetailsFailAction implements FailedAction {
     public readonly type = ActionTypes.LOAD_IMPORT_JOB_DETAILS_ERROR;
-    constructor(public error: any) { }
+    constructor(public error: ProblemDetails) { }
 }
 
 export class DeleteImportedPollingStationAction implements Action {
@@ -190,9 +195,9 @@ export class DeleteImportedPollingStationSuccessAction implements Action {
     constructor() { }
 }
 
-export class DeleteImportedPollingStationFailAction implements Action {
+export class DeleteImportedPollingStationFailAction implements FailedAction {
     public readonly type = ActionTypes.DELETE_IMPORTED_POLLING_STATION_ERROR;
-    constructor(public error: any) { }
+    constructor(public error: ProblemDetails) { }
 }
 
 
@@ -227,9 +232,9 @@ export class CreateImportedPollingStationSuccessAction implements Action {
     constructor() { }
 }
 
-export class CreateImportedPollingStationFailAction implements Action {
+export class CreateImportedPollingStationFailAction implements FailedAction {
     public readonly type = ActionTypes.CREATE_IMPORTED_POLLING_STATION_ERROR;
-    constructor(public error: any) { }
+    constructor(public error: ProblemDetails) { }
 }
 
 
@@ -243,9 +248,9 @@ export class UpdateImportedPollingStationSuccessAction implements Action {
     constructor() { }
 }
 
-export class UpdateImportedPollingStationFailAction implements Action {
+export class UpdateImportedPollingStationFailAction implements FailedAction {
     public readonly type = ActionTypes.UPDATE_IMPORTED_POLLING_STATION_ERROR;
-    constructor(public error: any) { }
+    constructor(public error: ProblemDetails) { }
 }
 
 export class CancelImportJobAction implements Action {
@@ -258,9 +263,9 @@ export class CancelImportJobSuccessAction implements Action {
     constructor() { }
 }
 
-export class CancelImportJobFailAction implements Action {
+export class CancelImportJobFailAction implements FailedAction {
     public readonly type = ActionTypes.CANCEL_JOB_ERROR;
-    constructor(public error: any) { }
+    constructor(public error: ProblemDetails) { }
 }
 
 
@@ -274,9 +279,9 @@ export class FinishImportJobSuccessAction implements Action {
     constructor() { }
 }
 
-export class FinishImportJobFailAction implements Action {
+export class FinishImportJobFailAction implements FailedAction {
     public readonly type = ActionTypes.FINISH_JOB_ERROR;
-    constructor(public error: any) { }
+    constructor(public error: ProblemDetails) { }
 }
 
 export class RestartImportJobAction implements Action {
@@ -289,9 +294,9 @@ export class RestartImportJobSuccessAction implements Action {
     constructor() { }
 }
 
-export class RestartImportJobFailAction implements Action {
+export class RestartImportJobFailAction implements FailedAction {
     public readonly type = ActionTypes.RESTART_JOB_ERROR;
-    constructor(public error: any) { }
+    constructor(public error: ProblemDetails) { }
 }
 
 export type AppActions = ClearErrorAction

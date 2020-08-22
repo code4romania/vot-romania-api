@@ -86,8 +86,8 @@ namespace VotRomania.Controllers
 
         // TODO: remove anonymous
         [AllowAnonymous]
-        [HttpGet]
-        [Route("import/cancel-job")]
+        [HttpPost]
+        [Route("import/cancel-job/{jobId:guid}")]
         [SwaggerOperation(Summary = "Cancels a specific job")]
         [SwaggerResponse(200, "Successfully cancelled a job", typeof(void))]
         [SwaggerResponse(500, "Something went wrong when cancelling job.", typeof(ProblemDetails))]
@@ -104,14 +104,32 @@ namespace VotRomania.Controllers
 
         // TODO: remove anonymous
         [AllowAnonymous]
-        [HttpGet, DisableRequestSizeLimit]
-        [Route("import/complete-job")]
+        [HttpPost]
+        [Route("import/complete-job/{jobId:guid}")]
         [SwaggerOperation(Summary = "Completes current job", Description = "Please note that this operations will add imported polling stations in main polling stations table and remove old ones! Operation will fail if job is not completed and there are some polling stations with unresolved addresses.")]
         [SwaggerResponse(200, "Successfully completes import job", typeof(void))]
         [SwaggerResponse(500, "Something went wrong when completing job.", typeof(ProblemDetails))]
         public async Task<IActionResult> CompleteJob(Guid jobId)
         {
             var result = await _mediator.Send(new CompleteImportJob(jobId));
+            if (result.IsSuccess)
+            {
+                return Ok();
+            }
+
+            return Problem(result.Error);
+        }
+
+        // TODO: remove anonymous
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("import/restart-job/{jobId:guid}")]
+        [SwaggerOperation(Summary = "Restarts job", Description = "Restarts job")]
+        [SwaggerResponse(200, "Successfully restarted job", typeof(void))]
+        [SwaggerResponse(500, "Something went wrong when restarting job.", typeof(ProblemDetails))]
+        public async Task<IActionResult> RestartJob(Guid jobId)
+        {
+            var result = await _mediator.Send(new RestartImportJob(jobId));
             if (result.IsSuccess)
             {
                 return Ok();

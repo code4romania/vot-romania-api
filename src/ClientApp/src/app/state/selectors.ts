@@ -50,15 +50,6 @@ export const getImportedPollingStations = createSelector(
     state => get(state.import.importedPollingStations, 'results', [])
 );
 
-export const getImportedPollingStationsError = createSelector(
-    getApplicationState,
-    state => ({ hasError: state.import.hasError, errorMessage: state.import.errorMessage })
-);
-
-export const getImportedPollingStationsLoading = createSelector(
-    getApplicationState,
-    state => state.import.isLoading
-);
 
 export const getImportedPollingStationsTotal = createSelector(
     getApplicationState,

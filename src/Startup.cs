@@ -209,7 +209,7 @@ namespace VotRomania
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseProblemDetails();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
