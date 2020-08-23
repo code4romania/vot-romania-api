@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
-import { throwError, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { ErrorService } from './error.service';
@@ -22,6 +22,13 @@ export interface StaticData {
   votersGuide: VotingGuide;
 }
 
+export interface AssignedAddress {
+  houseNumbers: string;
+  remarks: string;
+  street: string;
+  streetCode: string;
+}
+
 export interface PollingStation {
   id: number;
   latitude: number;
@@ -31,7 +38,7 @@ export interface PollingStation {
   pollingStationNumber: string;
   institution: string;
   address: string;
-  assignedAddresses: string[];
+  assignedAddresses: AssignedAddress[];
 }
 
 export interface PollingStationGroup {
