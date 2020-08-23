@@ -6,6 +6,11 @@
 .centered-items {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  p{
+    margin:0;
+  }
 }
 
 .map {
