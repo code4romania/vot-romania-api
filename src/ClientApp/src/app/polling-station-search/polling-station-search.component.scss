@@ -6,6 +6,12 @@
 .centered-items {
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  p {
+    margin:0;
+  }
 }
 
 .map {
@@ -62,20 +68,4 @@
       }
     }
 
-}
-
-.ps-list{
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  flex-flow: row wrap;
-  justify-content: space-around;
-
-  .ps-item{
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    max-width: 45%;
-  }
 }
