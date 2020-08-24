@@ -34,22 +34,22 @@
     <div class="centered-items mt-3">
       <p>Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este secția dedicată unde poți vota:</p>
     </div>
-    <div class="row">
+    <div class="ps-list">
       <app-polling-station-card-info [pollingStation]="pollingStations[0]"
                                      [distance]="1"
                                      [lightTheme]="true"
-                                     class="col-6">
+                                     class="ps-item">
       </app-polling-station-card-info>
     </div>
     <div class="centered-items mt-3">
       <p>Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș. Cele mai apropiate secții de tine sunt:</p>
     </div>
-    <div class="row">
+    <div class="ps-list">
       <app-polling-station-card-info *ngFor="let pollingStation of pollingStations | slice:1"
                                      [pollingStation]="pollingStation"
                                      [lightTheme]="false"
                                      [distance]="1"
-                                     class="col-md-6">
+                                     class="ps-item">
       </app-polling-station-card-info>
     </div>
   </div>
