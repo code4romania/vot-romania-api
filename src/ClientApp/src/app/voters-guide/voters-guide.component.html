@@ -1,7 +1,7 @@
 <ng-container *ngIf="data">
   <div class="container wrapper">
     <p>{{ data.description }}</p>
-    <h3><u>Alege una din optiunile de mai jos:</u></h3>
+    <h3><u>Alege una din opțiunile de mai jos:</u></h3>
 
     <div class="options-list">
       <div class="option cursor-pointer" *ngFor="let option of data.options" [class.is-selected]="option.isSelected"
