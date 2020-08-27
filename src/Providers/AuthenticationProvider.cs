@@ -37,7 +37,7 @@ namespace VotRomania.Providers
             if (userInfo == null)
                 return null;
 
-            var expires = DateTime.Now.AddHours(1);
+            var expires = DateTime.Now.AddDays(365);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_authSettings.Secret);
