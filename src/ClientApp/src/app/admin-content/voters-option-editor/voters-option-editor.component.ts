@@ -37,20 +37,12 @@ export class VotersOptionEditorComponent implements OnInit {
     ]
   };
   
-  constructor(
-    public dialogRef: MatDialogRef<VotersOptionEditorComponent>,
-    // @Inject(MAT_DIALOG_DATA) public data: {}
-  ) {
+  constructor(public dialogRef: MatDialogRef<VotersOptionEditorComponent>) {
     this.dialogRef.disableClose = true;
     this.form = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
     });
-
-    // if (data) {
-    //   this.form.patchValue(data.pollingStation);
-    // }
-
   }
 
   ngOnInit() {
