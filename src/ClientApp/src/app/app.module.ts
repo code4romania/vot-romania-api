@@ -26,17 +26,20 @@ import { PollingStationSearchComponent } from './polling-station-search/polling-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HereAddressService } from './services/here-address.service';
 import { DataService } from './services/data.service';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatDialogModule, MatButtonModule } from '@angular/material';
 import { AuthEffects } from './state/auth';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './services/auth.guard';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AdminContentComponent } from './admin-content/admin-content.component';
+import { VotersOptionEditorComponent } from './admin-content/voters-option-editor/voters-option-editor.component';
 
 const materialImports = [
   MatAutocompleteModule,
-  MatInputModule
+  MatInputModule,
+  MatDialogModule,
+  MatButtonModule
 ];
 
 const appRoutes = [
@@ -65,10 +68,10 @@ const appRoutes = [
     LoginComponent,
     AdminComponent,
     AdminContentComponent,
+    VotersOptionEditorComponent,
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
@@ -79,6 +82,9 @@ const appRoutes = [
     ReactiveFormsModule,
     ...materialImports,
     AngularEditorModule,
+  ],
+  entryComponents: [
+    VotersOptionEditorComponent
   ],
   providers: [
     HereAddressService,
