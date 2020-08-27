@@ -1,0 +1,27 @@
+<form [formGroup]="form" class="normal-form" (submit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
+
+    <mat-dialog-content class="mat-typography">
+        <h4 class="mb-2 mt-2">Title</h4>
+        <angular-editor id='title'
+                        placeholder='Enter title here...'
+                        formControlName="title"
+                        [config]="editorConfig">
+        </angular-editor>
+
+
+        <h4 class="mb-2 mt-2">Description</h4>
+        <angular-editor id='description'
+                        placeholder='Enter description here...'
+                        formControlName="description"
+                        [config]="editorConfig">
+        </angular-editor>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
+        <button mat-raised-button color="warn" type="button" (click)="onClose()">Close</button>
+
+    </mat-dialog-actions>
+
+</form> 

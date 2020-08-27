@@ -14,7 +14,6 @@ namespace VotRomania.Providers
 {
     public class AuthenticationProvider : IAuthenticationProvider
     {
-
         private readonly ILogger<AuthenticationProvider> _logger;
         private readonly AuthSettingOptions _authSettings;
         private readonly IUserProvider _userProvider;
