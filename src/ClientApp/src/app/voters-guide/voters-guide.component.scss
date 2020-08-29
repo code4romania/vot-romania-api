@@ -1,13 +1,17 @@
 .wrapper {
     align-items: center;
     margin-top: 50px;
+    margin-bottom: 120px;
 
-    p {
+    .description{
         font-style: normal;
-        font-weight: 600;
+        margin-top: 80px;
+        margin-bottom: 80px;
     }
 
     .options-list {
+        margin-top: 32px;
+        margin-bottom: 120px;
         width: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -16,13 +20,13 @@
             text-align: center;
             position: relative;
             color: #352245;
-            width: 215px;
-            height: 100px;
-            margin: 5px;
+            width: 255px;
+            height: 124px;
+            margin: 10px;
             font-weight: 600;
             font-size: 16px;
             line-height: 24px;
-            padding: 5px;
+            padding: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -84,6 +88,23 @@
                 opacity: 1;
             }
         }
+    }
+
+    .option-title {
+        font-size: 35px;
+        font-style: normal;
+        font-weight: bold;
+        line-height: 40px;
+        color: #352245;
+        margin-bottom: 40px;
+    }
+
+    .option-description {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #000000;
     }
 }
 

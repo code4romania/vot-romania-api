@@ -1,6 +1,7 @@
 .search-input {
   width: 45%;
   min-width: 450px;
+  margin-bottom: 80px;
 }
 
 .centered-items {
@@ -8,16 +9,20 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
 
-  p {
-    margin:0;
+.title-block{
+  margin-bottom: 32px;
+
+  .question{
+    margin-bottom: 24px;
   }
 }
 
 .map {
   height: 596px;
   width: 100%;
-  margin-top: 30px;
+  margin-bottom: 80px;
 }
 
 @media screen and (max-width: 575px) {
@@ -51,7 +56,7 @@
     }
 
     .ps-description {
-      font-family: Titillium Web;
+      font-family: 'Titillium Web';
       font-style: normal;
       font-weight: 500;
       font-size: 16px;
@@ -61,11 +66,33 @@
       
       .ps-address-label {
         background: #FFCC00;
-        font-family: Titillium Web;
+        font-family: 'Titillium Web';
         font-style: normal;
         font-weight: normal;
         font-size: 16px;
       }
     }
 
+}
+
+.text-padding {
+  padding-bottom: 32px;
+}
+
+.ps-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+
+.ps-item {
+  margin-bottom: 20px;
+  margin-left: 20px;
+  box-sizing: border-box;
+  max-width: 45%;
+  display: block;
 }

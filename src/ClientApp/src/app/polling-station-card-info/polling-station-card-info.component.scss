@@ -5,8 +5,16 @@ p {
   font-size: 1rem;
 }
 
+.address {
+  font-size: 18px;
+}
+
 .box {
-  padding: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
 
   &.box-dark {
     background: $color-dark;
@@ -20,9 +28,10 @@ p {
     & .badge {
       background: $color-light;
       color: $color-dark;
+      font-size: 14px;
     }
 
-    & h5, & .btn.btn-link{
+     & .address, .btn.btn-link{
         color: $color-light;
     }
   }

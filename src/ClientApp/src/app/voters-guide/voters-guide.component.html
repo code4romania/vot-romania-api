@@ -1,6 +1,7 @@
 <ng-container *ngIf="data">
   <div class="container wrapper">
-    <p>{{ data.description }}</p>
+    <p class="description">{{ data.description }}</p>
+
     <h3><u>Alege una din opțiunile de mai jos:</u></h3>
 
     <div class="options-list">
@@ -12,8 +13,9 @@
       </div>
 
     </div>
-    <div class="text-left" [innerHTML]="description">
-    </div>
+
+    <div class="option-title" [innerHTML]="title"></div>
+    <div class="text-left option-description" [innerHTML]="description"></div>
   </div>
 
 </ng-container>
