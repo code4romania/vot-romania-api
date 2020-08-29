@@ -5,6 +5,8 @@ import { select, Store } from '@ngrx/store';
 import { ApplicationState } from '../state/reducers';
 import { getError, getGeneralInfo, getSelectedLanguage, getVotingGuide } from '../state/selectors';
 import { ClearErrorAction, UpdateDataAction } from '../state/actions';
+import { MatDialog } from '@angular/material/dialog';
+import { VotersOptionEditorComponent } from './voters-option-editor/voters-option-editor.component';
 
 @Component({
   selector: 'app-admin-content',
@@ -23,7 +25,6 @@ export class AdminContentComponent implements OnInit {
   };
   public editing = {};
   public deleting = {};
-  public adding = {};
   public editorConfig: AngularEditorConfig = {
     editable: true,
     toolbarHiddenButtons: [
@@ -50,7 +51,8 @@ export class AdminContentComponent implements OnInit {
     ]
   };
 
-  constructor(private store: Store<ApplicationState>) {
+  constructor(private store: Store<ApplicationState>,
+    public dialog: MatDialog) {
   }
 
   public ngOnInit() {
@@ -92,14 +94,16 @@ export class AdminContentComponent implements OnInit {
     this.votersGuide.options.splice(idx, 1);
   }
 
-  public saveNewVotersGuideOption() {
-    if(this.newVotersGuideOption.title != '' && this.newVotersGuideOption.description != ''){
-      this.votersGuide.options.push(this.newVotersGuideOption);
-      this.newVotersGuideOption = {
-        title: '',
-        description: ''
+  public openNewVotersGuideOption(): void {
+    const dialogRef = this.dialog.open(VotersOptionEditorComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result.title !== '' && result.description !== '') {
+          this.votersGuide.options.push(result);
+        }
       }
-    }
+    });
   }
 
 }

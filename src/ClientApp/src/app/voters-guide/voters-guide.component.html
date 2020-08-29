@@ -1,19 +1,18 @@
 <ng-container *ngIf="data">
   <div class="container wrapper">
-    <p>{{ data.description }}
-    </p>
+    <p>{{ data.description }}</p>
+    <h3><u>Alege una din opțiunile de mai jos:</u></h3>
 
     <div class="options-list">
-      <div class="option cursor-pointer"
-        *ngFor="let option of data.options"
-        [class.is-selected]="option.isSelected"
-        (click)="showDescriptionFor(option)"
-        [innerHtml]="option.title">
+      <div class="option cursor-pointer" *ngFor="let option of data.options" [class.is-selected]="option.isSelected"
+        (click)="showDescriptionFor(option)">
+        <span [innerHtml]="option.title"></span>
+        <div class="check-icon-container"></div>
+        <span class="check-icon"></span>
       </div>
 
     </div>
-    <div class="text-left"
-         [innerHTML]="description">
+    <div class="text-left" [innerHTML]="description">
     </div>
   </div>
 

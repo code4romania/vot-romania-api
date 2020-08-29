@@ -30,11 +30,11 @@
 
             <div class="d-flex align-items-center">
                 <button class="btn btn-outline-success mr-2"
-                        type="button" (click)="adding['votersGuideOption'] = !adding['votersGuideOption']; editing['votersGuide'] = false; saveNewVotersGuideOption()">
-                    {{ newVotersGuideOption.title == '' || newVotersGuideOption.description == ''? 'New option' : 'Add new option' }}
+                        type="button" (click)="editing['votersGuideOption'] = !editing['votersGuideOption']; openNewVotersGuideOption()">
+                    New option
                 </button>
                 <button class="btn btn-outline-secondary"
-                        type="button" (click)="editing['votersGuide'] = !editing['votersGuide']; adding['votersGuideOption'] = false;">
+                        type="button" (click)="editing['votersGuide'] = !editing['votersGuide'];">
                     {{ editing['votersGuide'] ? 'Preview' : 'Edit' }}
                 </button>
             </div>
@@ -49,24 +49,6 @@
         </ng-container>
 
         <div *ngIf="!editing['votersGuide']" [innerHTML]="votersGuide.description"></div>
-
-        <ng-container *ngIf="adding['votersGuideOption']">
-            <h5 class="mb-2 mt-2">Title</h5>
-            <angular-editor id='newVotersGuideOptionTitle'
-                            placeholder='Enter title here...'
-                            [(ngModel)]="newVotersGuideOption.title"
-                            [config]="editorConfig">
-            </angular-editor>
-        </ng-container>
-
-        <ng-container *ngIf="adding['votersGuideOption']">
-            <h5 class="mb-2 mt-2">Description</h5>
-            <angular-editor id='newVotersGuideOptionDescription'
-                            placeholder='Enter description here...'
-                            [(ngModel)]="newVotersGuideOption.description"
-                            [config]="editorConfig">
-            </angular-editor>
-        </ng-container>
     </div>
 
     <ng-container *ngFor="let option of votersGuide.options; let idx = index;">
