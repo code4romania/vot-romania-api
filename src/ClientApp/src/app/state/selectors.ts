@@ -4,39 +4,43 @@ import { ApplicationState } from './reducers';
 const getApplicationState = createFeatureSelector<ApplicationState>('data');
 
 export const getLanguages = createSelector(
-    getApplicationState,
-    state => state.languages
+  getApplicationState,
+  state => state.languages
 );
 export const getSelectedLanguage = createSelector(
-    getApplicationState,
-    state => state.selectedLanguage
+  getApplicationState,
+  state => state.selectedLanguage
 );
 
 export const getGeneralInfo = createSelector(
-    getApplicationState,
-    state => state.generalInfo
+  getApplicationState,
+  state => state.generalInfo
+);
+export const getAboutInfo = createSelector(
+  getApplicationState,
+  state => state.aboutInfo
 );
 
 export const getVotingGuide = createSelector(
-    getApplicationState,
-    state => state.votingGuide
+  getApplicationState,
+  state => state.votingGuide
 );
 
 
 export const getSelectedAddressDetails = createSelector(
-    getApplicationState,
-    state => state.selectedAddressDetails
+  getApplicationState,
+  state => state.selectedAddressDetails
 );
 
 export const getMapPins = createSelector(
-    getApplicationState,
-    state => ({ userAddress: state.selectedAddressDetails, pollingStations: state.pollingStations })
+  getApplicationState,
+  state => ({userAddress: state.selectedAddressDetails, pollingStations: state.pollingStations})
 );
 
 
 export const getError = createSelector(
-    getApplicationState,
-    state => state.error
+  getApplicationState,
+  state => state.error
 );
 
 export const getAuthToken = createSelector(
