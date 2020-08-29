@@ -1,27 +1,18 @@
 <header>
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
     <div class="container">
-      <img class="navbar-brand cursor-pointer" src="../../assets/logo_horizontal.svg" width="90" height="80"
-           alt="Vot Romania"
-           [routerLink]="['/']"/>
-      <div class="left-menu">
-        <div class="btn-group cursor-pointer menu-item" [routerLink]="['about']">
-          Despre
+      <img class="navbar-brand cursor-pointer" src="../../assets/logo_horizontal.svg" width="90" height="80" alt="Vot Romania"
+        [routerLink]="['/']" />
+
+      <div class="btn-group cursor-pointer" dropdown>
+        <div id="language-select" dropdownToggle class="font-weight-bold" aria-controls="dropdown-basic">
+          {{ selectedLanguage$ | async }} <i class="fas fa-chevron-down"></i>
         </div>
-        <div class="btn-group cursor-pointer menu-item"  dropdown>
-          <div id="language-select" dropdownToggle class="font-weight-bold" aria-controls="dropdown-basic">
-            {{ selectedLanguage$ | async }} <i class="fas fa-chevron-down"></i>
-          </div>
-          <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu small" role="menu"
-              aria-labelledby="language-select">
-            <li role="menuitem" *ngFor="let language of (availableLanguages$ | async)">
-              <span class="dropdown-item" (click)="changeSelectedLanguageTo(language)">{{language}}</span>
-            </li>
-          </ul>
-        </div>
-        <div class="btn-group btn btn-success btn-donate menu-item">
-          Donează
-        </div>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu small" role="menu" aria-labelledby="language-select">
+          <li role="menuitem" *ngFor="let language of (availableLanguages$ | async)">
+            <span class="dropdown-item" (click)="changeSelectedLanguageTo(language)">{{language}}</span>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>

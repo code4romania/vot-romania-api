@@ -34,7 +34,6 @@ import { AuthGuard } from './services/auth.guard';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AdminContentComponent } from './admin-content/admin-content.component';
 import { VotersOptionEditorComponent } from './admin-content/voters-option-editor/voters-option-editor.component';
-import { AboutComponent } from './about/about.component';
 
 const materialImports = [
   MatAutocompleteModule,
@@ -50,7 +49,6 @@ const appRoutes = [
   { path: 'admin', component: AdminComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'admin/content', component: AdminContentComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'admin/login', component: LoginComponent, pathMatch: 'full' },
-  { path: 'about', component: AboutComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -71,7 +69,6 @@ const appRoutes = [
     AdminComponent,
     AdminContentComponent,
     VotersOptionEditorComponent,
-    AboutComponent,
   ],
   imports: [
     BrowserAnimationsModule,
