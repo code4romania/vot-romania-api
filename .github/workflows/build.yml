@@ -22,7 +22,7 @@ jobs:
         run: |
           docker build . \
             --tag $IMAGE_VOT_ROMANIA:$GITHUB_SHA \
-            --file Dockerfile
+            --file src/Dockerfile
 
       - name: Upload Docker image
         run: |
