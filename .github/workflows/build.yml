@@ -20,9 +20,10 @@ jobs:
 
       - name: Build Docker image
         run: |
+          cd src
           docker build . \
             --tag $IMAGE_VOT_ROMANIA:$GITHUB_SHA \
-            --file src/Dockerfile
+            --file Dockerfile
 
       - name: Upload Docker image
         run: |
