@@ -1,11 +1,42 @@
 nav {
   height: 90px;
+  font-size: 18px !important;
+  font-weight: 600;
+  line-height: 27px;
+}
+
+.left-menu
+{
+  float: left;
+}
+
+.menu-item
+{
+  margin: 0 2em;
 }
 
 .dropdown-menu {
   &.small {
     min-width: 0;
   }
+}
+
+.btn-donate {
+  background-color: #6fcf97;
+  border-color: transparent;
+  color: #fff;
+  border-width: 1px;
+  cursor: pointer;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: calc(.375em - 1px) .75em;
+  text-align: center;
+  white-space: nowrap;
+
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 27px;
 }
 
 @media screen and (max-width: 575px) {
