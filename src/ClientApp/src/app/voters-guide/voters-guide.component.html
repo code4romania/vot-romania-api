@@ -6,7 +6,7 @@
 
     <div class="options-list">
       <div class="option cursor-pointer" *ngFor="let option of data.options" [class.is-selected]="option.isSelected"
-        (click)="showDescriptionFor(option)">
+        (click)="showDescriptionFor(option, targetElement)">
         <span [innerHtml]="option.title"></span>
         <div class="check-icon-container"></div>
         <span class="check-icon"></span>
@@ -14,7 +14,7 @@
 
     </div>
 
-    <div class="option-title" [innerHTML]="title"></div>
+    <div class="option-title" [innerHTML]="title" #targetElement></div>
     <div class="text-left option-description" [innerHTML]="description"></div>
   </div>
 
