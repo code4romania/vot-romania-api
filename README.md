@@ -2,19 +2,19 @@
 
 [![GitHub contributors](https://img.shields.io/github/contributors/code4romania/vot-romania.svg?style=for-the-badge)](https://github.com/code4romania/vot-romania/graphs/contributors) [![GitHub last commit](https://img.shields.io/github/last-commit/code4romania/vot-romania.svg?style=for-the-badge)](https://github.com/code4romania/vot-romania/commits/master) [![License: MPL 2.0](https://img.shields.io/badge/license-MPL%202.0-brightgreen.svg?style=for-the-badge)](https://opensource.org/licenses/MPL-2.0)
 
-Insert bullets description of the project if available.
+The project aims to be the go-to source of useful information for voters in Romanian elections.
 
-[See the project live](insert_link_here)
+[See the project live](https://votromania.azurewebsites.net/)
 
-Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project.
+There are some differences in the voting process depending on a person's residency and citizenship status. This project aims to clearly present all relevant info.
 
-[Contributing](#contributing) | [Built with](#built-with) | [Repos and projects](#repos-and-projects) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
+[Contributing](#contributing) | [Built with](#built-with) | [Deployment](#deployment) | [Feedback](#feedback) | [License](#license) | [About Code4Ro](#about-code4ro)
 
 ## Contributing
 
 This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
 
-Help us out by testing this project in the [staging environment](insert_link_here). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
+Help us out by testing this project in the [staging environment](https://votromania.azurewebsites.net/). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
 
 If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
@@ -26,19 +26,14 @@ Also, this is [the workflow we follow](.github/WORKFLOW.md).
 ### Programming languages
 C# 8
 
-### Platforms
-
 ### Frontend framework
-
 Angular 8
 
 ### Package managers
 NPM
+
 ### Database technology & provider
-
-## Repos and projects
-
-Mention all related repos and projects.
+SQLite
 
 ## Deployment
 

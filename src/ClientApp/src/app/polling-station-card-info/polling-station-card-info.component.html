@@ -1,0 +1,29 @@
+<div class="h-100 box"
+     [class.box-light]="lightTheme"
+     [class.box-dark]="!lightTheme">
+  <div class="d-flex justify-content-between">
+    <p>Distanța: {{distance}} km</p>
+    <a class="btn btn-link cursor-pointer"
+       (click)="isCollapsed = !isCollapsed"
+       [attr.aria-expanded]="!isCollapsed"
+       aria-controls="collapsedStreets">
+      Vezi lista de străzi<span class="fas ml-1"
+            [class.fa-angle-down]="isCollapsed"
+            [class.fa-angle-up]="!isCollapsed">
+      </span>
+    </a>
+  </div>
+
+  <h3>Secția de votare Nr. {{pollingStation.pollingStationNumber}}, {{pollingStation.county}}</h3>
+  <div class="address"><span class="badge mr-1">Adresa:</span> {{pollingStation.address}}</div>
+
+  <div id="collapsedStreets" [collapse]="isCollapsed">
+    <hr/>
+    <p class="font-weight-bold">
+      La această secție pot vota persoanele care locuiesc pe următoarele străzi:
+    </p>
+    <ul>
+      <li *ngFor="let address of pollingStation.assignedAddresses">{{address.street}} {{address.houseNumbers}}</li>
+    </ul>
+  </div>
+</div>

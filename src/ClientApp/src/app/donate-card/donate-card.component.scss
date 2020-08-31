@@ -21,9 +21,8 @@
 .box {
   width: 55%;
   padding: 30px;
-  margin-top: 60px;
-
-
+  margin-bottom: 80px;
+  
   &.box-dark {
     background: #352245;
     color: #FFFFFF;
@@ -37,5 +36,11 @@
     line-height: 1.6;
     margin-bottom: 1.25rem;
     text-rendering: optimizeLegibility;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .box{
+    width: 100%;
   }
 }

@@ -1,0 +1,22 @@
+<div class="container">
+    <form [formGroup]="form" (submit)="login()">
+
+        <div class="flex-column d-flex my-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input autocomplete="username" matInput formControlName="userName">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input type="password" autocomplete="current-password" matInput formControlName="password">
+            </mat-form-field>
+        </div>
+
+        <div class="justify-content-center d-flex">
+            <button class="btn btn-outline-secondary"
+                     type="submit" (click)="login()">Login</button>
+        </div>
+
+        <div *ngIf="error" class="error">{{ error }}.</div>
+    </form>
+</div>

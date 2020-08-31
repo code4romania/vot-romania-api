@@ -1,0 +1,75 @@
+$color-light: #ffcc00;
+$color-dark: #352245;
+
+p {
+  font-size: 1rem;
+}
+
+.address {
+  font-size: 18px;
+}
+
+.box {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+
+  &.box-dark {
+    background: $color-dark;
+    color: white;
+    font-size: 16px;
+
+    & hr {
+      border-top-color: #FFFFFF;
+    }
+
+    & .badge {
+      background: $color-light;
+      color: $color-dark;
+      font-size: 14px;
+    }
+
+     & .address, .btn.btn-link{
+        color: $color-light;
+    }
+  }
+
+  &.box-light {
+    background: $color-light;
+    color: $color-dark;
+
+    & hr {
+      border-top-color: $color-dark;
+    }
+
+    & .badge {
+      background: $color-dark;
+      color: white;
+    }
+  }
+}
+
+.badge {
+    border-radius: 0;
+    font-weight:500;
+}
+
+a.btn.btn-link:not(href) {
+  text-decoration: underline;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+
+  & > li {
+    font-size: large;
+
+    &:before {
+      content: "-";
+      margin-right: 0.5rem;
+    }
+  }
+}
