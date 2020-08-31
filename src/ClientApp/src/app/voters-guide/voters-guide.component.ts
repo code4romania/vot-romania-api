@@ -24,6 +24,7 @@ export interface VotingGuideViewModel {
 export class VotersGuideComponent implements OnInit, OnDestroy {
 
   description: string;
+  title: string;
 
   data: VotingGuideViewModel;
   subscription: Subscription;
@@ -56,6 +57,7 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
   }
 
   showDescriptionFor(tile: Tile): void {
+    this.title = tile.title;
     this.description = tile.description;
     this.data.options.forEach(o => o.isSelected = false);
     tile.isSelected = true;
