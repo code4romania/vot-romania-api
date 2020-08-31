@@ -19,6 +19,7 @@ export interface VotingGuide {
 export interface StaticData {
   language: string;
   generalInfo: string;
+  aboutInfo: string;
   votersGuide: VotingGuide;
 }
 
