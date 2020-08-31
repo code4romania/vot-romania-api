@@ -35,6 +35,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { AdminContentComponent } from './admin-content/admin-content.component';
 import { VotersOptionEditorComponent } from './admin-content/voters-option-editor/voters-option-editor.component';
 import { AboutComponent } from './about/about.component';
+import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
 
 const materialImports = [
   MatAutocompleteModule,
@@ -51,6 +52,7 @@ const appRoutes = [
   { path: 'admin/content', component: AdminContentComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'admin/login', component: LoginComponent, pathMatch: 'full' },
   { path: 'about', component: AboutComponent, pathMatch: 'full' },
+  { path: 'cookies-policy', component: CookiePolicyComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -72,6 +74,7 @@ const appRoutes = [
     AdminContentComponent,
     VotersOptionEditorComponent,
     AboutComponent,
+    CookiePolicyComponent,
   ],
   imports: [
     BrowserAnimationsModule,
