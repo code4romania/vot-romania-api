@@ -1,14 +1,13 @@
-<header>
+<header class="container px-0">
   <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
-    <div class="container">
       <img class="navbar-brand cursor-pointer" src="../../assets/logo_horizontal.svg" width="90" height="80"
            alt="Vot Romania"
            [routerLink]="['/']"/>
-      <div class="left-menu">
-        <div class="btn-group cursor-pointer menu-item font-weight-bold" [routerLink]="['about']">
+      <div class="d-flex align-items-center mx-auto mr-sm-0">
+        <div class="cursor-pointer font-weight-bold mx-4" [routerLink]="['about']">
           Despre
         </div>
-        <div class="btn-group cursor-pointer menu-item"  dropdown>
+        <div class="cursor-pointer dropdown mx-4"  dropdown>
           <div id="language-select" dropdownToggle class="font-weight-bold" aria-controls="dropdown-basic">
             {{ selectedLanguage$ | async }} <i class="fas fa-chevron-down"></i>
           </div>
@@ -19,10 +18,9 @@
             </li>
           </ul>
         </div>
-        <div class="btn-group btn btn-success btn-donate menu-item">
+        <div class="btn btn-success btn-donate font-weight-bold cursor-pointer mx-4">
           Donează
         </div>
       </div>
-    </div>
   </nav>
 </header>
