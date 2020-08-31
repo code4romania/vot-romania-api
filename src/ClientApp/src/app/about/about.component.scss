@@ -1,0 +1,25 @@
+.title {
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.about {
+    p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+
+.contributors{
+    margin-top: 80px;
+    margin-bottom: 80px;
+    
+    display: flex;
+    justify-content: space-around;
+
+    p {
+        margin-bottom: 24px;
+    }
+
+}
