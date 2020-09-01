@@ -20,8 +20,6 @@ export interface VotingGuideViewModel {
   styleUrls: ['./voters-guide.component.scss']
 })
 export class VotersGuideComponent implements OnInit, OnDestroy {
-  @ViewChild('optionTitle', {static: true}) optionTitle: ElementRef;
-
   description: string;
   title: string;
 
@@ -29,11 +27,9 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(private store: Store<ApplicationState>) {
-
   }
 
   ngOnInit(): void {
-
     this.subscription = this.store
       .pipe(select(getVotingGuide),
         map(guide => {

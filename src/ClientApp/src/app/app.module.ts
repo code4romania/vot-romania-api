@@ -26,7 +26,6 @@ import { PollingStationSearchComponent } from './polling-station-search/polling-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HereAddressService } from './services/here-address.service';
 import { DataService } from './services/data.service';
-import { MatInputModule, MatDialogModule, MatButtonModule } from '@angular/material';
 import { MatInputModule, MatPaginatorModule, MatTableModule, MatSelect, MatSelectModule, MatSnackBarModule, MatDialogModule, MatToolbarModule, MatGridListModule, MatFormFieldModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatSortModule } from '@angular/material';
 import { AuthEffects } from './state/auth';
 import { LoginComponent } from './login/login.component';
@@ -111,16 +110,14 @@ const appRoutes = [
     ...materialImports,
     AngularEditorModule,
   ],
-  entryComponents: [
-    VotersOptionEditorComponent
-  ],
   providers: [
     HereAddressService,
     DataService,
     ToasterService
   ],
   entryComponents: [
-    PollingStationEditorComponent
+    PollingStationEditorComponent,
+    VotersOptionEditorComponent
   ],
   bootstrap: [AppComponent]
 })

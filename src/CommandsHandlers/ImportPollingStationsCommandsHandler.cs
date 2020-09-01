@@ -136,10 +136,10 @@ namespace VotRomania.CommandsHandlers
                         {
                             AssignedAddressModel assignedAddress = new AssignedAddressModel
                             {
-                                HouseNumbers = GetString(pollingStationsData.Rows[index][12]),
-                                Remarks = GetString(pollingStationsData.Rows[index][13]),
-                                Street = GetString(pollingStationsData.Rows[index][11]),
-                                StreetCode = GetString(pollingStationsData.Rows[index][10]),
+                                HouseNumbers = GetString(pollingStationsData.Rows[index][11]),
+                                Remarks = GetString(pollingStationsData.Rows[index][12]),
+                                Street = GetString(pollingStationsData.Rows[index][10]),
+                                StreetCode = GetString(pollingStationsData.Rows[index][9]),
 
                             };
                             currentPollingStation?.AssignedAddresses.Add(assignedAddress);
@@ -156,9 +156,9 @@ namespace VotRomania.CommandsHandlers
                         {
                             County = GetString(row[0]),
                             PollingStationNumber = pollingStationNumber,
-                            Locality = GetString(row[9]),
-                            Institution = GetString(row[6]),
-                            Address = GetString(row[7]),
+                            Locality = GetString(row[8]),
+                            Institution = GetString(row[5]),
+                            Address = GetString(row[6]),
                             AssignedAddresses = new List<AssignedAddressModel>()
                         };
 

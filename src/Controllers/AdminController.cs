@@ -28,12 +28,10 @@ namespace VotRomania.Controllers
             _tokenProvider = tokenProvider;
         }
 
-        // TODO: remove anonymous
-        [AllowAnonymous]
-        [HttpPost, DisableRequestSizeLimit]
-        [Route("import/polling-stations")]
-        [Consumes("multipart/form-data")]
 
+        [HttpPost, DisableRequestSizeLimit]
+        [Route("import/upload-polling-stations")]
+        [Consumes("multipart/form-data")]
         [SwaggerOperation(Summary = "Upload polling stations from excel file")]
         [SwaggerResponse(200, "Import job id.", typeof(void))]
         [SwaggerResponse(500, "Something went wrong when importing polling stations.", typeof(ProblemDetails))]
@@ -48,8 +46,6 @@ namespace VotRomania.Controllers
             return Problem(result.Error);
         }
 
-        // TODO: remove anonymous
-        [AllowAnonymous]
         [HttpGet]
         [Route("import/job-status")]
         [SwaggerOperation(Summary = "Get details for a specific job")]
@@ -66,8 +62,7 @@ namespace VotRomania.Controllers
             return Problem(result.Error);
         }
 
-        // TODO: remove anonymous
-        [AllowAnonymous]
+
         [HttpGet]
         [Route("import/current-job")]
         [SwaggerOperation(Summary = "Get current job that is being processed.")]
@@ -84,8 +79,7 @@ namespace VotRomania.Controllers
             return Problem(result.Error);
         }
 
-        // TODO: remove anonymous
-        [AllowAnonymous]
+
         [HttpPost]
         [Route("import/cancel-job/{jobId:guid}")]
         [SwaggerOperation(Summary = "Cancels a specific job")]
@@ -102,8 +96,7 @@ namespace VotRomania.Controllers
             return Problem(result.Error);
         }
 
-        // TODO: remove anonymous
-        [AllowAnonymous]
+
         [HttpPost]
         [Route("import/complete-job/{jobId:guid}")]
         [SwaggerOperation(Summary = "Completes current job", Description = "Please note that this operations will add imported polling stations in main polling stations table and remove old ones! Operation will fail if job is not completed and there are some polling stations with unresolved addresses.")]
@@ -120,8 +113,7 @@ namespace VotRomania.Controllers
             return Problem(result.Error);
         }
 
-        // TODO: remove anonymous
-        [AllowAnonymous]
+
         [HttpPost]
         [Route("import/restart-job/{jobId:guid}")]
         [SwaggerOperation(Summary = "Restarts job", Description = "Restarts job")]
@@ -138,10 +130,7 @@ namespace VotRomania.Controllers
             return Problem(result.Error);
         }
 
-
-        // TODO: remove anonymous
         [HttpGet]
-        [AllowAnonymous]
         [Route("import/{jobId:guid}/imported-polling-stations")]
         [SwaggerOperation(Summary = "Search imported polling stations by specific criteria")]
         [SwaggerResponse(200, "Imported polling stations found.", typeof(PagedResult<PollingStationModel>))]
@@ -165,7 +154,6 @@ namespace VotRomania.Controllers
 
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("import/{jobId:guid}/imported-polling-stations/{id}")]
         [SwaggerResponse(200, "Imported polling station details.", typeof(PagedResult<PollingStationModel>))]
         [SwaggerResponse(401)]
@@ -187,7 +175,6 @@ namespace VotRomania.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [Route("import/{jobId:guid}/imported-polling-stations")]
         [SwaggerOperation(Summary = "Adds an imported polling station")]
         [SwaggerResponse(200, "Id of new imported polling station", typeof(int))]
@@ -206,7 +193,6 @@ namespace VotRomania.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [Route("import/{jobId:guid}/imported-polling-stations/{id}")]
         [SwaggerOperation(Summary = "Updates an imported polling station")]
         [SwaggerResponse(200, "Latest data", typeof(void))]
@@ -225,7 +211,6 @@ namespace VotRomania.Controllers
         }
 
         [HttpDelete]
-        [AllowAnonymous]
         [Route("import/{jobId:guid}/imported-polling-stations/{id}")]
         [SwaggerOperation(Summary = "Deletes an imported polling station")]
         [SwaggerResponse(200, "Operation response", typeof(void))]
@@ -242,7 +227,6 @@ namespace VotRomania.Controllers
 
             return Ok();
         }
-
         [AllowAnonymous]
         [HttpPost("login")]
         [Consumes("application/json")]

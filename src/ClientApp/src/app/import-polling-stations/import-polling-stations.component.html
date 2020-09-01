@@ -1,7 +1,31 @@
 <div class="container">
 
     <div class="new-job" *ngIf="!currentJob">
-        <h1>upload here</h1>
+        <div class="file-upload">
+
+
+            <div class="progress-container">
+              <p>Progress <span style='float:right;'>{{progress.percentage}}</span>
+            
+            </p>
+               
+            <div class="progress">
+              <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width':progress.percentage}" aria-valuemin="0" aria-valuemax="100">
+                
+              </div>
+              
+            </div>
+            <p>File name: <span style='float:right'>{{selectedFile?.name}}</span></p>
+              
+            </div>
+            <button class="btn btn-primary" (click)="fileInput.click()">
+                <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+                Browse file
+            
+            </button>
+            
+            </div>
+            
     </div>
 
     <div class="in-progress-job" *ngIf="currentJob">

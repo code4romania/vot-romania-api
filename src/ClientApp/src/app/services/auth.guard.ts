@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
         state: RouterStateSnapshot): Promise<boolean> {
 
         if (!this.authService.getToken()) {
-            this.router.navigate(['admin', 'login', 'import']);
+            this.router.navigate(['admin', 'login']);
             return false;
         }
 

@@ -111,7 +111,6 @@ export interface ProblemDetails {
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-
   constructor(private http: HttpClient,
     private authService: AuthService,
     private errorService: ErrorService) { }
@@ -124,21 +123,26 @@ export class DataService {
   updateData(data: StaticData): Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
     return this.http.post<any>(`/api/application-content/${data.language}`, data, { headers })
       .pipe(catchError(this.errorService.handleError));
   }
 
   getPollingStations(latitude: number, longitude: number): Observable<PollingStationGroup[]> {
-    let params = new HttpParams();
+    let params = RequestHttpParams
+      .create()
+      .append('latitude', latitude.toString())
+      .append('longitude', longitude.toString())
+      .please();
 
-    params = params.append('latitude', latitude.toString());
-    params = params.append('longitude', longitude.toString());
-
-    return this.http.get<PollingStationGroup[]>('api/polling-station/near-me', { params: params })
+    return this.http.get<PollingStationGroup[]>('api/polling-station/near-me', { params: params },)
       .pipe(catchError(this.errorService.handleError));
   }
 
   getImportedPollingStations(jobId: string, filter: ImportedPollingStationsFilter, pagination: PaginationDetails): Observable<PaginatedResponse<ImportedPollingStation>> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
     const params = RequestHttpParams
       .create()
       .append('address', filter.address)
@@ -151,23 +155,30 @@ export class DataService {
       .append('pageSize', pagination.pageSize)
       .please();
 
-    return this.http.get<PaginatedResponse<ImportedPollingStation>>(`/api/admin/import/${jobId}/imported-polling-stations`, { params: params })
+    return this.http.get<PaginatedResponse<ImportedPollingStation>>(`/api/admin/import/${jobId}/imported-polling-stations`, { params: params, headers })
       .pipe(catchError(this.errorService.handleError));
   }
 
   getImportJobDetails(): Observable<ImportJobDetails> {
-    return this.http.get<ImportJobDetails>('/api/admin/import/current-job')
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    return this.http.get<ImportJobDetails>('/api/admin/import/current-job', { headers })
       .pipe(catchError(this.errorService.handleError));
   }
 
   deleteImportedPollingStationId(jobId: string, importedPollingStationId: number): Observable<any> {
-    return this.http.delete<PaginatedResponse<ImportedPollingStation>>(`/api/admin/import/${jobId}/imported-polling-stations/${importedPollingStationId}`)
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    return this.http.delete<PaginatedResponse<ImportedPollingStation>>(`/api/admin/import/${jobId}/imported-polling-stations/${importedPollingStationId}`, { headers })
       .pipe(catchError(this.errorService.handleError));
   }
 
   addImportedPollingStation(jobId: string, importedPollingStation: ImportedPollingStation, adddresses: AssignedAddress[]): Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
     const data = {
       ...importedPollingStation,
       assignedAddresses: adddresses
@@ -179,6 +190,7 @@ export class DataService {
   updateImportedPollingStation(jobId: string, pollingStationId: number, importedPollingStation: ImportedPollingStation, adddresses: AssignedAddress[]): Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
     const data = {
       ...importedPollingStation,
       assignedAddresses: adddresses
@@ -209,5 +221,20 @@ export class DataService {
 
     return this.http.post(`/api/admin/import/complete-job/${jobId}`, { headers })
       .pipe(catchError(this.errorService.handleError));
+  }
+
+  uploadDocument(selectedFile: File) {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+
+    const formData: FormData = new FormData();
+		formData.append('formFile', selectedFile);
+
+    return this.http.post('/api/admin/import/upload-polling-stations', formData, {
+      headers: headers,
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(catchError(this.errorService.handleError));
   }
 }

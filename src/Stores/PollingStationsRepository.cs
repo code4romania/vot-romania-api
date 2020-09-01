@@ -27,8 +27,6 @@ namespace VotRomania.Stores
         {
             var result = await Result.Try(async () =>
             {
-
-
                 var pollingStationsQuery = _context.PollingStations
                     .Include(x => x.PollingStationAddresses)
                     .Select(pollingStation => new PollingStationModel

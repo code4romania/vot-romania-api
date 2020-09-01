@@ -2,8 +2,9 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { ApplicationState } from '../state/reducers';
 import { getCurrentImportJobDetails } from '../state/selectors';
-import { ImportJobDetails } from '../services/data.service';
+import { ImportJobDetails, DataService } from '../services/data.service';
 import { LoadImportJobDetailsAction, RestartImportJobAction, FinishImportJobAction, CancelImportJobAction } from '../state/actions';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-import-polling-stations',
@@ -12,7 +13,11 @@ import { LoadImportJobDetailsAction, RestartImportJobAction, FinishImportJobActi
 })
 export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
   currentJob: ImportJobDetails;
-  constructor(public store: Store<ApplicationState>) { }
+  name = 'Angular';
+  selectedFile: File
+  progress: { percentage:string } = { percentage: '0%' }
+
+  constructor(public store: Store<ApplicationState>, public dataService: DataService) { }
 
   ngOnInit() {
     this.store.pipe(select(getCurrentImportJobDetails)).subscribe(job => this.initializeData(job));
@@ -21,7 +26,6 @@ export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.store.dispatch(new LoadImportJobDetailsAction());
   }
-
 
   initializeData(jobDetails: ImportJobDetails): void {
     this.currentJob = jobDetails;
@@ -37,5 +41,27 @@ export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
 
   cancelCurrentJob():void{
     this.store.dispatch(new CancelImportJobAction(this.currentJob.jobId));
+  }
+
+  onFileSelected(event) {
+    this.progress.percentage= '0%';
+    this.selectedFile = event.target.files[0]
+    this.onUpload();
+  }
+
+  onUpload() {
+    this.dataService.uploadDocument(this.selectedFile)
+    .subscribe(event => {
+      console.log(event);
+      if (event.type === HttpEventType.UploadProgress) {
+        this.progress.percentage = Math.round(100 * event.loaded / event.total) + '%';
+      } else if (event instanceof HttpResponse) {
+        console.log('File uploaded successfully!'+ JSON.stringify(event));
+      }
+
+    }, error => {
+
+      console.log(error);
+    })
   }
 }
