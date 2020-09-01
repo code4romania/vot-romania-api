@@ -162,7 +162,7 @@ export class VotersDecisionTreeService {
         id: '100',
         label: 'Adresa la care locuiești nu se va schimba în intervalul 3-27 septembrie',
         options: [
-          '1010'
+          '1000'
         ]
       },
       '1000': {
@@ -171,7 +171,7 @@ export class VotersDecisionTreeService {
       },
       '101': {
         id: '101',
-        label: 'Îți vei schimba adresa în intervalul 3 -27 septembrie',
+        label: 'Îți vei schimba adresa în intervalul 3-27 septembrie',
         options: [
           '1010'
         ]
