@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ApplicationState } from '../state/reducers';
 import { Store, select } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { getVotingGuide } from '../state/selectors';
 import { map } from 'rxjs/operators';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { VotersDecisionTreeService, OperatorTreeNode } from '../services/voters-decision-tree.service';
 
 export interface Tile {
   title: string;
@@ -14,10 +16,20 @@ export interface VotingGuideViewModel {
   description: string;
   options: Tile[];
 }
+
 @Component({
   selector: 'app-voters-guide',
   templateUrl: './voters-guide.component.html',
-  styleUrls: ['./voters-guide.component.scss']
+  styleUrls: ['./voters-guide.component.scss'],
+  animations: [
+    trigger('flyIn', [
+      state('in', style({ transform: 'translateX(0)' })),
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)' }),
+        animate(250)
+      ])
+    ])
+  ]
 })
 export class VotersGuideComponent implements OnInit, OnDestroy {
   @ViewChild('optionTitle', {static: true}) optionTitle: ElementRef;
@@ -27,9 +39,13 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
 
   data: VotingGuideViewModel;
   subscription: Subscription;
-
-  constructor(private store: Store<ApplicationState>) {
-
+  currentSentence$: Observable<string> = this.votersDecisionTreeService.currentSentence$;
+  options$: Observable<OperatorTreeNode[]> = this.votersDecisionTreeService.options$;
+  isBeyondInitialQuestion$: Observable<boolean> = this.votersDecisionTreeService.isBeyondInitialQuestion$;
+  hasError$: Observable<boolean> = this.votersDecisionTreeService.hasError$;
+  
+  constructor(private store: Store<ApplicationState>,
+    private votersDecisionTreeService: VotersDecisionTreeService) {
   }
 
   ngOnInit(): void {
@@ -53,6 +69,8 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.startOver();
+
   }
 
   showDescriptionFor(tile: Tile, targetElement: HTMLElement): void {
@@ -61,6 +79,17 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
     this.data.options.forEach(o => o.isSelected = false);
     tile.isSelected = true;
     targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
+  selectOption(optionId: string): void {
+    this.votersDecisionTreeService.selectOption(optionId);
+  }
+
+  back(): void {
+    this.votersDecisionTreeService.back();
+  }
+
+  startOver(): void {
+    this.votersDecisionTreeService.startOver();
   }
 }

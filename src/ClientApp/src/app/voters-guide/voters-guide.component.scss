@@ -108,6 +108,37 @@
     }
 }
 
+
+button.option {
+    border-radius: 34px;
+    border: 0;
+    cursor: pointer;
+    display: block;
+    margin-bottom: 12px;
+    padding: 0;
+    text-align: left;
+  
+    &:active, &:hover, &:focus {
+      mat-card {
+        background-color: red;
+        color: white;
+      }
+    }
+  
+  }
+  
+  mat-card {
+    border-radius: 34px;
+    padding: 12px 24px;
+    transition: all 250ms;
+  }
+  
+  section {
+    margin-bottom: 16px;
+  }
+  
+  
+
 @media (max-width: 575px) {
     .wrapper {
         .tile-list {
