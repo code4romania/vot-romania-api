@@ -109,7 +109,7 @@ export class HereAddressService {
     return this.httpClient.get<ILocationSearchResponse>(this.suggestUrl, { params: params });
   }
 
-  getLocationDetails(locationId: string): Observable<LocationDetailsResponse>{
+  getLocationDetails(locationId: string): Observable<LocationDetailsResponse> {
     let params = new HttpParams();
 
     params = params.append('locationid', locationId);

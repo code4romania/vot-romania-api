@@ -36,7 +36,7 @@ export class VotersOptionEditorComponent implements OnInit {
       ]
     ]
   };
-  
+
   constructor(public dialogRef: MatDialogRef<VotersOptionEditorComponent>) {
     this.dialogRef.disableClose = true;
     this.form = new FormGroup({
@@ -57,4 +57,4 @@ export class VotersOptionEditorComponent implements OnInit {
   onClose(): void {
     this.dialogRef.close();
   }
-} 
+}

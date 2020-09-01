@@ -19,7 +19,7 @@ export class NavMenuComponent {
     this.selectedLanguage$ = this.store.pipe(select(getSelectedLanguage));
   }
 
-  changeSelectedLanguageTo(language: string): void{
+  changeSelectedLanguageTo(language: string): void {
     this.store.dispatch(new ChangeSelectedLanguage(language));
   }
 }

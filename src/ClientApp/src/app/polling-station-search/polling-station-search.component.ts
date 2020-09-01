@@ -36,7 +36,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
 
   control = new FormControl();
   filteredAddresses: Observable<AddressSuggestion[]>;
-  searchText: string = 'Caută adresa ta pentru a afla la ce secție ești arondat';
+  searchText = 'Caută adresa ta pentru a afla la ce secție ești arondat';
   pollingStations: PollingStation[];
 
   private platform: any;
@@ -112,7 +112,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
   getPollingStationinfoBubble(group: PollingStationGroup): string {
     return group.pollingStations.reduce((accumulator, currentValue) =>
       accumulator + `<div class="ps-card">
-      <div class="ps-title"> Sectia de votare ${currentValue.pollingStationNumber},  ${currentValue.locality}</div> 
+      <div class="ps-title"> Sectia de votare ${currentValue.pollingStationNumber},  ${currentValue.locality}</div>
       <div class="ps-description">
           <p class="ps-address-label">Adresa:</p>
       <u>${currentValue.address}</u></div>
