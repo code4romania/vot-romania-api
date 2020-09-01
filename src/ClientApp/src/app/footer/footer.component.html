@@ -3,18 +3,18 @@
     <div class="container social-media-container">
       <a class="social-link-item" href="https://www.facebook.com/code4romania" target="_blank"
         rel="noopener noreferrer">
-        <img src="../../assets/facebook_grey.png" width="45" height="45" alt="Facebook" />
+        <img src="../../assets/facebook_grey.svg" width="45" height="45" alt="Facebook" />
       </a>
       <a class="social-link-item" href="https://www.instagram.com/code4romania" target="_blank"
         rel="noopener noreferrer">
-        <img src="../../assets/instagram_grey.png" width="45" height="45" alt="Instagram" />
+        <img src="../../assets/instagram_grey.svg" width="45" height="45" alt="Instagram" />
       </a>
       <a class="social-link-item" href="https://www.linkedin.com/company/code4romania" target="_blank"
         rel="noopener noreferrer">
-        <img src="../../assets/linkedin_grey.png" width="45" height="45" alt="LinkedIn" />
+        <img src="../../assets/linkedin_grey.svg" width="45" height="45" alt="LinkedIn" />
       </a>
       <a class="social-link-item" href="https://twitter.com/Code4Romania" target="_blank" rel="noopener noreferrer">
-        <img src="../../assets/twitter_grey.png" width="45" height="45" alt="Twitter" />
+        <img src="../../assets/twitter_grey.svg" width="45" height="45" alt="Twitter" />
       </a>
       <a id="donate-link-button" href="https://code4.ro/ro/doneaza/" target="_blank"
         rel="noopener noreferrer">DONEAZĂ</a>
@@ -23,21 +23,25 @@
   <div class="container text-white footer">
     <div class="row">
       <div class="col col-xs-12 col-sm-6 usefull-links" style="align-self:flex-end">
-        <h4 class="link-title">Linkuri Utile</h4>
+        <h4 class="link-title">Ecosistem Alegeri</h4>
         <div>
-          <a class="link-item" [routerLink]="['/termeni-si-conditii']">
-            Termeni și condiții
+          <a class="link-item" target="_blank" rel="noopener noreferrer" href="https://votdiaspora.ro/">
+            Vot diaspora
           </a>
         </div>
         <div>
-          <a class="link-item" [routerLink]="['/politica-de-confidentialitate']">
-            Politica de confidențialitate
+          <a class="link-item" target="_blank" rel="noopener noreferrer" href="https://votemonitor.org/">
+            Monitorizare Vot
           </a>
         </div>
         <div>
-          <a class="link-item" target="_blank" rel="noopener noreferrer"
-            href="https://code4.ro/ro/codul-de-conduita/">
-            Codul de conduita
+          <a class="link-item" target="_blank" rel="noopener noreferrer" href="https://rezultatevot.ro/">
+            Rezultate Vot
+          </a>
+        </div>
+        <div>
+          <a class="link-item" [routerLink]="['/about']">
+            Vot Romania
           </a>
         </div>
         <div>
@@ -46,12 +50,17 @@
           </a>
         </div>
         <div>
-          <a class="link-item" href="mailto: contact@code4.ro">
-            Contact
+          <a class="link-item" target="_blank" rel="noopener noreferrer" href="https://civiclabs.ro/">
+            Civic Labs
           </a>
         </div>
       </div>
       <div class="col-xs-12 col-sm-6">
+        <div class="text-sm-right mb-2">
+          <a class="link-item" [routerLink]="['/cookies-policy']">
+            Politica de cookies
+          </a>
+        </div>
         <div class="text-sm-right mb-2"><a href="http://bit.ly/2q06tSu" target="_blank"
             rel="noopener noreferrer">Abonează-te la newsletter</a></div>
         <div class="logo-container">

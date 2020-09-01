@@ -1,11 +1,17 @@
 nav {
-  height: 90px;
+  font-size: 18px;
 }
 
 .dropdown-menu {
   &.small {
     min-width: 0;
   }
+}
+
+.btn-donate {
+  background-color: #6fcf97;
+  border: 0 none;
+  font-size: 18px;
 }
 
 @media screen and (max-width: 575px) {

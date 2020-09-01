@@ -18,11 +18,7 @@ $VotRomania-accent: mat-palette($mat-pink, A200, A100, A400);
 $VotRomania-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$VotRomania-theme: mat-light-theme(
-  $VotRomania-primary,
-  $VotRomania-accent,
-  $VotRomania-warn
-);
+$VotRomania-theme: mat-light-theme( $VotRomania-primary, $VotRomania-accent, $VotRomania-warn );
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
@@ -37,51 +33,58 @@ $font-family-sans-serif: "Titillium Web", sans-serif;
 
 html,
 body {
-  height: 100%;
-  margin: 0;
-  font-family: $font-family-sans-serif;
+    height: 100%;
+    margin: 0;
+    font-family: $font-family-sans-serif;
 }
 
 p {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 37px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 30px;
 }
 
 h2 {
-  color: #ffcc00;
+    color: #ffcc00;
 }
 
 .cursor-pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
 
-html, body { height: 100%; }
-body { margin: 0;  }
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+}
 
 .error {
-  color: red;
+    color: red;
 }
 
 /* notification */
 snack-bar-container.success {
-  background-color: #5cb85c;
-  color : #fff;
+    background-color: #5cb85c;
+    color: #fff;
 }
 
 snack-bar-container.warn {
-  background-color: #f99157;
-  color : #fff;
+    background-color: #f99157;
+    color: #fff;
 }
 
-
-snack-bar-container.notification simple-snack-bar{
-  font-size: 18px !important;
-  font-weight: bold;
+snack-bar-container.notification simple-snack-bar {
+    font-size: 18px !important;
+    font-weight: bold;
 }
 
+.hide {
+    display: none;
+}
 
-.hide{
-  display: none;
+.margin-bottom-80 {
+    margin-bottom: 80px;
 }

@@ -14,7 +14,6 @@ namespace VotRomania.Providers
 {
     public class AuthenticationProvider : IAuthenticationProvider
     {
-
         private readonly ILogger<AuthenticationProvider> _logger;
         private readonly AuthSettingOptions _authSettings;
         private readonly IUserProvider _userProvider;
@@ -40,7 +39,7 @@ namespace VotRomania.Providers
                 return null;
             }
 
-            var expires = DateTime.Now.AddHours(1);
+            var expires = DateTime.Now.AddDays(365);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_authSettings.Secret);

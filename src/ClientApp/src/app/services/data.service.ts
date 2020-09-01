@@ -23,6 +23,13 @@ export interface StaticData {
   votersGuide: VotingGuide;
 }
 
+export interface AssignedAddress {
+  houseNumbers: string;
+  remarks: string;
+  street: string;
+  streetCode: string;
+}
+
 export interface PollingStation {
   id: number;
   latitude: number;
@@ -32,7 +39,7 @@ export interface PollingStation {
   pollingStationNumber: string;
   institution: string;
   address: string;
-  assignedAddresses: string[];
+  assignedAddresses: AssignedAddress[];
 }
 
 export interface PaginationDetails {

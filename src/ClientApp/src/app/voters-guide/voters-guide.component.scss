@@ -1,49 +1,124 @@
 .wrapper {
-  align-items: center;
-  text-align: center;
-  margin-top: 50px;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 120px;
 
-  p {
-    font-style: normal;
-    font-weight: 600;
-  }
-
-  .options-list {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-
-    .option {
-      background: #ffcc00;
-      color: #352245;
-      width: 200px;
-      height: 100px;
-      margin: 5px;
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 24px;
-      padding: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      &.is-selected {
-        background: #352245;
-        color: #ffcc00;
-      }
-    }
-  }
-
-  @media (max-width: 575px) {
-    .tile-list {
-      display: block;
+    .description{
+        font-style: normal;
+        margin-top: 80px;
+        margin-bottom: 80px;
     }
 
     .options-list {
-      .option {
-        width: 48%;
-        margin: 1%;
-      }
+        margin-top: 32px;
+        margin-bottom: 120px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+
+        .option {
+            text-align: center;
+            position: relative;
+            color: #352245;
+            width: 255px;
+            height: 124px;
+            margin: 10px;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 24px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #352245;
+            overflow: hidden;
+
+            .check-icon-container {
+                width: 45px;
+                height: 45px;
+                background-color: #352245;
+                position: absolute;
+                top: 0;
+                right: 0;
+                transform: translateX(50%) translateY(-50%) rotate(45deg);
+                transition: all 0.2s ease-in-out;
+                opacity: 0;
+            }
+
+            .check-icon {
+                opacity: 0;
+                background-image: url("../../assets/check-on.svg");
+                background-repeat: no-repeat;
+                background-size: cover;
+                position: absolute;
+                top: 0;
+                right: 0;
+                transition: all 0.2s ease-in-out;
+                width: 25px;
+                height: 25px;
+                transform: translateX(10%) translateY(-10%);
+            }
+
+            &:hover {
+                border: 2px solid #ffcc00;
+
+                .check-icon-container {
+                    opacity: 1;
+                }
+
+                .check-icon {
+                    opacity: 1;
+                }
+            }
+
+            &:hover.is-selected {
+                border: 2px solid #352245;
+            }
+        }
+
+        .option.is-selected {
+            background-color: #ffcc00;
+            border: 2px solid #352245;
+
+            .check-icon-container {
+                opacity: 1;
+            }
+
+            .check-icon {
+                opacity: 1;
+            }
+        }
     }
-  }
+
+    .option-title {
+        font-size: 35px;
+        font-style: normal;
+        font-weight: bold;
+        line-height: 40px;
+        color: #352245;
+        margin-bottom: 40px;
+    }
+
+    .option-description {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        color: #000000;
+    }
+}
+
+@media (max-width: 575px) {
+    .wrapper {
+        .tile-list {
+            display: block;
+        }
+
+        .options-list {
+            .option {
+                width: 48%;
+                margin: 1%;
+            }
+        }
+    }
 }

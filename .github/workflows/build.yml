@@ -1,0 +1,41 @@
+on:
+  push:
+    branches:
+      - master
+
+name: Deploy
+
+
+env:
+  IMAGE_VOT_ROMANIA: ${{ secrets.DOCKER_HUB_ORGANIZATION }}/vot-romania
+
+jobs:
+  build-dockerimage:
+    name: Build Docker container
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: |
+          cd src
+          docker build . \
+            --tag $IMAGE_VOT_ROMANIA:$GITHUB_SHA \
+            --file Dockerfile
+
+      - name: Upload Docker image
+        run: |
+          echo ${{ secrets.DOCKER_HUB_PASSWORD }} | \
+          docker login \
+            -u ${{ secrets.DOCKER_HUB_USERNAME }} \
+            --password-stdin
+          docker push $IMAGE_VOT_ROMANIA:$GITHUB_SHA
+      
+      - name: Tag Latest
+        run: |
+          docker tag \
+            $IMAGE_VOT_ROMANIA:$GITHUB_SHA \
+            $IMAGE_VOT_ROMANIA:latest
+          docker push $IMAGE_VOT_ROMANIA:latest

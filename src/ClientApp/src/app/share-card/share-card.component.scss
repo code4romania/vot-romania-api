@@ -1,17 +1,3 @@
-#donate-link-button {
-  max-width: 200px;
-  width: calc(100vw - 200px);
-  margin-left: 2px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 17px;
-  background-color: #4dcb79;
-  text-decoration: none;
-  height: 45px;
-  border-radius: 5px;
-}
 .middle {
   display: flex;
   justify-content: center;
@@ -20,7 +6,7 @@
 .box {
   width: 55%;
   padding: 30px;
-  margin-top: 60px;
+  margin-bottom: 40px;
 
   &.box-dark {
     background: #352245;

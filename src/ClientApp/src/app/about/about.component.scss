@@ -1,0 +1,34 @@
+.title {
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.about {
+    p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+.contributors {
+    margin-top: 80px;
+    margin-bottom: 80px;
+
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+
+    p {
+        margin-bottom: 24px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .contributors {
+        flex-direction: column;
+        .contributor {
+            margin-bottom: 40px;
+            margin-left: 40px;
+        }
+    }
+}

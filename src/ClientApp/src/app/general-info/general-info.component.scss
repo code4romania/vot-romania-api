@@ -1,15 +1,18 @@
 .wrapper {
   background: #352245;
-  min-height: 300px;
   display: flex;
   align-items: center;
-  text-align: center;
+  flex-direction: column;
+
+  .logo{
+    margin-top: 80px;
+    margin-bottom: 40px;
+  }
 
   p {
     color: white;
-    padding-top: 115px;
-    padding-bottom: 40px;
     font-style: normal;
     font-weight: normal;
+    margin-bottom: 80px;
   }
 }

@@ -1,11 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { ApplicationState } from '../state/reducers';
 import { Store, select } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { getVotingGuide } from '../state/selectors';
-import { VotingGuide } from '../services/data.service';
-import { switchMap, map, take, tap } from 'rxjs/operators';
-import { ofType } from '@ngrx/effects';
+import { map } from 'rxjs/operators';
 
 export interface Tile {
   title: string;
@@ -22,8 +20,10 @@ export interface VotingGuideViewModel {
   styleUrls: ['./voters-guide.component.scss']
 })
 export class VotersGuideComponent implements OnInit, OnDestroy {
+  @ViewChild('optionTitle', {static: true}) optionTitle: ElementRef;
 
   description: string;
+  title: string;
 
   data: VotingGuideViewModel;
   subscription: Subscription;
@@ -55,9 +55,12 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  showDescriptionFor(tile: Tile): void {
+  showDescriptionFor(tile: Tile, targetElement: HTMLElement): void {
+    this.title = tile.title;
     this.description = tile.description;
     this.data.options.forEach(o => o.isSelected = false);
     tile.isSelected = true;
+    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
   }
 }

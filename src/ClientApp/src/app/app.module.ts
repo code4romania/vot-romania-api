@@ -26,6 +26,7 @@ import { PollingStationSearchComponent } from './polling-station-search/polling-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { HereAddressService } from './services/here-address.service';
 import { DataService } from './services/data.service';
+import { MatInputModule, MatDialogModule, MatButtonModule } from '@angular/material';
 import { MatInputModule, MatPaginatorModule, MatTableModule, MatSelect, MatSelectModule, MatSnackBarModule, MatDialogModule, MatToolbarModule, MatGridListModule, MatFormFieldModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatSortModule } from '@angular/material';
 import { AuthEffects } from './state/auth';
 import { LoginComponent } from './login/login.component';
@@ -37,6 +38,9 @@ import { ImportPollingStationsComponent } from './import-polling-stations/import
 import { ImportedPollingStationsTableComponent } from './import-polling-stations/imported-polling-stations-table/imported-polling-stations-table.component';
 import { ToasterService } from './services/toaster.service';
 import { PollingStationEditorComponent } from './imported-polling-station-editor/polling-station-editor.component';
+import { VotersOptionEditorComponent } from './admin-content/voters-option-editor/voters-option-editor.component';
+import { AboutComponent } from './about/about.component';
+import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
 
 const materialImports = [
   MatAutocompleteModule,
@@ -66,6 +70,8 @@ const appRoutes = [
   { path: 'admin/content', component: AdminContentComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'admin/import', component: ImportPollingStationsComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'admin/login', component: LoginComponent, pathMatch: 'full' },
+  { path: 'about', component: AboutComponent, pathMatch: 'full' },
+  { path: 'cookies-policy', component: CookiePolicyComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -85,13 +91,15 @@ const appRoutes = [
     LoginComponent,
     AdminComponent,
     AdminContentComponent,
+    VotersOptionEditorComponent,
+    AboutComponent,
+    CookiePolicyComponent,
     ImportPollingStationsComponent,
     ImportedPollingStationsTableComponent,
     PollingStationEditorComponent,
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
@@ -102,6 +110,9 @@ const appRoutes = [
     ReactiveFormsModule,
     ...materialImports,
     AngularEditorModule,
+  ],
+  entryComponents: [
+    VotersOptionEditorComponent
   ],
   providers: [
     HereAddressService,
