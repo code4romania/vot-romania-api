@@ -10,8 +10,8 @@ import { VotersDecisionTreeService, OperatorTreeNode } from '../services/voters-
 export interface Tile {
   title: string;
   description: string;
-  isSelected: boolean;
 }
+
 export interface VotingGuideViewModel {
   description: string;
   options: Tile[];
@@ -32,7 +32,7 @@ export interface VotingGuideViewModel {
   ]
 })
 export class VotersGuideComponent implements OnInit, OnDestroy {
-  @ViewChild('optionTitle', {static: true}) optionTitle: ElementRef;
+  @ViewChild('optionTitle', { static: true }) optionTitle: ElementRef;
 
   description: string;
   title: string;
@@ -43,7 +43,7 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
   options$: Observable<OperatorTreeNode[]> = this.votersDecisionTreeService.options$;
   isBeyondInitialQuestion$: Observable<boolean> = this.votersDecisionTreeService.isBeyondInitialQuestion$;
   hasError$: Observable<boolean> = this.votersDecisionTreeService.hasError$;
-  
+
   constructor(private store: Store<ApplicationState>,
     private votersDecisionTreeService: VotersDecisionTreeService) {
   }
@@ -71,14 +71,6 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.startOver();
 
-  }
-
-  showDescriptionFor(tile: Tile, targetElement: HTMLElement): void {
-    this.title = tile.title;
-    this.description = tile.description;
-    this.data.options.forEach(o => o.isSelected = false);
-    tile.isSelected = true;
-    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   selectOption(optionId: string): void {

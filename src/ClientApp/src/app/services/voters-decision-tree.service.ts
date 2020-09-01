@@ -115,6 +115,8 @@ export class VotersDecisionTreeService {
           '68d3'
         ]
       },
+
+      
       'initial': {
         id: 'initial',
         options: [
@@ -146,7 +148,7 @@ export class VotersDecisionTreeService {
     filter(([tree]) => treeIsErrorFree(tree)),
     map(([tree, { previousBranchIds }]) =>
       isInitialDecision(previousBranchIds)
-        ? 'Start by choosing an option from the list below.'
+        ? 'Incepe prin a alege una din optiunile de mai jos'
         : `${previousBranchIds
           .map(entityId => {
             return tree[entityId].label;

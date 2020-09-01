@@ -3,7 +3,7 @@
     margin-top: 50px;
     margin-bottom: 120px;
 
-    .description{
+    .description {
         font-style: normal;
         margin-top: 80px;
         margin-bottom: 80px;
@@ -30,7 +30,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid #352245;
+            border: 2px solid #352245;
             overflow: hidden;
 
             .check-icon-container {
@@ -105,51 +105,5 @@
         font-size: 16px;
         line-height: 24px;
         color: #000000;
-    }
-}
-
-
-button.option {
-    border-radius: 34px;
-    border: 0;
-    cursor: pointer;
-    display: block;
-    margin-bottom: 12px;
-    padding: 0;
-    text-align: left;
-  
-    &:active, &:hover, &:focus {
-      mat-card {
-        background-color: red;
-        color: white;
-      }
-    }
-  
-  }
-  
-  mat-card {
-    border-radius: 34px;
-    padding: 12px 24px;
-    transition: all 250ms;
-  }
-  
-  section {
-    margin-bottom: 16px;
-  }
-  
-  
-
-@media (max-width: 575px) {
-    .wrapper {
-        .tile-list {
-            display: block;
-        }
-
-        .options-list {
-            .option {
-                width: 48%;
-                margin: 1%;
-            }
-        }
     }
 }

@@ -1,51 +1,34 @@
 <ng-container *ngIf="data">
-
-  <h2 class="mat-subheading-2" tabindex="0">
-    {{currentSentence$ | async}}
-  </h2>
-  <ng-container *ngIf="isBeyondInitialQuestion$ | async">
-    <section>
-      <button (click)="back()" mat-button class="back">Back</button>
-      <button (click)="startOver()" mat-button color="warn" class="start-over">Start Over</button>
-    </section>
-  </ng-container>
-  <div>
-    <ng-container *ngFor="let option of options$ | async">
-      <ng-container *ngIf="option.options; else votingOptionTemplate">
-        <button class="option mat-body-1" (click)="selectOption(option.id, $event)" [@flyIn]>
-          <button>
-            {{option.label}}
-          </button>
-        </button>
-      </ng-container>
-      <ng-template #votingOptionTemplate>
-        <div *ngIf="option.votersOptionId" class="mat-body-1">
-          <div class="option-title" [innerHTML]="data.options[option.votersOptionId].title" #targetElement></div>
-          <div class="text-left option-description" [innerHTML]="data.options[option.votersOptionId].description"></div>
-        </div>
-        <p *ngIf="option.text">{{ option.text }}</p>
-      </ng-template>
-    </ng-container>
-  </div>
-
-  <!--   
   <div class="container wrapper">
-    <p class="description">{{ data.description }}</p>
-
-    <h3><u>Alege una din opțiunile de mai jos:</u></h3>
+    <h2 class="mat-subheading-2" tabindex="0">
+      {{currentSentence$ | async}}
+    </h2>
+    <ng-container *ngIf="isBeyondInitialQuestion$ | async">
+      <section>
+        <button (click)="back()" class="btn btn-secondary">Inapoi</button>
+        <button (click)="startOver()" class="btn btn-danger">Incepe din nou</button>
+      </section>
+    </ng-container>
 
     <div class="options-list">
-      <div class="option cursor-pointer" *ngFor="let option of data.options" [class.is-selected]="option.isSelected"
-        (click)="showDescriptionFor(option, targetElement)">
-        <span [innerHtml]="option.title"></span>
-        <div class="check-icon-container"></div>
-        <span class="check-icon"></span>
-      </div>
+      <ng-container *ngFor="let option of options$ | async">
+        <ng-container *ngIf="option.options; else votingOptionTemplate">
+          <div class="option cursor-pointer" (click)="selectOption(option.id, $event)" [@flyIn]>
+            <span [innerHtml]="option.label"></span>
+            <div class="check-icon-container"></div>
+            <span class="check-icon"></span>
+          </div>
+        </ng-container>
 
+        <ng-template #votingOptionTemplate>
+          <div *ngIf="option.votersOptionId" class="mat-body-1">
+            <div class="option-title" [innerHTML]="data.options[option.votersOptionId].title" #targetElement></div>
+            <div class="text-left option-description" [innerHTML]="data.options[option.votersOptionId].description">
+            </div>
+          </div>
+          <p *ngIf="option.text">{{ option.text }}</p>
+        </ng-template>
+      </ng-container>
     </div>
-
-    <div class="option-title" [innerHTML]="title" #targetElement></div>
-    <div class="text-left option-description" [innerHTML]="description"></div>
-  </div> -->
-
+  </div>
 </ng-container>
