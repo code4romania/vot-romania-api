@@ -4,7 +4,6 @@ import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin.component';
 import { AuthGuard } from '../services/auth.guard';
 import { AdminContentComponent } from './admin-content/admin-content.component';
-import { VotersOptionEditorComponent } from './admin-content/voters-option-editor/voters-option-editor.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
