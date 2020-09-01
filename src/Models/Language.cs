@@ -8,6 +8,7 @@ namespace VotRomania.Models
     {
         [EnumMember(Value = "unknown")] Unknown = 0,
         [EnumMember(Value = "Ro")] Ro = 1,
-        [EnumMember(Value = "Hu")] Hu = 2
+        [EnumMember(Value = "Hu")] Hu = 2,
+        [EnumMember(Value = "En")] En = 3
     }
 }
