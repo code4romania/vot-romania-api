@@ -49,79 +49,38 @@ export class VotersDecisionTreeService {
   getDecisionTree$(): Observable<OperatorDecisionTree> {
     // TODO: put it here
     const data: OperatorDecisionTree = {
-      '2fd3': {
-        id: '2fd3',
+
+      '0': {
+        id: '0',
         label: 'Esti cetatean roman?',
         options: [
-          '1ff3',
-          'efd3'
+          '00',
         ]
       },
+      '00': {
+        id: '00',
+        text: 'nu poti vota!'
+      },
+      '01': {
+        id: '01',
+        votersOptionId: 5
+      },
 
-      'efd3': {
-        id: 'efd3',
-        label: 'Nu locuiesti in romania?',
+      '1': {
+        id: '1',
+        label: 'Esti cetatean UE?',
         options: [
-          '68d3'
-        ]
-      },
-
-      '1ff3': {
-        id: '1ff3',
-        label: 'Locuiesti in romania?',
-        options: [
-          '5673',
-          'ff33'
-        ]
-      },
-
-      '68d3': {
-        id: '68d3',
-        label: 'race',
-        text: 'Nu poti vota!'
-      },
-      '5673': {
-        id: '5673',
-        label: 'adresa e ca in buletin?',
-        options: [
-          '1223'
-        ]
-      },
-      '1223': {
-        id: '1223',
-        votersOptionId: 6 // par example
-      },
-      'ff33': {
-        id: 'ff33',
-        label: 'bla bla alta adresa ....',
-        options: [
-
+          '01'
         ]
       },
 
 
-      // -------------------------------
-      'b925': {
-        id: 'b925',
-        label: 'Esti cetatean al unei alte tari din UE?',
-        options: [
-        ]
-      },
 
-      '5be5': {
-        id: '5be5',
-        label: 'I want to receive values only from the Observable that emits a value first',
-        options: [
-          '68d3'
-        ]
-      },
-
-      
       'initial': {
         id: 'initial',
         options: [
-          '2fd3',
-          'b925'
+          '0',
+          '1'
         ]
       }
     };
