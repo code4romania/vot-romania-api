@@ -1,0 +1,20 @@
+{
+	"donate": "Donează",
+	"votersGuide": {
+		"callToAction": "Începe prin a alege una din opțiunile de mai jos",
+		"label0": "Ești cetățean român",
+		"label1": "Ești cetățean al unei alte țări din Uniunea Europeană",
+		"label00": "Nu te vei afla în România pe 27 septembrie",
+		"label01": "Te vei afla în Romania pe 27 septembrie",
+		"label010": "Locuiești la adresa din buletin",
+		"label011": "Locuiești la altă adresă decât cea din buletin",
+		"label0110": "Ai pe spatele buletinului un autocolant cu viza de flotant",
+		"label0111": "Nu ai viză de flotant pe spatele buletinului",
+		"label01110": "Te poate lua cineva în spațiu",
+		"label01111": "Nu ai pe cineva care te poate lua în spațiu",
+		"label10": "Ești în evidența Inspectoratului General pentru Imigrări",
+		"label100": "Adresa la care locuiești nu se va schimba în intervalul 3-27 septembrie",
+		"label101": "Îți vei schimba adresa în intervalul 3-27 septembrie",
+		"label11": "Nu ești în evidența Inspectoratului General pentru Imigrări"
+	}
+}
