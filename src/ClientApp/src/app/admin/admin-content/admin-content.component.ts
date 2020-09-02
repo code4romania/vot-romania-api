@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { VotingGuide, Option } from '../services/data.service';
+import { VotingGuide, Option } from '../../services/data.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { select, Store } from '@ngrx/store';
-import { ApplicationState } from '../state/reducers';
-import { getError, getGeneralInfo, getSelectedLanguage, getVotingGuide } from '../state/selectors';
-import { ClearErrorAction, UpdateDataAction } from '../state/actions';
+import { ApplicationState } from '../../state/reducers';
+import { getError, getGeneralInfo, getSelectedLanguage, getVotingGuide } from '../../state/selectors';
+import { ClearErrorAction, UpdateDataAction } from '../../state/actions';
 import { MatDialog } from '@angular/material/dialog';
 import { VotersOptionEditorComponent } from './voters-option-editor/voters-option-editor.component';
 

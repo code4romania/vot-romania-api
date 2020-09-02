@@ -12,12 +12,11 @@ import {
 } from './actions';
 import { Observable, of } from 'rxjs';
 import { mergeMap, map, catchError, switchMap, tap } from 'rxjs/operators';
-import { Action, Store } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { DataService } from '../services/data.service';
 import { HereAddressService } from '../services/here-address.service';
 
-import { ApplicationState } from './reducers';
 import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
@@ -26,8 +25,7 @@ export class ApplicationEffects {
     constructor(private dataService: DataService,
                 private addressService: HereAddressService,
                 private router: Router,
-                private actions$: Actions,
-                private store$: Store<ApplicationState>) {
+                private actions$: Actions) {
     }
 
     @Effect()
@@ -46,7 +44,7 @@ export class ApplicationEffects {
         ofType(ActionTypes.UPDATE_DATA),
         mergeMap((action: UpdateDataAction) =>
             this.dataService.updateData(action.payload.data).pipe(
-                map(data => (new UpdateDataDoneAction())),
+                map(() => (new UpdateDataDoneAction())),
                 catchError(err => of(new UpdateDataErrorAction(err))
                 )
             )
