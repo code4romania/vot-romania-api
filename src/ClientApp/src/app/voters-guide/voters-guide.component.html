@@ -3,6 +3,13 @@
     <!-- <h2 class="mat-subheading-2" tabindex="0">
         {{ currentSentence$ | async | translate | joinTranslations: '...' }}
     </h2> -->
+    <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row">
+      <button (click)="startOver()" class="btn col-6">
+        << {{ 'back_to_start_button' | translate }}</button>
+          <button (click)="back()" class="btn col-6">
+            < {{ 'back_button' | translate }}</button>
+    </ng-container>
+
     <div class="options-list justify-content-center my-5">
       <ng-container *ngFor="let option of options$ | async">
         <ng-container *ngIf="option.options; else votingOptionTemplate">
@@ -13,44 +20,37 @@
           </div>
         </ng-container>
 
-        <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row">
-              <button (click)="startOver()" class="btn col-6">
-            << {{ 'back_to_start_button' | translate }}</button>
-            <button (click)="back()" class="btn col-6">
-              < {{ 'back_button' | translate }}</button>
-        </ng-container>
-
         <ng-template #votingOptionTemplate>
           <div *ngIf="option.votersOptionId">
             <h2 class="option-title" [innerHTML]="data.options[option.votersOptionId].title" #targetElement></h2>
             <p class="text-left option-description" [innerHTML]="data.options[option.votersOptionId].description">
             </p>
           </div>
-          <p *ngIf="option.text">{{ option.text | translate }}</p>
+          <div *ngIf="option.text" [innerHTML]="option.text | translate"></div>
         </ng-template>
       </ng-container>
     </div>
 
     <div class="row">
       <div class="col-12 col-lg-4">
-        <h3>{{ exceptional_cases.case1_title | translate }}</h3>
+        <h3>{{ 'exceptional_cases.case1_title' | translate }}</h3>
         <p>
-          {{ exceptional_cases.case1_p1 | translate }}
+          {{ 'exceptional_cases.case1_p1' | translate }}
         </p>
         <p>
-          {{ exceptional_cases.case1_p2 | translate }}
+          {{ 'exceptional_cases.case1_p2' | translate }}
         </p>
       </div>
       <div class="col-12 col-lg-4 py-4 py-lg-0">
-        <h3>{{ exceptional_cases.case2_title | translate }}</h3>
+        <h3>{{ 'exceptional_cases.case2_title' | translate }}</h3>
         <p>
-          {{ exceptional_cases.case2_p1 | translate }}
+          {{ 'exceptional_cases.case2_p1' | translate }}
         </p>
       </div>
       <div class="col">
-        <h3>{{ exceptional_cases.case3_title | translate }}</h3>
+        <h3>{{ 'exceptional_cases.case3_title' | translate }}</h3>
         <p>
-          {{ exceptional_cases.case3_p1 | translate }}
+          {{ 'exceptional_cases.case3_p1' | translate }}
         </p>
       </div>
     </div>
