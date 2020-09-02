@@ -8,11 +8,11 @@ import { LoadDataAction } from './state/actions';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private store:Store<any>) {
-    
+  constructor(private store: Store<any>) {
+
   }
+  title = 'app';
   ngOnInit(): void {
     this.store.dispatch(new LoadDataAction());
   }
-  title = 'app';
 }

@@ -1,3 +1,5 @@
+@import "./_fonts";
+
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import "~@angular/material/theming";
@@ -29,9 +31,8 @@ $VotRomania-theme: mat-light-theme(
 // that you are using.
 @include angular-material-theme($VotRomania-theme);
 
-@import "node_modules/bootstrap/scss/functions";
-@import "node_modules/bootstrap/scss/variables";
-@import "node_modules/bootstrap/scss/mixins";
+
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 $font-family-sans-serif: "Titillium Web", sans-serif;
 
