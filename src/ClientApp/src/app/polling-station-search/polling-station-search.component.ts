@@ -137,7 +137,6 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         pixelRatio: pixelRatio
       });
 
-    new H.mapevents.Behavior(new H.mapevents.MapEvents(this.hereMap));
     this.mapUi = H.ui.UI.createDefault(this.hereMap, defaultLayers);
   }
 

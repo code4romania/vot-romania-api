@@ -26,7 +26,7 @@ import { DataService } from './services/data.service';
 import { AboutComponent } from './about/about.component';
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
 import { AdminModule } from './admin/admin.module';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { JoinTranslationsPipe } from './join-translations.pipe';
 
