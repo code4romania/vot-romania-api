@@ -26,31 +26,31 @@
             <p class="text-left option-description" [innerHTML]="data.options[option.votersOptionId].description">
             </p>
           </div>
-          <p *ngIf="option.text">{{ option.text | translate }}</p>
+          <div *ngIf="option.text" [innerHTML]="option.text | translate"></div>
         </ng-template>
       </ng-container>
     </div>
 
     <div class="row">
       <div class="col-12 col-lg-4">
-        <h3>{{ exceptional_cases.case1_title | translate }}</h3>
+        <h3>{{ 'exceptional_cases.case1_title' | translate }}</h3>
         <p>
-          {{ exceptional_cases.case1_p1 | translate }}
+          {{ 'exceptional_cases.case1_p1' | translate }}
         </p>
         <p>
-          {{ exceptional_cases.case1_p2 | translate }}
+          {{ 'exceptional_cases.case1_p2' | translate }}
         </p>
       </div>
       <div class="col-12 col-lg-4 py-4 py-lg-0">
-        <h3>{{ exceptional_cases.case2_title | translate }}</h3>
+        <h3>{{ 'exceptional_cases.case2_title' | translate }}</h3>
         <p>
-          {{ exceptional_cases.case2_p1 | translate }}
+          {{ 'exceptional_cases.case2_p1' | translate }}
         </p>
       </div>
       <div class="col">
-        <h3>{{ exceptional_cases.case3_title | translate }}</h3>
+        <h3>{{ 'exceptional_cases.case3_title' | translate }}</h3>
         <p>
-          {{ exceptional_cases.case3_p1 | translate }}
+          {{ 'exceptional_cases.case3_p1' | translate }}
         </p>
       </div>
     </div>
