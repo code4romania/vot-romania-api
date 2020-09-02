@@ -217,7 +217,7 @@ export class VotersDecisionTreeService {
       },
       '011110': {
         id: '011110',
-        votersOptionId: 5
+        label: 'votersGuide.label011110',
       },
       '10': {
         id: '10',
