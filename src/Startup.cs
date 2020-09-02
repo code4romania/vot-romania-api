@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using VotRomania.Extensions;
 using VotRomania.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using VotRomania.Providers;
 using VotRomania.Services;
@@ -48,21 +49,26 @@ namespace VotRomania
             services.AddMemoryCache();
 
             services.AddHealthChecks();
-            services.Configure<DatabaseOptions>(Configuration.GetSection("Database"));
             services.Configure<HereMapsOptions>(Configuration.GetSection("HereMaps"));
 
             var authenticationSection = Configuration.GetSection("Authentication");
             services.Configure<AuthSettingOptions>(authenticationSection);
             services.Configure<ApplicationUsersOptions>(Configuration.GetSection("UserSettings"));
+            services.AddPostgreSqlDbContext(Configuration);
 
+            services.AddScoped<IPollingStationsRepository, PollingStationsRepository>();
+            services.AddScoped<IApplicationContentRepository, ApplicationContentRepository>();
             services.AddDbContext<VotRomaniaContext>(ServiceLifetime.Singleton);
-            services.AddSingleton<IPollingStationsRepository, PollingStationsRepository>();
-            services.AddSingleton<IApplicationContentRepository, ApplicationContentRepository>();
-            services.AddSingleton<IImportJobsRepository, ImportJobsRepository>();
-            services.AddSingleton<IImportedPollingStationsRepository, ImportedPollingStationsRepository>();
+            services.AddScoped<IPollingStationsRepository, PollingStationsRepository>();
+            services.AddScoped<IApplicationContentRepository, ApplicationContentRepository>();
+            services.AddScoped<IImportJobsRepository, ImportJobsRepository>();
+            services.AddScoped<IImportedPollingStationsRepository, ImportedPollingStationsRepository>();
 
-            services.AddTransient<IAddressLocationSearchService, HereAddressLocationSearchService>();
-            services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>();
+            services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>((services) =>
+            {
+                var votRomaniaContext = services.GetService<VotRomaniaContext>();
+                return new IneffectiveSearchService(votRomaniaContext);
+            });
 
             services.AddHostedService<QueuedHostedService>();
             services.AddSingleton<IBackgroundJobsQueue, BackgroundJobsQueue>();
@@ -178,8 +184,10 @@ namespace VotRomania
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VotRomaniaContext dbContext)
         {
+            dbContext.Database.Migrate();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

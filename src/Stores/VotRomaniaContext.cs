@@ -1,15 +1,11 @@
-﻿using System.IO;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using VotRomania.Options;
+﻿using Microsoft.EntityFrameworkCore;
 using VotRomania.Stores.Entities;
 
 namespace VotRomania.Stores
 {
     public class VotRomaniaContext : DbContext
     {
+        public VotRomaniaContext(DbContextOptions<VotRomaniaContext> options) : base(options)
         private readonly ILogger _logger;
         private readonly DatabaseOptions _databaseOptions;
         private static readonly ILoggerFactory _loggerFactory
@@ -24,8 +20,6 @@ namespace VotRomania.Stores
             IOptions<DatabaseOptions> databaseOptions,
             ILoggerFactory loggerFactory)
         {
-            _logger = logger;
-            _databaseOptions = databaseOptions.Value;
         }
 
         public DbSet<ApplicationContentEntity> ApplicationContent { get; set; }

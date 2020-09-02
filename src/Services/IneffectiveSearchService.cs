@@ -3,39 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
+using Microsoft.EntityFrameworkCore;
 using VotRomania.Models;
 using VotRomania.Stores;
+using VotRomania.Stores.Entities;
 
 namespace VotRomania.Services
 {
     public class IneffectiveSearchService : IPollingStationSearchService
     {
-        private readonly IPollingStationsRepository _pollingStationsRepository;
+        private readonly VotRomaniaContext _context;
 
-
-        private List<(GeoCoordinate Coordinates, PollingStationModel[] PollingStations)>? _pollingStations;
+        private List<(GeoCoordinate Coordinates, PollingStationModel[] PollingStations)> _pollingStations;
 
         // TODO: Change to KDTree
-        public IneffectiveSearchService(IPollingStationsRepository pollingStationsRepository)
+        public IneffectiveSearchService(VotRomaniaContext context)
         {
-            _pollingStationsRepository = pollingStationsRepository;
+            _context = context;
             PrefillPollingStationsCache().GetAwaiter().GetResult();
         }
 
         private async Task PrefillPollingStationsCache()
         {
-            var pollingStationsResult = await _pollingStationsRepository.GetPollingStationsAsync();
+            var pollingStations = _context.PollingStations
+                .Select(pollingStation => new PollingStationModel()
+                {
+                    Id = pollingStation.Id,
+                    Address = pollingStation.Address,
+                    Longitude = pollingStation.Longitude,
+                    Latitude = pollingStation.Latitude,
+                    County = pollingStation.County,
+                    PollingStationNumber = pollingStation.PollingStationNumber,
+                    Locality = pollingStation.Locality,
+                    Institution = pollingStation.Institution,
+                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a))
+                })
+                .ToListAsync();
 
-            if (pollingStationsResult.IsFailure)
-            {
-                throw new ApplicationException("could not load polling stations");
-            }
-
-            _pollingStations = pollingStationsResult
-                .Value
-                .Results
+            _pollingStations = pollingStations
                 .GroupBy(
-                    x => new { lat = x.Latitude, lng = x.Longitude },
+                    x => new
+                    {
+                        lat = x.Latitude,
+                        lng = x.Longitude
+                    },
+                        p => p,
+                        (key, pollingStationsInfos) => (new GeoCoordinate(key.lat, key.lng), pollingStationsInfos.ToArray())
+                        )
+                    .ToList();
+            x => new { lat = x.Latitude, lng = x.Longitude },
                     p => p,
                     (key, pollingStationsInfos) => (new GeoCoordinate(key.lat, key.lng), pollingStationsInfos.ToArray())
                 )

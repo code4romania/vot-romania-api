@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -11,9 +11,7 @@ export class AuthGuard implements CanActivate {
 
     }
 
-    public async canActivate(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Promise<boolean> {
+    public async canActivate(): Promise<boolean> {
 
         if (!this.authService.getToken()) {
             this.router.navigate(['admin', 'login']);

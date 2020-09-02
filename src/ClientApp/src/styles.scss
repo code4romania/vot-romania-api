@@ -1,3 +1,5 @@
+@import "./_fonts";
+
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import "~@angular/material/theming";
@@ -25,9 +27,8 @@ $VotRomania-theme: mat-light-theme( $VotRomania-primary, $VotRomania-accent, $Vo
 // that you are using.
 @include angular-material-theme($VotRomania-theme);
 
-@import "node_modules/bootstrap/scss/functions";
-@import "node_modules/bootstrap/scss/variables";
-@import "node_modules/bootstrap/scss/mixins";
+
+@import "../node_modules/bootstrap/scss/bootstrap";
 
 $font-family-sans-serif: "Titillium Web", sans-serif;
 
@@ -86,5 +87,17 @@ snack-bar-container.notification simple-snack-bar {
 }
 
 .margin-bottom-80 {
-    margin-bottom: 80px;
+  margin-bottom: 80px;
+}
+
+.coming-soon {
+  width: 100%;
+  min-height: 50px;
+  background-color: #fc0;
+  color: #352245;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px;
+  margin-bottom: 100px;
 }

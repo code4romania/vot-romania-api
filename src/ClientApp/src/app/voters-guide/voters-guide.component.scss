@@ -3,7 +3,7 @@
     margin-top: 50px;
     margin-bottom: 120px;
 
-    .description{
+    .description {
         font-style: normal;
         margin-top: 80px;
         margin-bottom: 80px;
@@ -30,7 +30,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid #352245;
+            border: 2px solid #352245;
             overflow: hidden;
 
             .check-icon-container {
@@ -105,20 +105,5 @@
         font-size: 16px;
         line-height: 24px;
         color: #000000;
-    }
-}
-
-@media (max-width: 575px) {
-    .wrapper {
-        .tile-list {
-            display: block;
-        }
-
-        .options-list {
-            .option {
-                width: 48%;
-                margin: 1%;
-            }
-        }
     }
 }

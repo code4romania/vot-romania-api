@@ -1,7 +1,3 @@
-nav {
-  font-size: 18px;
-}
-
 .dropdown-menu {
   &.small {
     min-width: 0;
@@ -12,10 +8,4 @@ nav {
   background-color: #6fcf97;
   border: 0 none;
   font-size: 18px;
-}
-
-@media screen and (max-width: 575px) {
-  .dropdown-menu {
-    left: -50% !important;
-  }
 }
