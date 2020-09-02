@@ -5,9 +5,9 @@
     </h2> -->
     <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row">
       <button (click)="back()" class="btn col-6">
-        < Înapoi</button>
+        <  {{ 'back_button' | translate }}</button>
           <button (click)="startOver()" class="btn col-6">
-            << Începe din nou</button>
+            << {{ 'back_to_start_button' | translate }}</button>
     </ng-container>
 
     <div class="options-list justify-content-center my-5">
@@ -26,43 +26,31 @@
             <p class="text-left option-description" [innerHTML]="data.options[option.votersOptionId].description">
             </p>
           </div>
-          <p *ngIf="option.text">{{ option.text }}</p>
+          <p *ngIf="option.text">{{ option.text | translate }}</p>
         </ng-template>
       </ng-container>
     </div>
 
     <div class="row">
       <div class="col-12 col-lg-4">
-        <h3>Ești imobilizat la domiciliu sau în unități speciale (ex: spital)</h3>
+        <h3>{{ exceptional_cases.case1_title | translate }}</h3>
         <p>
-          Dacă nu te poți deplasa la secția de votare pentru că ești bolnav sau invalid, poți solicita urna mobilă.
-          Pentru acest lucru trebuie să faci o cerere, împreună cu actele din care rezultă starea de sănătate și să
-          o transmiți președintelui biroului electoral al secției de votare.
+          {{ exceptional_cases.case1_p1 | translate }}
         </p>
-
         <p>
-          Dacă ești reținut, pe baza unui mandat de arestare, sub măsura preventivă a arestului la domiciliu, sau
-          execuți o pedeapsă privativă de libertate și nu ți-ai pierdut drepturile electorale poți solicita urna
-          mobilă conform cu procedurile stabilite pentru acest caz de către Biroul Electoral Central.
+          {{ exceptional_cases.case1_p2 | translate }}
         </p>
       </div>
       <div class="col-12 col-lg-4 py-4 py-lg-0">
-        <h3>Ești diagnosticat cu Covid și te afli în carantină sau internat?</h3>
+        <h3>{{ exceptional_cases.case2_title | translate }}</h3>
         <p>
-          Conform declarațiilor președintelui AEP, persoanele infectate cu noul coronavirus, care se află în
-          carantină, izolare sau internate în spital vor putea vota la alegerile locale solicitând urna mobilă. Doar
-          pacienții internați la terapie intensivă vor avea condiții speciale. Pentru a solicita urna mobilă trebuie
-          să faci o cerere, împreună cu actele din care rezultă starea de sănătate și să o transmiți președintelui
-          biroului electoral al secției de votare.
+          {{ exceptional_cases.case2_p1 | translate }}
         </p>
       </div>
-      <div class="col-12 col-lg-4">
-        <h3>Cetățean în incapacitate de a semna sau aplica ștampila în secție</h3>
+      <div class="col">
+        <h3>{{ exceptional_cases.case3_title | translate }}</h3>
         <p>
-          Dacă ești un cetățean cu dizabilități și te prezinți în secție și nu poți semna pe lista electorală din
-          motive de invaliditate sau nu poți aplica ștampila pe buletin și președintele secției de votare constată
-          acest lucru, poți fi însoțit în cabină de un însoțitor pe care îl alegi tu și care nu este din rândul
-          persoanelor acreditate, al membrilor biroului electoral al secţiei de votare sau al candidaţilor.
+          {{ exceptional_cases.case3_p1 | translate }}
         </p>
       </div>
     </div>

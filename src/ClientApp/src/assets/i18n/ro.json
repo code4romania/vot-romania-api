@@ -1,5 +1,6 @@
 {
 	"donate": "Donează",
+	"nav_about": "Despre",
 	"votersGuide": {
 		"callToAction": "Începe prin a alege una din opțiunile de mai jos",
 		"label0": "Ești cetățean român",
@@ -16,5 +17,34 @@
 		"label100": "Adresa la care locuiești nu se va schimba în intervalul 3-27 septembrie",
 		"label101": "Îți vei schimba adresa în intervalul 3-27 septembrie",
 		"label11": "Nu ești în evidența Inspectoratului General pentru Imigrări"
-	}
+	},
+	"exceptional_cases": {
+		"case1_title": "Ești imobilizat la domiciliu sau în unități speciale (ex: spital)",
+		"case1_p1": "Dacă nu te poți deplasa la secția de votare pentru că ești bolnav sau invalid, poți solicita urna mobilă. Pentru acest lucru trebuie să faci o cerere, împreună cu actele din care rezultă starea de sănătate și să o transmiți președintelui biroului electoral al secției de votare.",
+		"case1_p2": "Dacă ești reținut, pe baza unui mandat de arestare, sub măsura preventivă a arestului la domiciliu, sau execuți o pedeapsă privativă de libertate și nu ți-ai pierdut drepturile electorale poți solicita urna mobilă conform cu procedurile stabilite pentru acest caz de către Biroul Electoral Central.",
+		"case2_title": "Ești diagnosticat cu Covid și te afli în carantină sau internat?",
+		"case2_p1": "Conform declarațiilor președintelui AEP, persoanele infectate cu noul coronavirus, care se află în carantină, izolare sau internate în spital vor putea vota la alegerile locale solicitând urna mobilă. Doar pacienții internați la terapie intensivă vor avea condiții speciale. Pentru a solicita urna mobilă trebuie să faci o cerere, împreună cu actele din care rezultă starea de sănătate și să o transmiți președintelui biroului electoral al secției de votare.",
+		"case3_title": "Poți ajunge în secția de votare dar ai nevoie de ajutor pentru a aplica ștampila",
+		"case3_p1": "Dacă ești un cetățean cu dizabilități și te prezinți în secție și nu poți semna pe lista electorală din motive de invaliditate sau nu poți aplica ștampila pe buletin și președintele secției de votare constată acest lucru, poți fi însoțit în cabină de un însoțitor pe care îl alegi tu și care nu este din rândul persoanelor acreditate, al membrilor biroului electoral al secţiei de votare sau al candidaţilor."
+	},
+	"back_button": "Înapoi",
+	"back_to_start_button": "Înapoi la început",
+	"introduction": "Pe 27 septembrie au loc alegeri locale în România. Românii și cetățenii altor state din Uniunea Europeană cu domiciliul sau reședința pe teritoriul României au dreptul de a-și alege primarii, consilierii locali și consilierii județeni. Descoperă cu ajutorul Vot România unde poți vota, în ce condiții și care sunt actele de care ai nevoie pentru a face acest lucru.",
+	"about": {
+		"title": "Despre proiect",
+		"p1": "Vot România este o platformă care simplifică pe înțelesul cetățenilor ghidul electoral al alegerilor locale, care vor avea loc la finalul lunii septembrie 2020. Vot România este cel de-al patrulea proiect pe care Code for Romania îl realizează pentru a facilita accesul cetățenilor la informație și a ajuta la o mai mare transparență a procesului electoral.",
+		"p21": "Accesând",
+		"p22": "toți cetățenii vor putea să verifice, alături de documentele și procedurile necesare pentru a vota și care este secția la care sunt arondați în funcție de statutul fiecăruia. Website-ul va fi disponibil cu informații actualizate la fiecare nouă rundă electorală. Conținutul prezent pe platforma Vot România este realizat în parteneriat cu experții electorali ai Observatorului Electoral.",
+		"p31": "Vot România face parte din ecosistemul electoral dezvoltat de voluntarii Code for Romania, fiind cea de-a patra aplicație dedicată procesului electoral din țara noastră. Monitorizare Vot este aplicația web și mobilă dedicată observatorilor electorali independenți - prima aplicație de monitorizare electorală din România, fiind și cea mai utilizată de acest tip la nivel global. Lansată în 2016 aceasta a fost folosită la toate rundele electorale din ultimii patru ani și a fost preluată inclusiv în Polonia, în 2018, în cadrul primelor alegeri monitorizate independent în statul polonez. A doua aplicație din ecosistem este Vot Diaspora, o aplicație web destinată românilor de peste hotare pentru a le oferi sprijin pe durata alegerilor pentru a descoperi unde pot vota și de ce documente au nevoie sau ce proceduri trebuie să parcurgă pentru a vota. La alegerile Europarlamentare din 2019, aplicația a fost utilizată de 25% din totalul alegătorilor din diaspora, iar la ultima rundă a alegerilor prezidențiale, 185.000 alegători s-au informat prin",
+		"p32": "A treia soluție este Rezultate Vot, website lansat în 2019 cu ocazia alegerilor europarlamentare - o platformă care arată în timp real prezența la vot și rezultatele alegerilor. Din anul 2020 platforma va cuprinde și întregul istoric electoral post-decembrist și alte funcționalități în premieră pentru România, fiind nu doar locul unde vor putea fi aflate cel mai rapid și ușor rezultatele alegerilor, ci și un bun instrument de analiză comparativă a datelor.",
+		"p4": "Toate aplicațiile din ecosistemul dedicat alegerilor sunt dezvoltate pro bono de către voluntarii Code for Romania în cadrul Civic Labs, unul dintre programele prin care asociația proiectează soluții de tehnologie civică pentru probleme din șase domenii-cheie pentru societatea românească - educație, sănătate, mediu, grupuri vulnerabile, transparență și implicare civică.",
+		"p5.1": "Code for Romania este o organizație non-profit care dezvoltă pro bono soluții digitale pentru a rezolva probleme sociale. Înființată în anul 2016, Code for Romania a ajuns în prezent la o comunitate de peste 1700 de voluntari din sectorul IT care au dezvoltat zeci de aplicații web și mobile pentru România, precum cele din ecosistemul Covid-19,",
+		"p5.2": "și altele.",
+		"p6": "Soluție proiectată în:",
+		"p7": "dezvoltată pro-bono de:",
+		"p8": "în parteneriat cu:"
+	},
+	"map_hero_p1": "În curând aici vei găsi o hartă și un buton de căutare care te vor ajuta să găsești secția de votare de care aparții. <br> Dacă Vot România te ajută, fă o",
+	"map_hero_p2": "donație oricât de mică",
+	"map_hero_p3": "pentru Code for Romania care a dezvoltat acest site complet pro bono."
 }
