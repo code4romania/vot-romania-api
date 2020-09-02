@@ -1,39 +1,18 @@
-﻿using System.IO;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using VotRomania.Options;
+﻿using Microsoft.EntityFrameworkCore;
 using VotRomania.Stores.Entities;
 
 namespace VotRomania.Stores
 {
     public class VotRomaniaContext : DbContext
     {
-        private readonly ILogger _logger;
-        private readonly DatabaseOptions _databaseOptions;
-
-        public VotRomaniaContext(
-            ILogger<VotRomaniaContext> logger,
-            IOptions<DatabaseOptions> databaseOptions)
+        public VotRomaniaContext(DbContextOptions<VotRomaniaContext> options) : base(options)
         {
-            _logger = logger;
-            _databaseOptions = databaseOptions.Value;
         }
 
         public DbSet<PollingStationEntity> PollingStations { get; set; }
         public DbSet<ApplicationContentEntity> ApplicationContent { get; set; }
         public DbSet<PollingStationAddressEntity> PollingStationAddresses { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var connectionStringBuilder = new SqliteConnectionStringBuilder();
-            connectionStringBuilder.DataSource = _databaseOptions.DatabasePath.Replace("\\", Path.DirectorySeparatorChar.ToString());
-            connectionStringBuilder.Mode = SqliteOpenMode.ReadWriteCreate;
-            optionsBuilder.UseSqlite(connectionStringBuilder.ConnectionString);
-
-            base.OnConfiguring(optionsBuilder);
-        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

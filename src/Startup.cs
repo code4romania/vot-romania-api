@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using VotRomania.Extensions;
 using VotRomania.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using VotRomania.Providers;
 using VotRomania.Services;
 using VotRomania.Stores;
@@ -41,17 +42,20 @@ namespace VotRomania
         {
             services.AddOptions();
             services.AddHealthChecks();
-            services.Configure<DatabaseOptions>(Configuration.GetSection("Database"));
 
             var authenticationSection = Configuration.GetSection("Authentication");
             services.Configure<AuthSettingOptions>(authenticationSection);
             services.Configure<ApplicationUsersOptions>(Configuration.GetSection("UserSettings"));
+            services.AddPostgreSqlDbContext(Configuration);
 
-            services.AddDbContext<VotRomaniaContext>(ServiceLifetime.Singleton);
-            services.AddSingleton<IPollingStationsRepository, PollingStationsRepository>();
-            services.AddSingleton<IApplicationContentRepository, ApplicationContentRepository>();
+            services.AddScoped<IPollingStationsRepository, PollingStationsRepository>();
+            services.AddScoped<IApplicationContentRepository, ApplicationContentRepository>();
 
-            services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>();
+            services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>((services) =>
+            {
+                var votRomaniaContext = services.GetService<VotRomaniaContext>();
+                return new IneffectiveSearchService(votRomaniaContext);
+            });
 
             services.AddScoped<IUserProvider, UserProvider>();
             services.AddScoped<IAuthenticationProvider, AuthenticationProvider>();
@@ -160,8 +164,10 @@ namespace VotRomania
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VotRomaniaContext dbContext)
         {
+            dbContext.Database.Migrate();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

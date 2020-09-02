@@ -2,32 +2,51 @@
 using System.Linq;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
+using Microsoft.EntityFrameworkCore;
 using VotRomania.Models;
 using VotRomania.Stores;
+using VotRomania.Stores.Entities;
 
 namespace VotRomania.Services
 {
     public class IneffectiveSearchService : IPollingStationSearchService
     {
-        private readonly IPollingStationsRepository _pollingStationsRepository;
-
+        private readonly VotRomaniaContext _context;
 
         private readonly List<(GeoCoordinate Coordinates, PollingStationModel[] PollingStations)> _pollingStations;
 
         // TODO: Change to KDTree
-        public IneffectiveSearchService(IPollingStationsRepository pollingStationsRepository)
+        public IneffectiveSearchService(VotRomaniaContext context)
         {
-            _pollingStationsRepository = pollingStationsRepository;
-            var pollingStations = pollingStationsRepository.GetPollingStationsAsync().GetAwaiter().GetResult();
+            _context = context;
+            var pollingStations = _context.PollingStations
+                .Select(pollingStation => new PollingStationModel()
+                {
+                    Id = pollingStation.Id,
+                    Address = pollingStation.Address,
+                    Longitude = pollingStation.Longitude,
+                    Latitude = pollingStation.Latitude,
+                    County = pollingStation.County,
+                    PollingStationNumber = pollingStation.PollingStationNumber,
+                    Locality = pollingStation.Locality,
+                    Institution = pollingStation.Institution,
+                    AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a))
+                })
+                .ToListAsync()
+                .GetAwaiter()
+                .GetResult();
 
             _pollingStations = pollingStations
-                .Results
                 .GroupBy(
-                    x => new { lat = x.Latitude, lng = x.Longitude },
-                    p => p,
-                    (key, pollingStationsInfos) => (new GeoCoordinate(key.lat, key.lng), pollingStationsInfos.ToArray())
-                    )
-                .ToList();
+                    x => new
+                    {
+                        lat = x.Latitude,
+                        lng = x.Longitude
+                    },
+                        p => p,
+                        (key, pollingStationsInfos) => (new GeoCoordinate(key.lat, key.lng), pollingStationsInfos.ToArray())
+                        )
+                    .ToList();
         }
 
         public Task<PollingStationsGroupModel[]> GetNearestPollingStationsAsync(double latitude, double longitude)
@@ -45,6 +64,24 @@ namespace VotRomania.Services
                 .ToArray();
 
             return Task.FromResult(pollingStationsInfos);
+        }
+        private static AssignedAddresses MapToAssignedAddresses(PollingStationAddressEntity pollingStationAssignedAddress)
+        {
+            if (pollingStationAssignedAddress == null)
+            {
+                return null;
+            }
+
+            return new AssignedAddresses
+            {
+                Id = pollingStationAssignedAddress.Id,
+                PollingStationId = pollingStationAssignedAddress.PollingStationId,
+                HouseNumbers = pollingStationAssignedAddress.HouseNumbers,
+                Remarks = pollingStationAssignedAddress.Remarks,
+                Street = pollingStationAssignedAddress.Street,
+                Locality = pollingStationAssignedAddress.Locality,
+                StreetCode = pollingStationAssignedAddress.StreetCode
+            };
         }
     }
 }
