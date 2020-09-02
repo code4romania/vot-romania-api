@@ -63,7 +63,7 @@
       display: flex;
       align-items: center;
       text-align: center;
-      
+
       .ps-address-label {
         background: #FFCC00;
         font-family: 'Titillium Web';
@@ -82,7 +82,6 @@
 .ps-list {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
   flex-wrap: wrap;
   align-items: flex-start;
   flex-flow: row wrap;
@@ -103,7 +102,7 @@
     margin-left: 0;
 
   }
-  
+
   h5 {
     text-align: center;
   }
