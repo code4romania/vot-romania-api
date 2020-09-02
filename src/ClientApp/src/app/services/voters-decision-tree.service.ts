@@ -75,7 +75,7 @@ export class VotersDecisionTreeService {
           .map(entityId => {
             return tree[entityId].label;
           })
-          .filter(value => value);
+          .filter(val => val);
 
       return value;
     }
