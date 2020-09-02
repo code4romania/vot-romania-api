@@ -1,16 +1,10 @@
 <ng-container *ngIf="data">
-  <div class="container wrapper justify-content-center">
-    <!-- <h2 class="mat-subheading-2" tabindex="0">
-        {{ currentSentence$ | async | translate | joinTranslations: '...' }}
-    </h2> -->
-    <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row">
-      <button (click)="startOver()" class="btn col-6">
-        << {{ 'back_to_start_button' | translate }}</button>
-          <button (click)="back()" class="btn col-6">
-            < {{ 'back_button' | translate }}</button>
-    </ng-container>
+  <div class="container wrapper justify-content-center text-center">
+    <h3>
+      {{ "guide_title" | translate }}
+    </h3>
 
-    <div class="options-list justify-content-center my-5">
+    <div class="options-list justify-content-center my-2">
       <ng-container *ngFor="let option of options$ | async">
         <ng-container *ngIf="option.options; else votingOptionTemplate">
           <div class="option cursor-pointer" (click)="selectOption(option.id, $event)" [@flyIn]>
@@ -21,19 +15,26 @@
         </ng-container>
 
         <ng-template #votingOptionTemplate>
-          <div *ngIf="option.votersOptionId">
+          <div *ngIf="option.votersOptionId" class="text-left">
             <h2 class="option-title" [innerHTML]="data.options[option.votersOptionId].title" #targetElement></h2>
             <p class="text-left option-description" [innerHTML]="data.options[option.votersOptionId].description">
             </p>
           </div>
-          <div *ngIf="option.text" [innerHTML]="option.text | translate"></div>
+          <div class="text-left" *ngIf="option.text" [innerHTML]="option.text | translate"></div>
         </ng-template>
       </ng-container>
     </div>
 
-    <div class="row">
+    <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row">
+      <button (click)="startOver()" class="btn col-6">
+        << {{ 'back_to_start_button' | translate }}</button>
+          <button (click)="back()" class="btn col-6">
+            < {{ 'back_button' | translate }}</button>
+    </ng-container>
+
+    <div class="row mt-5">
       <div class="col-12 col-lg-4">
-        <h3>{{ 'exceptional_cases.case1_title' | translate }}</h3>
+        <p><b>{{ 'exceptional_cases.case1_title' | translate }}</b></p>
         <p>
           {{ 'exceptional_cases.case1_p1' | translate }}
         </p>
@@ -42,13 +43,13 @@
         </p>
       </div>
       <div class="col-12 col-lg-4 py-4 py-lg-0">
-        <h3>{{ 'exceptional_cases.case2_title' | translate }}</h3>
+        <p><b>{{ 'exceptional_cases.case2_title' | translate }}</b></p>
         <p>
           {{ 'exceptional_cases.case2_p1' | translate }}
         </p>
       </div>
       <div class="col">
-        <h3>{{ 'exceptional_cases.case3_title' | translate }}</h3>
+        <p><b>{{ 'exceptional_cases.case3_title' | translate }}</b></p>
         <p>
           {{ 'exceptional_cases.case3_p1' | translate }}
         </p>
