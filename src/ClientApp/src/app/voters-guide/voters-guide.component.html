@@ -1,7 +1,7 @@
 <ng-container *ngIf="data">
   <div class="container wrapper">
     <h2 class="mat-subheading-2" tabindex="0">
-      {{currentSentence$ | async}}
+      {{ currentSentence$ | async | translate | joinTranslations: '...' }}
     </h2>
     <ng-container *ngIf="isBeyondInitialQuestion$ | async">
       <section>
@@ -14,7 +14,7 @@
       <ng-container *ngFor="let option of options$ | async">
         <ng-container *ngIf="option.options; else votingOptionTemplate">
           <div class="option cursor-pointer" (click)="selectOption(option.id, $event)" [@flyIn]>
-            <span [innerHtml]="option.label"></span>
+            <span>{{option.label | translate }}</span>
             <div class="check-icon-container"></div>
             <span class="check-icon"></span>
           </div>
