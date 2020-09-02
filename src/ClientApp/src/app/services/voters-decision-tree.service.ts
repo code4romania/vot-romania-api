@@ -157,7 +157,7 @@ export class VotersDecisionTreeService {
       },
       '000': {
         id: '000',
-        votersOptionId: 1
+        text: 'votersGuide.label000'
       },
       '010': {
         id: '010',
@@ -168,7 +168,7 @@ export class VotersDecisionTreeService {
       },
       '0100': {
         id: '0100',
-        votersOptionId: 2
+        text: 'votersGuide.label0100'
       },
       '011': {
         id: '011',
@@ -187,7 +187,7 @@ export class VotersDecisionTreeService {
       },
       '01100': {
         id: '01100',
-        votersOptionId: 3
+        text: 'votersGuide.label01100'
       },
       '0111': {
         id: '0111',
@@ -206,7 +206,7 @@ export class VotersDecisionTreeService {
       },
       '011100': {
         id: '011100',
-        votersOptionId: 4
+        text: 'votersGuide.label011100'
       },
       '01111': {
         id: '01111',
@@ -236,7 +236,7 @@ export class VotersDecisionTreeService {
       },
       '1000': {
         id: '1000',
-        votersOptionId: 6
+        text: 'votersGuide.label1000'
       },
       '101': {
         id: '101',
@@ -247,7 +247,7 @@ export class VotersDecisionTreeService {
       },
       '1010': {
         id: '1010',
-        votersOptionId: 7
+        text: 'votersGuide.label1010'
       },
       '11': {
         id: '11',
@@ -258,7 +258,7 @@ export class VotersDecisionTreeService {
       },
       '110': {
         id: '110',
-        votersOptionId: 8
+        text: 'votersGuide.label110'
       },
     };
 
