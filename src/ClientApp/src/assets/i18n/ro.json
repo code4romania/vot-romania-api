@@ -61,7 +61,8 @@
 	},
 	"donate_card": {
 		"title": "Susține-ne",
-		"text": "Vot România este un proiect dezvoltat pro bono de o echipă de voluntari Code for Romania. În fiecare zi, sute dintre prietenii si colegii tăi lucrează pentru a construi instrumente digitale utile pentru a ne face viața mai ușoară și pentru a digitaliza România. Ajută-ne să mergem mai departe."
+		"text": "Vot România este un proiect dezvoltat pro bono de o echipă de voluntari Code for Romania. În fiecare zi, sute dintre prietenii si colegii tăi lucrează pentru a construi instrumente digitale utile pentru a ne face viața mai ușoară și pentru a digitaliza România. Ajută-ne să mergem mai departe.",
+		"button": "Donează"
 	},
 	"cookie": {
 		"title": "Politica de cookies",
