@@ -61,7 +61,8 @@
 	},
 	"donate_card": {
 		"title": "Support us",
-		"text": "Vot România is developed pro bono by a team of Code for Romania volunteers. Every day, hundreds of your friends and colleagues work together to build useful digital tools that make our lives easier and make Romania a better place. Help us move forward towards that."
+		"text": "Vot România is developed pro bono by a team of Code for Romania volunteers. Every day, hundreds of your friends and colleagues work together to build useful digital tools that make our lives easier and make Romania a better place. Help us move forward towards that.",
+		"button": "Donate"
 	},
 	"cookie": {
 		"title": "Confidentiality Policy",
