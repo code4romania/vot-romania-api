@@ -3,6 +3,13 @@
     <!-- <h2 class="mat-subheading-2" tabindex="0">
         {{ currentSentence$ | async | translate | joinTranslations: '...' }}
     </h2> -->
+    <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row">
+      <button (click)="startOver()" class="btn col-6">
+        << {{ 'back_to_start_button' | translate }}</button>
+          <button (click)="back()" class="btn col-6">
+            < {{ 'back_button' | translate }}</button>
+    </ng-container>
+
     <div class="options-list justify-content-center my-5">
       <ng-container *ngFor="let option of options$ | async">
         <ng-container *ngIf="option.options; else votingOptionTemplate">
@@ -11,13 +18,6 @@
             <div class="check-icon-container"></div>
             <span class="check-icon"></span>
           </div>
-        </ng-container>
-
-        <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row">
-              <button (click)="startOver()" class="btn col-6">
-            << {{ 'back_to_start_button' | translate }}</button>
-            <button (click)="back()" class="btn col-6">
-              < {{ 'back_button' | translate }}</button>
         </ng-container>
 
         <ng-template #votingOptionTemplate>
