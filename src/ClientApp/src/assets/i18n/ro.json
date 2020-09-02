@@ -41,14 +41,6 @@
 		"p5.1": "Code for Romania este o organizație non-profit care dezvoltă pro bono soluții digitale pentru a rezolva probleme sociale. Înființată în anul 2016, Code for Romania a ajuns în prezent la o comunitate de peste 1700 de voluntari din sectorul IT care au dezvoltat zeci de aplicații web și mobile pentru România, precum cele din ecosistemul Covid-19,",
 		"p5.2": "și altele.",
 		"p6": "Soluție proiectată în:",
-<<<<<<< HEAD
-		"p7": "dezvoltată pro-bono de:",
-		"p8": "în parteneriat cu:"
-	},
-	"map_hero_p1": "În curând aici vei găsi o hartă și un buton de căutare care te vor ajuta să găsești secția de votare de care aparții. <br> Dacă Vot România te ajută, fă o",
-	"map_hero_p2": "donație oricât de mică",
-	"map_hero_p3": "pentru Code for Romania care a dezvoltat acest site complet pro bono."
-=======
 		"p7": "dezvoltată pro bono de:",
 		"p8": "în parteneriat cu:"
 	},
@@ -117,5 +109,4 @@
 		"p27": "Toate browserele moderne ofera posibilitatea de a schimba setarile cookie-urilor. Aceste setari se gasesc de regula in optiuni sau in meniul de preferinte al browserului tau.",
 		"p28": "Pentru setarile cookie-urilor generate de terti, si pentru mai multe informatii privind confidentialitatea legata de publicitatea online, IAB Romania pune la dispozitie urmatorul site: http://www.youronlinechoices.com/ro/"
 	}
->>>>>>> develop
 }

@@ -44,11 +44,6 @@
 		"p7": "developed pro-bono by:",
 		"p8": "in partnership with:"
 	},
-<<<<<<< HEAD
-	"map_hero_p1": "În curând aici vei găsi o hartă și un buton de căutare care te vor ajuta să găsești secția de votare de care aparții. <br> Dacă Vot România te ajută, fă o",
-	"map_hero_p2": "donație oricât de mică",
-	"map_hero_p3": "pentru Code for Romania care a dezvoltat acest site complet pro bono."
-=======
 	"map_hero_p1": "În curând aici vei găsi o hartă și un buton de căutare care te vor ajuta să găsești secția de votare de care aparții. Dacă Vot România te ajută, fă o",
 	"map_hero_p2": "donație oricât de mică",
 	"map_hero_p3": "pentru Code for Romania care a dezvoltat acest site complet pro bono.",
@@ -114,5 +109,4 @@
 		"p27": "Modern browsers offer the ability to change cookie settings. You can usually find cookie settings under the “options” tab or the “preferences” menu of your browser.",
 		"p28": "For third-party cookies settings and for more information about online ad confidentiality, IAB Romania offers the following website: http://www.youronlinechoices.com/ro/"
 	}
->>>>>>> develop
 }
