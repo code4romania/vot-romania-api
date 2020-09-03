@@ -34,7 +34,7 @@ namespace VotRomania.Extensions
             var pageCount = (double)result.RowCount / pageSize.Value;
             result.PageCount = (int)Math.Ceiling(pageCount);
 
-            var skip = page.Value * pageSize.Value;
+            var skip = (page.Value-1) * pageSize.Value;
             result.Results = await query.Skip(skip).Take(pageSize.Value).ToListAsync();
 
             return result;

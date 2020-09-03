@@ -1,11 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ImportedPollingStation, AssignedAddress } from '../services/data.service';
 import { Store } from '@ngrx/store';
-import { ApplicationState } from '../state/reducers';
-import { CreateImportedPollingStationAction, UpdateImportedPollingStationAction } from '../state/actions';
-import { get, isEqual } from 'lodash';
+import { get } from 'lodash';
+import { AssignedAddress } from 'src/app/services/data.service';
+import { ApplicationState } from 'src/app/state/reducers';
+import { ImportedPollingStation } from '../services/polling-stations.service';
+import { UpdateImportedPollingStationAction, CreateImportedPollingStationAction } from '../state/admin-actions';
 
 @Component({
   selector: 'app-polling-station-editor',

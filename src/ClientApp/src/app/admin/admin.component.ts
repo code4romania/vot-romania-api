@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Logout } from '../state/auth';
 import { Store } from '@ngrx/store';
-import { ApplicationState } from '../state/reducers';
+import { Logout } from './state/auth';
+import { AdminState } from './state/admin-reducers';
 
 @Component({
   selector: 'app-admin',
@@ -9,7 +9,7 @@ import { ApplicationState } from '../state/reducers';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  constructor(private store: Store<ApplicationState>) {
+  constructor(private store: Store<AdminState>) {
   }
 
   public logout() {

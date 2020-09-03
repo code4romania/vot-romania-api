@@ -1,11 +1,11 @@
 import { Action } from '@ngrx/store';
-import { actionType } from './actions';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { AuthService, LoginCredentials, LoginResponse } from '../services/auth.service';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { actionType } from 'src/app/state/actions';
 
 export class AuthActionTypes {
   static readonly LOGIN_REQUESTED = actionType('Login requested');
@@ -81,7 +81,7 @@ export class AuthEffects {
   logout$: Observable<any> = this.actions$.pipe(
     ofType(AuthActionTypes.LOGOUT),
     tap(() => {
-      this.router.navigate(['']);
+      this.router.navigate(['admin/login']);
       localStorage.removeItem('token');
     })
   );

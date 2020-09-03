@@ -121,27 +121,23 @@ namespace VotRomania.Stores
         {
             try
             {
-                using (var transaction = _context.Database.BeginTransaction())
+                var newId = await _context.PollingStations.MaxAsync(x => x.Id) + 1;
+                var entity = new PollingStationEntity
                 {
-                    var newId = await _context.PollingStations.MaxAsync(x => x.Id) + 1;
-                    var entity = new PollingStationEntity
-                    {
-                        Id = newId,
-                        Address = pollingStation.Address,
-                        Longitude = pollingStation.Longitude,
-                        Latitude = pollingStation.Latitude,
-                        County = pollingStation.County,
-                        PollingStationNumber = pollingStation.PollingStationNumber,
-                        Locality = pollingStation.Locality,
-                        Institution = pollingStation.Institution,
-                    };
+                    Id = newId,
+                    Address = pollingStation.Address,
+                    Longitude = pollingStation.Longitude,
+                    Latitude = pollingStation.Latitude,
+                    County = pollingStation.County,
+                    PollingStationNumber = pollingStation.PollingStationNumber,
+                    Locality = pollingStation.Locality,
+                    Institution = pollingStation.Institution,
+                };
 
-                    await _context.PollingStations.AddAsync(entity);
-                    _context.SaveChanges();
+                await _context.PollingStations.AddAsync(entity);
+                _context.SaveChanges();
 
-                    transaction.Commit();
-                    return (true, string.Empty, newId);
-                }
+                return (true, string.Empty, newId);
             }
             catch (Exception e)
             {
@@ -153,20 +149,16 @@ namespace VotRomania.Stores
         {
             try
             {
-                using (var transaction = _context.Database.BeginTransaction())
+                var entity = await _context.PollingStations.FirstOrDefaultAsync(x => x.Id == pollingStationId);
+                if (entity == null)
                 {
-                    var entity = await _context.PollingStations.FirstOrDefaultAsync(x => x.Id == pollingStationId);
-                    if (entity == null)
-                    {
-                        return (false, $"Could not find polling station with id = {pollingStationId}");
-                    }
-
-                    _context.PollingStations.Remove(entity);
-                    _context.SaveChanges();
-
-                    transaction.Commit();
-                    return (true, string.Empty);
+                    return (false, $"Could not find polling station with id = {pollingStationId}");
                 }
+
+                _context.PollingStations.Remove(entity);
+                _context.SaveChanges();
+
+                return (true, string.Empty);
             }
             catch (Exception e)
             {
@@ -179,29 +171,25 @@ namespace VotRomania.Stores
         {
             try
             {
-                using (var transaction = _context.Database.BeginTransaction())
+                var entity = await _context.PollingStations
+                    .FirstOrDefaultAsync(x => x.Id == pollingStation.Id);
+
+                if (entity == null)
                 {
-                    var entity = await _context.PollingStations
-                        .FirstOrDefaultAsync(x => x.Id == pollingStation.Id);
-
-                    if (entity == null)
-                    {
-                        return (false, $"Could not find polling station with id = {pollingStation.Id}");
-                    }
-
-                    entity.Address = pollingStation.Address;
-                    entity.Longitude = pollingStation.Longitude;
-                    entity.Latitude = pollingStation.Latitude;
-                    entity.County = pollingStation.County;
-                    entity.PollingStationNumber = pollingStation.PollingStationNumber;
-                    entity.Locality = pollingStation.Locality;
-                    entity.Institution = pollingStation.Institution;
-
-                    _context.SaveChanges();
-
-                    transaction.Commit();
-                    return (true, string.Empty);
+                    return (false, $"Could not find polling station with id = {pollingStation.Id}");
                 }
+
+                entity.Address = pollingStation.Address;
+                entity.Longitude = pollingStation.Longitude;
+                entity.Latitude = pollingStation.Latitude;
+                entity.County = pollingStation.County;
+                entity.PollingStationNumber = pollingStation.PollingStationNumber;
+                entity.Locality = pollingStation.Locality;
+                entity.Institution = pollingStation.Institution;
+
+                _context.SaveChanges();
+
+                return (true, string.Empty);
             }
             catch (Exception e)
             {

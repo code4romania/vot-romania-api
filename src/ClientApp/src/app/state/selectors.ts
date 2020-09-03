@@ -1,6 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 import { ApplicationState } from './reducers';
-import { get } from 'lodash';
 
 const getApplicationState = createFeatureSelector<ApplicationState>('data');
 
@@ -38,33 +37,4 @@ export const getMapPins = createSelector(
 export const getError = createSelector(
     getApplicationState,
     state => state.error
-);
-
-export const getAuthToken = createSelector(
-    getApplicationState,
-    state => state.auth.token
-);
-
-export const getImportedPollingStations = createSelector(
-    getApplicationState,
-    state => get(state.import.importedPollingStations, 'results', [])
-);
-
-
-export const getImportedPollingStationsTotal = createSelector(
-    getApplicationState,
-    state => get(state.import.importedPollingStations, 'rowCount')
-);
-
-export const getCurrentImportJobDetails = createSelector(
-    getApplicationState,
-    state => state.import.importJobDetails
-);
-export const getCurrentImportedPollingStationsFilter = createSelector(
-    getApplicationState,
-    state => state.import.importedPollingStationsFilter
-);
-export const getCurrentImportedPollingStationsPagination = createSelector(
-    getApplicationState,
-    state => state.import.importedPollingStationsPagination
 );

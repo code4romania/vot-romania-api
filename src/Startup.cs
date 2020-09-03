@@ -19,6 +19,7 @@ using VotRomania.Extensions;
 using VotRomania.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using VotRomania.Providers;
 using VotRomania.Services;
@@ -58,17 +59,10 @@ namespace VotRomania
 
             services.AddScoped<IPollingStationsRepository, PollingStationsRepository>();
             services.AddScoped<IApplicationContentRepository, ApplicationContentRepository>();
-            services.AddDbContext<VotRomaniaContext>(ServiceLifetime.Singleton);
-            services.AddScoped<IPollingStationsRepository, PollingStationsRepository>();
-            services.AddScoped<IApplicationContentRepository, ApplicationContentRepository>();
             services.AddScoped<IImportJobsRepository, ImportJobsRepository>();
             services.AddScoped<IImportedPollingStationsRepository, ImportedPollingStationsRepository>();
-
-            services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>((services) =>
-            {
-                var votRomaniaContext = services.GetService<VotRomaniaContext>();
-                return new IneffectiveSearchService(votRomaniaContext);
-            });
+            services.AddScoped<IAddressLocationSearchService, HereAddressLocationSearchService>();
+            services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>();
 
             services.AddHostedService<QueuedHostedService>();
             services.AddSingleton<IBackgroundJobsQueue, BackgroundJobsQueue>();

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ErrorService } from './error.service';
+import { ErrorService } from 'src/app/services/error.service';
 
 export interface LoginCredentials {
     userName: string;

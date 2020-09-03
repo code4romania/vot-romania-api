@@ -51,9 +51,6 @@ const appRoutes: Routes = [
     PollingStationSearchComponent,
     AboutComponent,
     CookiePolicyComponent,
-    ImportPollingStationsComponent,
-    ImportedPollingStationsTableComponent,
-    PollingStationEditorComponent,
   ],
   imports: [
     BrowserAnimationsModule,

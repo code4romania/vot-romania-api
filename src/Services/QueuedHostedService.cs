@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using VotRomania.Models;
@@ -12,24 +13,18 @@ namespace VotRomania.Services
 {
     public class QueuedHostedService : BackgroundService
     {
-        private readonly IImportJobsRepository _importJobsRepository;
-        private readonly IImportedPollingStationsRepository _importedPollingStationsRepository;
-        private readonly IAddressLocationSearchService _locationSearchService;
         private readonly IBackgroundJobsQueue _jobsQueue;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
         private readonly ILogger<QueuedHostedService> _logger;
 
 
         public QueuedHostedService(IBackgroundJobsQueue jobsQueue,
-            IImportJobsRepository importJobsRepository,
-            IImportedPollingStationsRepository importedPollingStationsRepository,
-            IAddressLocationSearchService locationSearchService,
+            IServiceScopeFactory serviceScopeFactory,
             ILogger<QueuedHostedService> logger)
         {
             _jobsQueue = jobsQueue;
-            _importJobsRepository = importJobsRepository;
-            _importedPollingStationsRepository = importedPollingStationsRepository;
-            _locationSearchService = locationSearchService;
+            _serviceScopeFactory = serviceScopeFactory;
             _logger = logger;
         }
 
@@ -44,62 +39,74 @@ namespace VotRomania.Services
             {
                 var jobId = await _jobsQueue.DequeueAsync(stoppingToken);
 
-                try
+                using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    var jobStatusResult = await _importJobsRepository.GetImportJobStatus(jobId);
+                    var importJobsRepository = scope.ServiceProvider.GetService<IImportJobsRepository>();
+                    var importedPollingStationsRepository =
+                        scope.ServiceProvider.GetService<IImportedPollingStationsRepository>();
+                    var locationSearchService = scope.ServiceProvider.GetService<IAddressLocationSearchService>();
 
-                    if (jobStatusResult.IsFailure)
+
+                    try
                     {
-                        continue;
+                        var jobStatusResult = await importJobsRepository.GetImportJobStatus(jobId);
+
+                        if (jobStatusResult.IsFailure)
+                        {
+                            continue;
+                        }
+
+                        var jobStatus = jobStatusResult.Value.Status;
+                        if (jobStatus == JobStatus.Canceled || jobStatus == JobStatus.Finished)
+                        {
+                            continue;
+                        }
+
+                        var query = new ImportedPollingStationsQuery
+                        {
+                            ResolvedAddressStatus = ResolvedAddressStatusType.NotProcessed
+                        };
+
+                        var defaultPagination = new PaginationQuery();
+
+                        var pollingStations =
+                            await importedPollingStationsRepository.GetImportedPollingStationsAsync(jobId, query,
+                                defaultPagination);
+
+                        if (pollingStations.IsFailure)
+                        {
+                            continue;
+                        }
+
+                        if (pollingStations.Value.RowCount == 0)
+                        {
+                            await importJobsRepository.UpdateJobStatus(jobId, JobStatus.Finished);
+                            continue;
+                        }
+
+                        await importJobsRepository.UpdateJobStatus(jobId, JobStatus.Started);
+
+                        foreach (var ps in pollingStations.Value.Results)
+                        {
+                            var locationSearchResult = await locationSearchService.FindCoordinates(ps.County, ps.Address);
+
+                            ps.ResolvedAddressStatus = locationSearchResult.OperationStatus;
+                            ps.Latitude = locationSearchResult.Latitude;
+                            ps.Longitude = locationSearchResult.Longitude;
+                            ps.FailMessage = locationSearchResult.ErrorMessage;
+
+                            await importedPollingStationsRepository.UpdateImportedPollingStation(jobId, ps);
+                        }
+
+                        _jobsQueue.QueueBackgroundWorkItem(jobId);
                     }
-
-                    var jobStatus = jobStatusResult.Value.Status;
-                    if (jobStatus == JobStatus.Canceled || jobStatus == JobStatus.Finished)
+                    catch (Exception ex)
                     {
-                        continue;
+                        _logger.LogError(ex,
+                            "Error occurred executing {WorkItem}.", nameof(jobId));
                     }
-
-                    var query = new ImportedPollingStationsQuery
-                    {
-                        ResolvedAddressStatus = ResolvedAddressStatusType.NotProcessed
-                    };
-
-                    var defaultPagination = new PaginationQuery();
-
-                    var pollingStations = await _importedPollingStationsRepository.GetImportedPollingStationsAsync(jobId, query, defaultPagination);
-
-                    if (pollingStations.IsFailure)
-                    {
-                        continue;
-                    }
-
-                    if (pollingStations.Value.RowCount == 0)
-                    {
-                        await _importJobsRepository.UpdateJobStatus(jobId, JobStatus.Finished);
-                        continue;
-                    }
-
-                    await _importJobsRepository.UpdateJobStatus(jobId, JobStatus.Started);
-
-                    foreach (var ps in pollingStations.Value.Results)
-                    {
-                        var locationSearchResult = await _locationSearchService.FindCoordinates(ps.Address);
-
-                        ps.ResolvedAddressStatus = locationSearchResult.OperationStatus;
-                        ps.Latitude = locationSearchResult.Latitude;
-                        ps.Longitude = locationSearchResult.Longitude;
-                        ps.FailMessage = locationSearchResult.ErrorMessage;
-
-                        await _importedPollingStationsRepository.UpdateImportedPollingStation(jobId, ps);
-                    }
-
-                    _jobsQueue.QueueBackgroundWorkItem(jobId);
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex,
-                        "Error occurred executing {WorkItem}.", nameof(jobId));
-                }
+
             }
         }
 

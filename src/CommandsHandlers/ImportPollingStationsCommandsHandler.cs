@@ -55,20 +55,16 @@ namespace VotRomania.CommandsHandlers
 
         public async Task<Result<Guid>> Handle(StartImportNewPollingStations request, CancellationToken cancellationToken)
         {
-            using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
-            {
-                Guid jobId = Guid.NewGuid();
-                return await _importJobsRepository.HasImportJobInProgress()
-                    .Ensure(result => result == false, "Cannot start an upload job while an upload is in progress")
-                    .Tap(() => _importedPollingStationsRepository.CleanPreviouslyImportedData())
-                    .Bind(_ => ParsePollingStations(request.File))
-                    .Tap(ps => _importedPollingStationsRepository.InsertPollingStations(jobId, ps))
-                    .Tap(() => _importJobsRepository.InsertInJobTable(jobId, request.File))
-                    .Bind(_ => _backgroundJobsQueue.QueueBackgroundWorkItem(jobId))
-                    .OnFailure(() => transaction.RollbackAsync(cancellationToken))
-                    .Bind(async () => await Result.Try(async () => await transaction.CommitAsync(cancellationToken)))
-                    .Finally(r => r.IsSuccess ? Result.Success(jobId) : Result.Failure<Guid>(r.Error));
-            }
+
+            Guid jobId = Guid.NewGuid();
+            return await _importJobsRepository.HasImportJobInProgress()
+                .Ensure(result => result == false, "Cannot start an upload job while an upload is in progress")
+                .Tap(() => _importedPollingStationsRepository.CleanPreviouslyImportedData())
+                .Bind(_ => ParsePollingStations(request.File))
+                .Tap(ps => _importedPollingStationsRepository.InsertPollingStations(jobId, ps))
+                .Tap(() => _importJobsRepository.InsertInJobTable(jobId, request.File))
+                .Bind(_ => _backgroundJobsQueue.QueueBackgroundWorkItem(jobId))
+                .Finally(r => r.IsSuccess ? Result.Success(jobId) : Result.Failure<Guid>(r.Error));
         }
 
         private string LogException(Exception exception, string? message = null)
@@ -203,23 +199,19 @@ namespace VotRomania.CommandsHandlers
         }
         public async Task<Result> Handle(CompleteImportJob request, CancellationToken cancellationToken)
         {
-            using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
-            {
-                return await _importJobsRepository.GetImportJobStatus(request.JobId)
-                    .Ensure(job => job.Status == JobStatus.Finished, "Cannot complete job. Job should have finished status.")
-                    .Bind(_ => _importedPollingStationsRepository.GetNumberOfImportedAddresses(request.JobId))
-                    .Ensure(count => count > 0, "There are no polling stations to import.")
-                    .Bind(_ => _importedPollingStationsRepository.GetNumberOfUnresolvedAddresses(request.JobId))
-                    .Ensure(numberOfUnresolvedAddresses => numberOfUnresolvedAddresses == 0,
-                        "Cannot complete job with unresolved addresses.")
-                    .Tap(() => _pollingStationsRepository.RemoveAllPollingStations())
-                    .Tap(() => AddImportedPollingStationsToPollingStations(request.JobId, cancellationToken))
-                    .Tap(() => _importedPollingStationsRepository.RemoveImportedPollingStations(request.JobId))
-                    .Tap(() => _importJobsRepository.UpdateJobStatus(request.JobId, JobStatus.Imported))
-                    .Tap(() => _pollingStationSearchService.BustCache())
-                    .OnFailure(() => transaction.RollbackAsync(cancellationToken))
-                    .OnSuccessTry(_ => transaction.CommitAsync(cancellationToken));
-            }
+            return await _importJobsRepository.GetImportJobStatus(request.JobId)
+                .Ensure(job => job.Status == JobStatus.Finished,
+                    "Cannot complete job. Job should have finished status.")
+                .Bind(_ => _importedPollingStationsRepository.GetNumberOfImportedAddresses(request.JobId))
+                .Ensure(count => count > 0, "There are no polling stations to import.")
+                .Bind(_ => _importedPollingStationsRepository.GetNumberOfUnresolvedAddresses(request.JobId))
+                .Ensure(numberOfUnresolvedAddresses => numberOfUnresolvedAddresses == 0,
+                    "Cannot complete job with unresolved addresses.")
+                .Tap(() => _pollingStationsRepository.RemoveAllPollingStations())
+                .Tap(() => AddImportedPollingStationsToPollingStations(request.JobId, cancellationToken))
+                .Tap(() => _importedPollingStationsRepository.RemoveImportedPollingStations(request.JobId))
+                .Tap(() => _importJobsRepository.UpdateJobStatus(request.JobId, JobStatus.Imported))
+                .Tap(() => _pollingStationSearchService.BustCache());
         }
 
 
@@ -250,9 +242,10 @@ namespace VotRomania.CommandsHandlers
             return await _importJobsRepository.GetCurrentImportJob();
         }
 
-        public Task<Result> Handle(RestartImportJob request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(RestartImportJob request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return await _importJobsRepository.RestartJob(request.JobId)
+                .Tap(() => _backgroundJobsQueue.QueueBackgroundWorkItem(request.JobId));
         }
     }
 }

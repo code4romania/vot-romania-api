@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { ApplicationState } from '../state/reducers';
-import { getCurrentImportJobDetails } from '../state/selectors';
-import { ImportJobDetails, DataService } from '../services/data.service';
-import { LoadImportJobDetailsAction, RestartImportJobAction, FinishImportJobAction, CancelImportJobAction } from '../state/actions';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { ApplicationState } from 'src/app/state/reducers';
+import { ImportJobDetails, PollingStationsService } from '../services/polling-stations.service';
+import { LoadImportJobDetailsAction, RestartImportJobAction, FinishImportJobAction, CancelImportJobAction } from '../state/admin-actions';
+import { getCurrentImportJobDetails } from '../state/admin-selectors';
 
 @Component({
   selector: 'app-import-polling-stations',
@@ -17,7 +17,7 @@ export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
   selectedFile: File
   progress: { percentage:string } = { percentage: '0%' }
 
-  constructor(public store: Store<ApplicationState>, public dataService: DataService) { }
+  constructor(public store: Store<ApplicationState>, public pollingStationsService: PollingStationsService) { }
 
   ngOnInit() {
     this.store.pipe(select(getCurrentImportJobDetails)).subscribe(job => this.initializeData(job));
@@ -50,7 +50,7 @@ export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
   }
 
   onUpload() {
-    this.dataService.uploadDocument(this.selectedFile)
+    this.pollingStationsService.uploadDocument(this.selectedFile)
     .subscribe(event => {
       console.log(event);
       if (event.type === HttpEventType.UploadProgress) {

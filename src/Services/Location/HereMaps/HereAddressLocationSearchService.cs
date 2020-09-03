@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
@@ -31,7 +30,7 @@ namespace VotRomania.Services.Location.HereMaps
             };
         }
 
-        public async Task<LocationSearchResult> FindCoordinates(string fullAddress)
+        public async Task<LocationSearchResult> FindCoordinates(string county, string fullAddress)
         {
             LocationSearchResult? locationSearchResult;
             try
@@ -40,8 +39,9 @@ namespace VotRomania.Services.Location.HereMaps
                 {
                     return locationSearchResult;
                 }
-
-                using (var response = await _client.GetAsync($"/v1/geocode?q={WebUtility.UrlEncode(fullAddress)}&apiKey={_apiKey}&countryCode:ROU"))
+                // TODO: Add county
+                // TODO: Add mnemonics for counties
+                using (var response = await _client.GetAsync($"/v1/geocode?q={fullAddress}&apiKey={_apiKey}&countryCode:ROU"))
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
 
@@ -52,7 +52,7 @@ namespace VotRomania.Services.Location.HereMaps
                         // TODO: should we handle multiple responses ?
                         if (geocodeResponse.Items.Length > 1)
                         {
-                            _logger.LogWarning($"Found 2 locations for address '{fullAddress}");
+                            _logger.LogWarning($"Found {geocodeResponse.Items.Length} locations for address '{fullAddress}");
                         }
 
                         if (geocodeResponse.Items.Any())
@@ -67,7 +67,7 @@ namespace VotRomania.Services.Location.HereMaps
                         }
                         else
                         {
-                            var errorMessage = $"Could not find address: '{WebUtility.UrlEncode(fullAddress)}'";
+                            var errorMessage = $"Could not find address: '{county} {fullAddress}'";
                             _logger.LogWarning(errorMessage);
                             locationSearchResult = new LocationSearchResult
                             {

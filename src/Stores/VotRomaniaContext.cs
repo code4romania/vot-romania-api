@@ -1,26 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.IO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using VotRomania.Stores.Entities;
 
 namespace VotRomania.Stores
 {
     public class VotRomaniaContext : DbContext
     {
-        public VotRomaniaContext(DbContextOptions<VotRomaniaContext> options) : base(options)
-        private readonly ILogger _logger;
-        private readonly DatabaseOptions _databaseOptions;
-        private static readonly ILoggerFactory _loggerFactory
-            = LoggerFactory.Create(builder =>
-            {
-                builder.AddConsole();
-                builder.AddDebug();
-            });
-
-        public VotRomaniaContext(
-            ILogger<VotRomaniaContext> logger,
-            IOptions<DatabaseOptions> databaseOptions,
-            ILoggerFactory loggerFactory)
-        {
-        }
+        public VotRomaniaContext(DbContextOptions<VotRomaniaContext> options) : base(options) { }
 
         public DbSet<ApplicationContentEntity> ApplicationContent { get; set; }
         public DbSet<PollingStationEntity> PollingStations { get; set; }
@@ -28,18 +15,6 @@ namespace VotRomania.Stores
         public DbSet<UploadJobsEntity> ImportJobs { get; set; }
         public DbSet<ImportedPollingStationEntity> ImportedPollingStations { get; set; }
         public DbSet<ImportedPollingStationAddressEntity> ImportedPollingStationAddresses { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var connectionStringBuilder = new SqliteConnectionStringBuilder();
-            connectionStringBuilder.DataSource = _databaseOptions.DatabasePath.Replace("\\", Path.DirectorySeparatorChar.ToString());
-            connectionStringBuilder.Mode = SqliteOpenMode.ReadWriteCreate;
-            optionsBuilder.UseSqlite(connectionStringBuilder.ConnectionString);
-            optionsBuilder.EnableDetailedErrors();
-            optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseLoggerFactory(_loggerFactory);
-            base.OnConfiguring(optionsBuilder);
-        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

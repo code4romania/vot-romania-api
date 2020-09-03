@@ -136,7 +136,7 @@ namespace VotRomania.Stores
                 {
                     return null;
                 }
-                
+
                 return new JobStatusModel
                 {
                     JobId = job.JobId,
@@ -149,6 +149,19 @@ namespace VotRomania.Stores
             }, e => LogException(e));
 
             return result;
+        }
+
+        public async Task<Result> RestartJob(Guid jobId)
+        {
+            return await Result.Try(async () =>
+             {
+                 var job = await _context.ImportJobs
+                     .Where(x => x.JobId == jobId.ToString())
+                     .FirstAsync();
+
+                 job.JobStatus = JobStatus.Started;
+                 await _context.SaveChangesAsync();
+             });
         }
 
         private string LogException(Exception exception, string? message = null)
