@@ -17,7 +17,7 @@ namespace VotRomania.Extensions
             if (page == null || pageSize == null)
             {
                 var singlePagedResult = new PagedResult<T>();
-                singlePagedResult.CurrentPage = 0;
+                singlePagedResult.CurrentPage = 1;
                 singlePagedResult.PageSize = resultRowCount;
                 singlePagedResult.RowCount = resultRowCount;
                 singlePagedResult.Results = await query.ToListAsync();
@@ -34,7 +34,7 @@ namespace VotRomania.Extensions
             var pageCount = (double)result.RowCount / pageSize.Value;
             result.PageCount = (int)Math.Ceiling(pageCount);
 
-            var skip = (page.Value-1) * pageSize.Value;
+            var skip = (page.Value - 1) * pageSize.Value;
             result.Results = await query.Skip(skip).Take(pageSize.Value).ToListAsync();
 
             return result;

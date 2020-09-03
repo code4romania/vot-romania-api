@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using ExcelDataReader;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using VotRomania.Commands;
@@ -34,6 +31,7 @@ namespace VotRomania.CommandsHandlers
         private readonly ILogger<ImportPollingStationsCommandsHandler> _logger;
         private readonly IBackgroundJobsQueue _backgroundJobsQueue;
         private readonly IPollingStationSearchService _pollingStationSearchService;
+        private readonly IExcelParser _excelParser;
 
         public ImportPollingStationsCommandsHandler(
             VotRomaniaContext context,
@@ -42,6 +40,7 @@ namespace VotRomania.CommandsHandlers
             IImportedPollingStationsRepository importedPollingStationsRepository,
             IBackgroundJobsQueue backgroundJobsQueue,
             IPollingStationSearchService pollingStationSearchService,
+            IExcelParser excelParser,
             ILogger<ImportPollingStationsCommandsHandler> logger)
         {
             _context = context;
@@ -50,6 +49,7 @@ namespace VotRomania.CommandsHandlers
             _importedPollingStationsRepository = importedPollingStationsRepository;
             _backgroundJobsQueue = backgroundJobsQueue;
             _pollingStationSearchService = pollingStationSearchService;
+            _excelParser = excelParser;
             _logger = logger;
         }
 
@@ -60,7 +60,7 @@ namespace VotRomania.CommandsHandlers
             return await _importJobsRepository.HasImportJobInProgress()
                 .Ensure(result => result == false, "Cannot start an upload job while an upload is in progress")
                 .Tap(() => _importedPollingStationsRepository.CleanPreviouslyImportedData())
-                .Bind(_ => ParsePollingStations(request.File))
+                .Bind(_ => _excelParser.ParsePollingStations(request.File))
                 .Tap(ps => _importedPollingStationsRepository.InsertPollingStations(jobId, ps))
                 .Tap(() => _importJobsRepository.InsertInJobTable(jobId, request.File))
                 .Bind(_ => _backgroundJobsQueue.QueueBackgroundWorkItem(jobId))
@@ -103,89 +103,6 @@ namespace VotRomania.CommandsHandlers
             }
 
             return entity;
-        }
-
-        private Result<List<PollingStationModel>> ParsePollingStations(IFormFile requestFile)
-        {
-            var parseResult = Result.Try(() =>
-            {
-                DataSet result;
-
-                using (var reader = ExcelReaderFactory.CreateReader(requestFile.OpenReadStream()))
-                {
-                    result = reader.AsDataSet();
-                }
-
-                var pollingStationsData = result.Tables[0];
-                var pollingStations = new List<PollingStationModel>();
-
-                PollingStationModel? currentPollingStation = null;
-                int index = 1;
-                do
-                {
-                    DataRow row = pollingStationsData.Rows[index];
-
-                    var pollingStationNumber = GetString(row[4]);
-                    if (string.IsNullOrEmpty(pollingStationNumber))
-                    {
-                        do
-                        {
-                            AssignedAddressModel assignedAddress = new AssignedAddressModel
-                            {
-                                HouseNumbers = GetString(pollingStationsData.Rows[index][11]),
-                                Remarks = GetString(pollingStationsData.Rows[index][12]),
-                                Street = GetString(pollingStationsData.Rows[index][10]),
-                                StreetCode = GetString(pollingStationsData.Rows[index][9]),
-
-                            };
-                            currentPollingStation?.AssignedAddresses.Add(assignedAddress);
-                            ++index;
-
-                        } while (index < pollingStationsData.Rows.Count &&
-                                 string.IsNullOrEmpty(GetString(pollingStationsData.Rows[index][4])));
-
-                        --index;
-                    }
-                    else
-                    {
-                        currentPollingStation = new PollingStationModel
-                        {
-                            County = GetString(row[0]),
-                            PollingStationNumber = pollingStationNumber,
-                            Locality = GetString(row[8]),
-                            Institution = GetString(row[5]),
-                            Address = GetString(row[6]),
-                            AssignedAddresses = new List<AssignedAddressModel>()
-                        };
-
-                        pollingStations.Add(currentPollingStation);
-                    }
-
-                    ++index;
-
-                } while (index < pollingStationsData.Rows.Count);
-
-                return pollingStations;
-            }, exception => LogException(exception, $"Error in method {nameof(ParsePollingStations)}"));
-
-            return parseResult;
-        }
-
-        private static string GetString(object value)
-        {
-            if (value == null)
-            {
-                return string.Empty;
-            }
-
-            var text = value.ToString();
-
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                return string.Empty;
-            }
-
-            return text.Trim();
         }
 
         public async Task<Result> Handle(CancelImportJob request, CancellationToken cancellationToken)

@@ -19,7 +19,6 @@ using VotRomania.Extensions;
 using VotRomania.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using VotRomania.Providers;
 using VotRomania.Services;
@@ -69,6 +68,7 @@ namespace VotRomania
 
             services.AddScoped<IUserProvider, UserProvider>();
             services.AddScoped<IAuthenticationProvider, AuthenticationProvider>();
+            services.AddScoped<IExcelParser, ExcelParser>();
 
             // Authentication
             var appSettings = authenticationSection.Get<AuthSettingOptions>();

@@ -219,7 +219,7 @@ export class PollingStationsService {
         const token = this.authService.getToken();
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-        return this.http.post(`/api/admin/import/complete-job/${jobId}`, { headers })
+        return this.http.post(`/api/admin/import/complete-job/${jobId}`, {}, { headers })
             .pipe(catchError(this.errorService.handleError));
     }
 

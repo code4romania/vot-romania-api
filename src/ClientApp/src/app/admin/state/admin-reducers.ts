@@ -36,7 +36,7 @@ const DEFAULT_IPS_FILTER: ImportedPollingStationsFilter = {
 };
 
 const DEFAULT_PAGINATION: PaginationDetails = {
-    pageNumber: 0,
+    pageNumber: 1,
     pageSize: 5
 };
 

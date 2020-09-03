@@ -60,8 +60,8 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
   public ngAfterViewInit(): void {
     this.subscription.add(merge(this.paginator.page).pipe(
       map(() => ({
-        pageNumber: get(this.paginator, 'pageIndex'),
-        pageSize: get(this.paginator, 'pageSize')
+        pageNumber: get(this.paginator, 'pageIndex', 0) + 1,
+        pageSize: get(this.paginator, 'pageSize', 5)
       })),
       tap(pagination => this.store.dispatch(new UpdatePagination(pagination)))
     ).subscribe());

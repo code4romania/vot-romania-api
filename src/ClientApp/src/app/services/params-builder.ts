@@ -16,14 +16,14 @@ export class RequestHttpParams {
             throw new Error('Parameter should have name!');
         }
 
-        if (value !== undefined) {
+        if (value !== undefined && value.toString().trim() !== '') {
             this.params = this.params.append(name, value.toString().trim());
         }
 
         return this;
     }
 
-    public  please(): HttpParams {
+    public please(): HttpParams {
         return this.params;
     }
 }
