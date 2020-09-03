@@ -53,9 +53,7 @@
 		"p7": "dezvoltată pro bono de:",
 		"p8": "în parteneriat cu:"
 	},
-	"map_hero_p1": "În curând aici vei găsi o hartă și un buton de căutare care te vor ajuta să găsești secția de votare de care aparții. Dacă Vot România te ajută, fă o",
-	"map_hero_p2": "donație oricât de mică",
-	"map_hero_p3": "pentru Code for Romania care a dezvoltat acest site complet pro bono.",
+	"map_hero": "În curând aici vei găsi o hartă și un buton de căutare care te vor ajuta să găsești secția de votare de care aparții.<br> Dacă Vot România te ajută, fă o <a href='https://code4.ro/ro/doneaza/' target='_blank'>donație oricât de mică</a> pentru Code for Romania care a dezvoltat acest site complet pro bono.",
 	"social_share": {
 		"title": "Informează-ți prietenii",
 		"text": "Distribuie aceste informații în social media pentru a ajuta cât mai mulți români să afle unde pot vota la alegerile locale din 2020, de ce documente au nevoie și alte sfaturi utile."

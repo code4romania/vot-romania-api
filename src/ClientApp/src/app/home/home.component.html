@@ -3,8 +3,8 @@
 <app-voters-guide></app-voters-guide>
 <!-- <app-polling-station-search></app-polling-station-search> -->
 <div class="coming-soon p-2 my-5">
-    <p class="font-weight-bold text-center m-0">
-        {{ 'map_hero_p1' | translate }} <a href="https://code4.ro/ro/doneaza/" target="_blank">{{ 'map_hero_p2' | translate }}</a> {{ 'map_hero_p3' | translate }}
+    <p class="font-weight-bold text-center m-0" [innerHTML]="'map_hero' | translate ">
+        {{ 'map_hero_p1' | translate }}  {{ 'map_hero_p3' | translate }}
     </p>
 </div>
 <app-share-card></app-share-card>
