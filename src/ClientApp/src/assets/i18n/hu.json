@@ -52,9 +52,7 @@
 		"p7": "pro bono fejlesztés:",
 		"p8": "partnerek:"
 	},
-	"map_hero_p1": "Hamarosan itt találsz egy térképet és egy keresőt is amelyek segíteni fognak a szavazóiroda megtalálásában amelyhez tartozol. Ha Vot Romania segitett kuld egy",
-	"map_hero_p2": "bármilyen kis adományt",
-	"map_hero_p3": "a Code for Romania-nak mely pro bono fejlesztette eszt az eszközt",
+	"map_hero": "Hamarosan itt találsz egy térképet és egy keresőt is amelyek segíteni fognak a szavazóiroda megtalálásában amelyhez tartozol.<br> Ha Vot Romania segitett kuld egy <a href='https://code4.ro/ro/doneaza/' target='_blank'>bármilyen kis adományt</a> a Code for Romania-nak mely pro bono fejlesztette eszt az eszközt.",
 	"social_share": {
 		"title": "Tudasd az ismerösökkel",
 		"text": "Oszd meg ezt a szociális medián hogy minél több állampolgár megtudhatsa hol tud szavazni a 2020 helyi választásokon, milyen dokumentumokra lesz szükség és más hasznos infót. "
