@@ -1,34 +1,59 @@
 <ng-container *ngIf="data">
-  <div class="container wrapper">
-    <h2 class="mat-subheading-2" tabindex="0">
-      {{currentSentence$ | async}}
-    </h2>
-    <ng-container *ngIf="isBeyondInitialQuestion$ | async">
-      <section>
-        <button (click)="back()" class="btn btn-secondary">Inapoi</button>
-        <button (click)="startOver()" class="btn btn-danger">Incepe din nou</button>
-      </section>
-    </ng-container>
+  <div class="container wrapper justify-content-center text-center">
+    <h3 *ngIf="(options$ | async).length !== 1">
+      {{ "guide_title" | translate }}
+    </h3>
 
-    <div class="options-list">
+    <div class="options-list justify-content-center my-2">
       <ng-container *ngFor="let option of options$ | async">
         <ng-container *ngIf="option.options; else votingOptionTemplate">
           <div class="option cursor-pointer" (click)="selectOption(option.id, $event)" [@flyIn]>
-            <span [innerHtml]="option.label"></span>
+            <span>{{option.label | translate }}</span>
             <div class="check-icon-container"></div>
             <span class="check-icon"></span>
           </div>
         </ng-container>
 
         <ng-template #votingOptionTemplate>
-          <div *ngIf="option.votersOptionId" class="mat-body-1">
-            <div class="option-title" [innerHTML]="data.options[option.votersOptionId].title" #targetElement></div>
-            <div class="text-left option-description" [innerHTML]="data.options[option.votersOptionId].description">
-            </div>
+          <div *ngIf="option.votersOptionId" class="text-left">
+            <h2 class="option-title" [innerHTML]="data.options[option.votersOptionId].title" #targetElement></h2>
+            <p class="text-left option-description" [innerHTML]="data.options[option.votersOptionId].description">
+            </p>
           </div>
-          <p *ngIf="option.text">{{ option.text }}</p>
+          <div class="text-left answer my-2" *ngIf="option.text" [innerHTML]="option.text | translate"></div>
         </ng-template>
       </ng-container>
+    </div>
+
+    <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row">
+      <button (click)="startOver()" class="btn col-6">
+        << {{ 'back_to_start_button' | translate }}</button>
+          <button (click)="back()" class="btn col-6">
+            < {{ 'back_button' | translate }}</button>
+    </ng-container>
+
+    <div class="row mt-5 exceptional-cases">
+      <div class="col-12 col-lg-4 text-left">
+        <p><b>{{ 'exceptional_cases.case1_title' | translate }}</b></p>
+        <p>
+          {{ 'exceptional_cases.case1_p1' | translate }}
+        </p>
+        <p>
+          {{ 'exceptional_cases.case1_p2' | translate }}
+        </p>
+      </div>
+      <div class="col-12 col-lg-4 py-4 py-lg-0 text-left">
+        <p><b>{{ 'exceptional_cases.case2_title' | translate }}</b></p>
+        <p>
+          {{ 'exceptional_cases.case2_p1' | translate }}
+        </p>
+      </div>
+      <div class="col text-left">
+        <p><b>{{ 'exceptional_cases.case3_title' | translate }}</b></p>
+        <p>
+          {{ 'exceptional_cases.case3_p1' | translate }}
+        </p>
+      </div>
     </div>
   </div>
 </ng-container>

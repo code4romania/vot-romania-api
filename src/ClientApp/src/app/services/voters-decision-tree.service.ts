@@ -63,19 +63,22 @@ export class VotersDecisionTreeService {
     shareReplay()
   );
 
-  currentSentence$: Observable<string> = combineLatest(
+  currentSentence$: Observable<string[]> = combineLatest(
     this.tree$,
     this.state$
   ).pipe(
     filter(([tree]) => treeIsErrorFree(tree)),
-    map(([tree, { previousBranchIds }]) =>
-      isInitialDecision(previousBranchIds)
-        ? 'Începe prin a alege una din opțiunile de mai jos'
-        : `${previousBranchIds
+    map(([tree, { previousBranchIds }]) => {
+      const value = isInitialDecision(previousBranchIds)
+        ? ['votersGuide.callToAction']
+        : previousBranchIds
           .map(entityId => {
             return tree[entityId].label;
           })
-          .join(' ')}...`.trim()
+          .filter(val => val);
+
+      return value;
+    }
     )
   );
 
@@ -123,7 +126,7 @@ export class VotersDecisionTreeService {
       },
       '0': {
         id: '0',
-        label: 'Ești cetățean român',
+        label: 'votersGuide.label0',
         options: [
           '00',
           '01'
@@ -131,7 +134,7 @@ export class VotersDecisionTreeService {
       },
       '1': {
         id: '1',
-        label: 'Ești cetățean al unei alte țări din Uniunea Europeană',
+        label: 'votersGuide.label1',
         options: [
           '10',
           '11'
@@ -139,14 +142,14 @@ export class VotersDecisionTreeService {
       },
       '00': {
         id: '00',
-        label: 'Nu te vei afla în România pe 27 septembrie',
+        label: 'votersGuide.label00',
         options: [
           '000'
         ]
       },
       '01': {
         id: '01',
-        label: 'Te vei afla în Romania pe 27 septembrie',
+        label: 'votersGuide.label01',
         options: [
           '010',
           '011'
@@ -154,22 +157,22 @@ export class VotersDecisionTreeService {
       },
       '000': {
         id: '000',
-        votersOptionId: 1
+        text: 'votersGuide.label000'
       },
       '010': {
         id: '010',
-        label: 'Locuiești la adresa din buletin',
+        label: 'votersGuide.label010',
         options: [
           '0100'
         ]
       },
       '0100': {
         id: '0100',
-        votersOptionId: 2
+        text: 'votersGuide.label0100'
       },
       '011': {
         id: '011',
-        label: 'Locuiești la altă adresă decât cea din buletin',
+        label: 'votersGuide.label011',
         options: [
           '0110',
           '0111'
@@ -177,18 +180,18 @@ export class VotersDecisionTreeService {
       },
       '0110': {
         id: '0110',
-        label: 'Ai pe spatele buletinului un autocolant cu viza de flotant',
+        label: 'votersGuide.label0110',
         options: [
           '01100'
         ]
       },
       '01100': {
         id: '01100',
-        votersOptionId: 3
+        text: 'votersGuide.label01100'
       },
       '0111': {
         id: '0111',
-        label: 'Nu ai viză de flotant pe spatele buletinului',
+        label: 'votersGuide.label0111',
         options: [
           '01110',
           '01111'
@@ -196,29 +199,29 @@ export class VotersDecisionTreeService {
       },
       '01110': {
         id: '01110',
-        label: 'Te poate lua cineva în spațiu',
+        label: 'votersGuide.label01110',
         options: [
           '011100'
         ]
       },
       '011100': {
         id: '011100',
-        votersOptionId: 4
+        text: 'votersGuide.label011100'
       },
       '01111': {
         id: '01111',
-        label: 'Nu ai pe cineva care te poate lua în spațiu',
+        label: 'votersGuide.label01111',
         options: [
           '011110'
         ]
       },
       '011110': {
         id: '011110',
-        votersOptionId: 5
+        text: 'votersGuide.label011110',
       },
       '10': {
         id: '10',
-        label: 'Ești în evidența Inspectoratului General pentru Imigrări',
+        label: 'votersGuide.label10',
         options: [
           '100',
           '101'
@@ -226,36 +229,36 @@ export class VotersDecisionTreeService {
       },
       '100': {
         id: '100',
-        label: 'Adresa la care locuiești nu se va schimba în intervalul 3-27 septembrie',
+        label: 'votersGuide.label100',
         options: [
           '1000'
         ]
       },
       '1000': {
         id: '1000',
-        votersOptionId: 6
+        text: 'votersGuide.label1000'
       },
       '101': {
         id: '101',
-        label: 'Îți vei schimba adresa în intervalul 3-27 septembrie',
+        label: 'votersGuide.label101',
         options: [
           '1010'
         ]
       },
       '1010': {
         id: '1010',
-        votersOptionId: 7
+        text: 'votersGuide.label1010'
       },
       '11': {
         id: '11',
-        label: 'Nu ești în evidența Inspectoratului General pentru Imigrări',
+        label: 'votersGuide.label11',
         options: [
           '110',
         ]
       },
       '110': {
         id: '110',
-        votersOptionId: 8
+        text: 'votersGuide.label110'
       },
     };
 

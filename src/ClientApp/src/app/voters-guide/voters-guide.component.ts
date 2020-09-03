@@ -37,7 +37,7 @@ export class VotersGuideComponent implements OnInit, OnDestroy {
 
   data: VotingGuideViewModel;
   subscription: Subscription;
-  currentSentence$: Observable<string> = this.votersDecisionTreeService.currentSentence$;
+  currentSentence$: Observable<string[]> = this.votersDecisionTreeService.currentSentence$;
   options$: Observable<OperatorTreeNode[]> = this.votersDecisionTreeService.options$;
   isBeyondInitialQuestion$: Observable<boolean> = this.votersDecisionTreeService.isBeyondInitialQuestion$;
   hasError$: Observable<boolean> = this.votersDecisionTreeService.hasError$;

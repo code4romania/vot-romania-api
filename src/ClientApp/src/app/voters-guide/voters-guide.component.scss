@@ -1,7 +1,6 @@
 .wrapper {
     align-items: center;
-    margin-top: 50px;
-    margin-bottom: 120px;
+    padding-top: 2rem;
 
     .description {
         font-style: normal;
@@ -9,10 +8,11 @@
         margin-bottom: 80px;
     }
 
+    button {
+        font-size: 20px;
+    }
+
     .options-list {
-        margin-top: 32px;
-        margin-bottom: 120px;
-        width: 100%;
         display: flex;
         flex-wrap: wrap;
 
@@ -24,7 +24,7 @@
             height: 124px;
             margin: 10px;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 20px;
             line-height: 24px;
             padding: 8px;
             display: flex;
@@ -91,7 +91,7 @@
     }
 
     .option-title {
-        font-size: 35px;
+        font-size: 20px;
         font-style: normal;
         font-weight: bold;
         line-height: 40px;
@@ -102,8 +102,18 @@
     .option-description {
         font-style: normal;
         font-weight: normal;
-        font-size: 16px;
+        font-size: 20px;
         line-height: 24px;
         color: #000000;
+    }
+
+    .answer {
+        font-size: 20px;
+    }
+
+    .exceptional-cases {
+        p {
+            font-size: 18px;
+        }
     }
 }
