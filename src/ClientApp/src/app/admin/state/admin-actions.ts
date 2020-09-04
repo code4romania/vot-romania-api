@@ -106,11 +106,13 @@ export class LoadDataAction implements Action {
     readonly type = AdminActionTypes.LOAD_DATA;
 }
 
+@HideLoader()
 export class LoadErrorAction implements FailedAction {
     readonly type = AdminActionTypes.LOAD_ERROR;
     constructor(public error: ProblemDetails) { }    ;
 }
 
+@HideLoader()
 export class LoadDataDoneAction implements Action {
     readonly type = AdminActionTypes.LOAD_DATA_DONE;
     payload: {
@@ -141,11 +143,13 @@ export class UpdateDataAction implements Action {
     }
 }
 
+@HideLoader()
 export class UpdateDataErrorAction implements FailedAction {
     readonly type = AdminActionTypes.UPDATE_DATA_ERROR;
     constructor(public error: ProblemDetails) {}
 }
 
+@HideLoader()
 export class UpdateDataDoneAction implements Action {
     readonly type = AdminActionTypes.UPDATE_DATA_DONE;
 
