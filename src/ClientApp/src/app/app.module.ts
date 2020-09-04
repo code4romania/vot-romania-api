@@ -21,7 +21,7 @@ import { ShareCardComponent } from './share-card/share-card.component';
 import { DonateCardComponent } from './donate-card/donate-card.component';
 import { PollingStationCardInfoComponent } from './polling-station-card-info/polling-station-card-info.component';
 import { PollingStationSearchComponent } from './polling-station-search/polling-station-search.component';
-// import { HereAddressService } from './services/here-address.service';
+import { HereAddressService } from './services/here-address.service';
 import { DataService } from './services/data.service';
 import { AboutComponent } from './about/about.component';
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
@@ -70,14 +70,14 @@ const appRoutes: Routes = [
     MatAutocompleteModule,
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
       }
-  })
+    })
   ],
   providers: [
-    // HereAddressService,
+    HereAddressService,
     DataService
   ],
   bootstrap: [AppComponent]
