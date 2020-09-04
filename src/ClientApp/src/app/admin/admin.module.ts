@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { MatInputModule, MatDialogModule, MatAutocompleteModule, MatPaginatorModule, MatTableModule, MatSelectModule, MatSnackBarModule, MatToolbarModule, MatGridListModule, MatFormFieldModule, MatCheckboxModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatSortModule } from '@angular/material';
+import { MatInputModule, MatDialogModule, MatAutocompleteModule, MatPaginatorModule, MatTableModule, MatSelectModule, MatSnackBarModule, MatToolbarModule, MatGridListModule, MatFormFieldModule, MatCheckboxModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatSortModule, MatProgressSpinnerModule, MatSpinner } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin.component';
 import { AdminContentComponent } from './admin-content/admin-content.component';
@@ -17,22 +17,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { AdminEffects } from './state/admin-effects';
 import { adminStateReducer } from './state/admin-reducers';
 import { AuthEffects } from './state/auth';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    AdminComponent,
-    AdminContentComponent,
-    VotersOptionEditorComponent,
-    ImportPollingStationsComponent,
-    ImportedPollingStationsTableComponent,
-    PollingStationEditorComponent,
-  ],
-  entryComponents: [
-    VotersOptionEditorComponent,
-    PollingStationEditorComponent
-  ],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -54,9 +42,26 @@ import { AuthEffects } from './state/auth';
     MatSortModule,
     ReactiveFormsModule,
     AngularEditorModule,
+    MatProgressSpinnerModule, 
+    OverlayModule ,
     StoreModule.forFeature('admin', adminStateReducer),
     EffectsModule.forFeature([ AdminEffects, AuthEffects ]),
   ],
+  declarations: [
+    LoginComponent,
+    AdminComponent,
+    AdminContentComponent,
+    VotersOptionEditorComponent,
+    ImportPollingStationsComponent,
+    ImportedPollingStationsTableComponent,
+    PollingStationEditorComponent
+    ],
+  entryComponents: [
+    VotersOptionEditorComponent,
+    PollingStationEditorComponent,
+    MatSpinner
+  ],
+  
    providers: [
     DataService
   ],

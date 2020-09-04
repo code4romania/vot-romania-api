@@ -94,3 +94,8 @@ snack-bar-container.notification simple-snack-bar {
   background: #fc0;
   color: #352245;
 }
+// spinner overlay
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing.dark-backdrop {
+    background: #000;
+    opacity: 0.75 !important;
+  }

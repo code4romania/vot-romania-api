@@ -5,6 +5,7 @@ import { ApplicationState } from 'src/app/state/reducers';
 import { ImportJobDetails, PollingStationsService } from '../services/polling-stations.service';
 import { LoadImportJobDetailsAction, RestartImportJobAction, FinishImportJobAction, CancelImportJobAction } from '../state/admin-actions';
 import { getCurrentImportJobDetails } from '../state/admin-selectors';
+import { SpinnerService } from '../services/spinner.service';
 
 @Component({
   selector: 'app-import-polling-stations',
@@ -15,9 +16,11 @@ export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
   currentJob: ImportJobDetails;
   name = 'Angular';
   selectedFile: File
-  progress: { percentage:string } = { percentage: '0%' }
+  progress: { percentage: string } = { percentage: '0%' }
 
-  constructor(public store: Store<ApplicationState>, public pollingStationsService: PollingStationsService) { }
+  constructor(public store: Store<ApplicationState>,
+    public pollingStationsService: PollingStationsService,
+    private spinnerService: SpinnerService) { }
 
   ngOnInit() {
     this.store.pipe(select(getCurrentImportJobDetails)).subscribe(job => this.initializeData(job));
@@ -31,37 +34,38 @@ export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
     this.currentJob = jobDetails;
   }
 
-  restartCurrentJob():void{
+  restartCurrentJob(): void {
     this.store.dispatch(new RestartImportJobAction(this.currentJob.jobId));
   }
 
-  finishImport():void{
+  finishImport(): void {
     this.store.dispatch(new FinishImportJobAction(this.currentJob.jobId));
   }
 
-  cancelCurrentJob():void{
+  cancelCurrentJob(): void {
     this.store.dispatch(new CancelImportJobAction(this.currentJob.jobId));
   }
 
   onFileSelected(event) {
-    this.progress.percentage= '0%';
-    this.selectedFile = event.target.files[0]
+    this.progress.percentage = '0%';
+    this.selectedFile = event.target.files[0];
     this.onUpload();
   }
 
   onUpload() {
+    this.spinnerService.display(true);
     this.pollingStationsService.uploadDocument(this.selectedFile)
-    .subscribe(event => {
-      console.log(event);
-      if (event.type === HttpEventType.UploadProgress) {
-        this.progress.percentage = Math.round(100 * event.loaded / event.total) + '%';
-      } else if (event instanceof HttpResponse) {
-        console.log('File uploaded successfully!'+ JSON.stringify(event));
-      }
+      .subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.progress.percentage = Math.round(100 * event.loaded / event.total) + '%';
+        } else if (event instanceof HttpResponse) {
+          this.spinnerService.display(false);
+          this.store.dispatch(new LoadImportJobDetailsAction());
+        }
+      }, error => {
+        this.spinnerService.display(false);
 
-    }, error => {
-
-      console.log(error);
-    })
+        console.log(error);
+      })
   }
 }

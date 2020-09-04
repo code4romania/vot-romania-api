@@ -45,6 +45,7 @@ import { HereAddressService } from 'src/app/services/here-address.service';
 import { ToasterService } from '../services/toaster.service';
 import { ApplicationState } from 'src/app/state/reducers';
 import { ImportedPollingStation, PollingStationsService } from '../services/polling-stations.service';
+import { SpinnerService } from '../services/spinner.service';
 
 @Injectable({ providedIn: 'root' })
 export class AdminEffects {
@@ -54,6 +55,7 @@ export class AdminEffects {
         private router: Router,
         private actions$: Actions,
         private toasterService: ToasterService,
+        private spinnerService: SpinnerService,
         private store$: Store<ApplicationState>) {
     }
 
@@ -233,6 +235,12 @@ export class AdminEffects {
             AdminActionTypes.FINISH_JOB_ERROR
         ),
         tap(details => {this.toasterService.show(details.error.detail , 'warning'); return empty();})
+    );
+
+    @Effect({dispatch: false})
+    showLoader$ = this.actions$.pipe(
+      filter((action: any) => action && action.showLoader !== undefined),
+      map((action: any) => this.spinnerService.display(action.showLoader))
     );
 }
 

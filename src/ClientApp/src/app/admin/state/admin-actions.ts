@@ -16,6 +16,22 @@ export function actionType<T extends string>(label: T): T {
     return label as T;
 }
 
+export function ShowLoader() {
+    return function (Class: Function) {
+        Object.defineProperty(Class.prototype,'showLoader', {
+            value: true
+        });
+    }
+}
+
+export function HideLoader() {
+    return function (Class: Function) {
+        Object.defineProperty(Class.prototype, 'showLoader', {
+            value: false
+        });
+    }
+}
+
 export class AdminActionTypes {
     static readonly CLEAR_ERROR = actionType('Clear error');
 
@@ -85,6 +101,7 @@ export class ClearErrorAction implements Action {
     readonly type = AdminActionTypes.CLEAR_ERROR;
 }
 
+@ShowLoader()
 export class LoadDataAction implements Action {
     readonly type = AdminActionTypes.LOAD_DATA;
 }
@@ -107,6 +124,7 @@ export class LoadDataDoneAction implements Action {
     }
 }
 
+@ShowLoader()
 export class UpdateDataAction implements Action {
     readonly type = AdminActionTypes.UPDATE_DATA;
 
@@ -135,73 +153,85 @@ export class UpdateDataDoneAction implements Action {
     }
 }
 
+@ShowLoader()
 export class ChangeSelectedLanguage implements Action {
     readonly type = AdminActionTypes.CHANGE_LANGUAGE;
 
     constructor(public payload: string) { }
 }
 
+@ShowLoader()
 export class LoadLocations implements Action {
     readonly type = AdminActionTypes.LOAD_LOCATIONS;
 
     constructor(public locationId: string) { }
 }
 
+@HideLoader()
 export class LoadLocationError implements FailedAction {
     readonly type = AdminActionTypes.LOAD_LOCATIONS_ERROR;
     constructor(public error: ProblemDetails) { }
 }
 
+@HideLoader()
 export class LoadLocationDone implements Action {
     readonly type = AdminActionTypes.LOAD_LOCATIONS_DONE;
     constructor(public userLocation: LocationDetails, public pollingStations) { }
 }
 
+@ShowLoader()
 export class LoadImportedPollingStationsAction implements Action {
     public readonly type = AdminActionTypes.LOAD_IPS;
     constructor() { }
 }
 
+@HideLoader()
 export class LoadImportedPollingStationsSuccessAction implements Action {
     public readonly type = AdminActionTypes.LOAD_IPS_DONE;
     constructor(public payload: PaginatedResponse<ImportedPollingStation>) { }
 }
 
+@HideLoader()
 export class LoadImportedPollingStationsFailAction implements FailedAction {
     public readonly type = AdminActionTypes.LOAD_IPS_ERROR;
     constructor(public error: ProblemDetails) { }
 }
 
+@ShowLoader()
 export class LoadImportJobDetailsAction implements Action {
     public readonly type = AdminActionTypes.LOAD_IMPORT_JOB_DETAILS;
     constructor() { }
 }
 
+@HideLoader()
 export class LoadImportJobDetailsSuccessAction implements Action {
     public readonly type = AdminActionTypes.LOAD_IMPORT_JOB_DETAILS_DONE;
     constructor(public importJobDetails: ImportJobDetails) { }
 }
 
+@HideLoader()
 export class LoadImportJobDetailsFailAction implements FailedAction {
     public readonly type = AdminActionTypes.LOAD_IMPORT_JOB_DETAILS_ERROR;
     constructor(public error: ProblemDetails) { }
 }
 
+@ShowLoader()
 export class DeleteImportedPollingStationAction implements Action {
     public readonly type = AdminActionTypes.DELETE_IMPORTED_POLLING_STATION;
     constructor(public jobId: string, public importedPollingStationId: number) { }
 }
 
+@HideLoader()
 export class DeleteImportedPollingStationSuccessAction implements Action {
     public readonly type = AdminActionTypes.DELETE_IMPORTED_POLLING_STATION_DONE;
     constructor() { }
 }
 
+@HideLoader()
 export class DeleteImportedPollingStationFailAction implements FailedAction {
     public readonly type = AdminActionTypes.DELETE_IMPORTED_POLLING_STATION_ERROR;
     constructor(public error: ProblemDetails) { }
 }
-
 
 export class UpdatePagination implements Action {
     public readonly type = AdminActionTypes.UPDATE_PAGINATION;
@@ -224,78 +254,93 @@ export class DisplayToasterMessage implements Action {
 }
 
 
+@ShowLoader()
 export class CreateImportedPollingStationAction implements Action {
     public readonly type = AdminActionTypes.CREATE_IMPORTED_POLLING_STATION;
     constructor(public jobId: string, public importedPollingStation: ImportedPollingStation, public adddresses: AssignedAddress[]) { }
 }
 
+@HideLoader()
 export class CreateImportedPollingStationSuccessAction implements Action {
     public readonly type = AdminActionTypes.CREATE_IMPORTED_POLLING_STATION_DONE;
     constructor() { }
 }
 
+@HideLoader()
 export class CreateImportedPollingStationFailAction implements FailedAction {
     public readonly type = AdminActionTypes.CREATE_IMPORTED_POLLING_STATION_ERROR;
     constructor(public error: ProblemDetails) { }
 }
 
 
+@ShowLoader()
 export class UpdateImportedPollingStationAction implements Action {
     public readonly type = AdminActionTypes.UPDATE_IMPORTED_POLLING_STATION;
     constructor(public jobId: string, public pollingStationId: number, public importedPollingStation: ImportedPollingStation, public adddresses: AssignedAddress[]) { }
 }
 
+@HideLoader()
 export class UpdateImportedPollingStationSuccessAction implements Action {
     public readonly type = AdminActionTypes.UPDATE_IMPORTED_POLLING_STATION_DONE;
     constructor() { }
 }
 
+@HideLoader()
 export class UpdateImportedPollingStationFailAction implements FailedAction {
     public readonly type = AdminActionTypes.UPDATE_IMPORTED_POLLING_STATION_ERROR;
     constructor(public error: ProblemDetails) { }
 }
 
+@ShowLoader()
 export class CancelImportJobAction implements Action {
     public readonly type = AdminActionTypes.CANCEL_JOB;
     constructor(public jobId: string) { }
 }
 
+@HideLoader()
 export class CancelImportJobSuccessAction implements Action {
     public readonly type = AdminActionTypes.CANCEL_JOB_DONE;
     constructor() { }
 }
 
+@HideLoader()
 export class CancelImportJobFailAction implements FailedAction {
     public readonly type = AdminActionTypes.CANCEL_JOB_ERROR;
     constructor(public error: ProblemDetails) { }
 }
 
 
+@ShowLoader()
 export class FinishImportJobAction implements Action {
     public readonly type = AdminActionTypes.FINISH_JOB;
     constructor(public jobId: string) { }
 }
 
+@HideLoader()
 export class FinishImportJobSuccessAction implements Action {
     public readonly type = AdminActionTypes.FINISH_JOB_DONE;
     constructor() { }
 }
 
+@HideLoader()
 export class FinishImportJobFailAction implements FailedAction {
     public readonly type = AdminActionTypes.FINISH_JOB_ERROR;
     constructor(public error: ProblemDetails) { }
 }
 
+@ShowLoader()
 export class RestartImportJobAction implements Action {
     public readonly type = AdminActionTypes.RESTART_JOB;
     constructor(public jobId: string) { }
 }
 
+@HideLoader()
 export class RestartImportJobSuccessAction implements Action {
     public readonly type = AdminActionTypes.RESTART_JOB_DONE;
     constructor() { }
 }
 
+@HideLoader()
 export class RestartImportJobFailAction implements FailedAction {
     public readonly type = AdminActionTypes.RESTART_JOB_ERROR;
     constructor(public error: ProblemDetails) { }
