@@ -29,6 +29,7 @@ import { AdminModule } from './admin/admin.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { JoinTranslationsPipe } from './join-translations.pipe';
+import { MapPsDetailsComponent } from './polling-station-search/map-ps-details/map-ps-details.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -55,6 +56,7 @@ const appRoutes: Routes = [
     AboutComponent,
     CookiePolicyComponent,
     JoinTranslationsPipe,
+    MapPsDetailsComponent,
   ],
   imports: [
     BrowserAnimationsModule,

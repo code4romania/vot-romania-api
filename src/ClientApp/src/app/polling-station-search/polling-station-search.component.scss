@@ -19,11 +19,6 @@
   }
 }
 
-.map {
-  height: 596px;
-  width: 100%;
-  margin-bottom: 80px;
-}
 
 @media screen and (max-width: 575px) {
   .search-input {
@@ -42,38 +37,6 @@
   }
 }
 
-.ps-card {
-  width: 472px;
-
-    .ps-title {
-      font-family: "Titillium Web";
-      font-style: normal;
-      font-weight: 600;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      text-align: center;
-    }
-
-    .ps-description {
-      font-family: 'Titillium Web';
-      font-style: normal;
-      font-weight: 500;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      text-align: center;
-
-      .ps-address-label {
-        background: #FFCC00;
-        font-family: 'Titillium Web';
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-      }
-    }
-
-}
 
 .text-padding {
   padding-bottom: 32px;
@@ -94,6 +57,19 @@
   box-sizing: border-box;
   max-width: 45%;
   display: block;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 596px;
+  display: inline-block;
+  position: relative;
+  margin-bottom: 80px;
+  .map {
+    height: 596px;
+    width: 100%;
+    margin-bottom: 80px;
+  }
 }
 
 @media screen and (max-width: 575px) {

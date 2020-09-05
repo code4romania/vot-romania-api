@@ -35,6 +35,9 @@
 		"case3_title": "Olyan állampolgár aki aláirási vagy pecsételési képessége nincs",
 		"case3_p1": "DHa mozgássérült vagy és a szavazó irodában nem tudod rokkantsági okokból aláírni és lepecsételni a szavazólapot, a szavazo iroda elnoke tudatositássával lehet kísérőt kérni a szavazófülkében ameddig az illetékes vállasza a kísérőt, és ez nem egy a szavazó irodához vagy a versenyben lévő egyik jelölt. "
 	},
+	"pollingStationSearch": {
+		"searchPlaceholder":"Caută adresa ta pentru a afla la ce secție ești arondat"
+	},
 	"back_button": "Viszza",
 	"back_to_start_button": "Vissza az elejére",
 	"introduction": "Szeptember 27-én helyi választások vannak Romániában. A román állampolgárok és azok a más Európai Unió tagállampolgárai akiknek lakcímük vagy tartózkodási cimuk van Románia teruletén szavazhatnak polgármesterükre, helyi tanácsosokra és megyei tanácsosokra. Találd med a Vot Romania segítségével hogy hol tudsz szavazni, milyen feltételek között és melyek azok a dokumentumok amelyekre szükséged lesz.",

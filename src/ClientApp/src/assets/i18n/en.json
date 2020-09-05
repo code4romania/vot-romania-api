@@ -36,6 +36,9 @@
 		"case3_title": "You are unable to sign or apply the rubber stamp at the polling station due to disability",
 		"case3_p1": "Citizens with disability who arrive at the polling place and cannot sign the electoral list from reasons of impairment or cannot correctly apply the rubber voting stamp on the ballot may, upon confirmation of the impairment from the polling station president, be accompanied by a person of their own choosing as long as that person is not one of the polling station committee members, observers or one of the candidates."
 	},
+	"pollingStationSearch": {
+		"searchPlaceholder":"[EN] Caută adresa ta pentru a afla la ce secție ești arondat"
+	},
 	"back_button": "Back",
 	"back_to_start_button": "Back to start",
 	"introduction": "On September 27th, local elections will be held in Romania. Romanian citizens as well as citizens of other EU states residing on Romanian territory have the right to elect their mayor as well as local and county council representatives. Vot România helps you find out where you can vote, how you can do it and what documents you will need for it.",

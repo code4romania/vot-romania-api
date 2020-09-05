@@ -1,0 +1,18 @@
+<div *ngIf="isVisible" class="details-wrapper" [@inOutAnimation]>
+    <div class="details">
+        <div class="header">
+            <span class="cross-icon" (click)="close()"></span>
+        </div>
+
+        <div class="details-content">
+            <div class="ps-card" *ngFor="let ps of pollingStations; trackBy: trackFn">
+                <div class="ps-title"> Sectia de votare {{ps.pollingStationNumber}}, {{ps.locality}}</div>
+                <div class="ps-description">
+                    <p class="ps-address-label">Adresa:</p>
+                    <u>{{ps.address}}</u>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>

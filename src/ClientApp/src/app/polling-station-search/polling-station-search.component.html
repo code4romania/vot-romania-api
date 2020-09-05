@@ -7,7 +7,7 @@
     <div class="w-100 centered-items">
       <div class="input-group search-input">
         <input type="text" class="form-control" [formControl]="control" [matAutocomplete]="auto"
-          [attr.placeholder]="searchText" [attr.aria-label]="searchText">
+          [attr.placeholder]="'pollingStationSearch.searchPlaceholder' | translate" [attr.aria-label]="'pollingStationSearch.searchPlaceholder' | translate">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button">
             <i class="fas fa-search"></i>
@@ -42,6 +42,9 @@
     </div>
   </div>
 
-  <div #map id="map" style="height: 596px;" class="map">
+  <div class="map-wrapper" style="height: 596px;">
+    <div #map id="map" style="height: 596px;" class="map">
+    </div>
+    <app-map-ps-details [dataSource]="pollingStatationsGroup$"></app-map-ps-details>
   </div>
 </div>

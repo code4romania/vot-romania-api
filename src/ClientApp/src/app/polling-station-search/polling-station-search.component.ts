@@ -8,7 +8,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { switchMap, debounceTime, map, filter } from 'rxjs/operators';
 import { HereAddressService, AddressSuggestion, LocationDetails } from '../services/here-address.service';
 import { ApplicationState } from '../state/reducers';
@@ -36,13 +36,14 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
 
   control = new FormControl();
   filteredAddresses: Observable<AddressSuggestion[]>;
-  searchText = 'Caută adresa ta pentru a afla la ce secție ești arondat';
   pollingStations: PollingStation[];
+  pollingStatationsGroup$: Subject<PollingStationGroup> = new Subject<PollingStationGroup>();
 
   private platform: any;
   private hereMap: any;
+  private behavior: any;
+  // @ts-ignore
   private mapUi: any;
-  private currentlyOpenedInfoBubble: any;
 
 
   @ViewChild('map', { static: true })
@@ -70,32 +71,33 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
       .pipe(filter(data => data !== undefined && data.pollingStations !== undefined && data.userAddress !== undefined))
       .subscribe((details: { userAddress: LocationDetails, pollingStations: PollingStationGroup[] }) => {
         this.clearMap();
-        const { userAddress, pollingStations } = details;
+        const { userAddress, pollingStations: pollingStationsGroups } = details;
 
         const position = userAddress.displayPosition;
         const userAddressMarker = new H.map.Marker({ lat: position.latitude, lng: position.longitude }, { icon: this.userIcon });
         userAddressMarker.setData('locatia ta');
         const mapMarkers: any[] = [];
         mapMarkers.push(userAddressMarker);
-        this.pollingStations = [].concat(...pollingStations.map(p => p.pollingStations));
-        pollingStations.forEach(p => {
-          const pollingStationMarker = new H.map.Marker({ lat: p.latitude, lng: p.longitude }, { icon: this.pollingStationIcon });
-          pollingStationMarker.setData(this.getPollingStationinfoBubble(p));
+        this.pollingStations = [].concat(...pollingStationsGroups.map(p => p.pollingStations));
+        pollingStationsGroups.forEach(pollingStationGroup => {
+          const pollingStationMarker = new H.map.Marker(
+            {
+              lat: pollingStationGroup.latitude,
+              lng: pollingStationGroup.longitude
+            },
+            {
+              icon: this.pollingStationIcon
+            });
+
+          pollingStationMarker.setData(pollingStationGroup);
           mapMarkers.push(pollingStationMarker);
         });
 
         const group = new H.map.Group();
         group.addEventListener('tap', (evt) => {
-          // event target is the marker itself, group is a parent event target
-          // for all objects that it contains
-          const bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
-            // read custom data
-            content: evt.target.getData()
-          });
-          this.mapUi.removeBubble(this.currentlyOpenedInfoBubble);
-          // show info bubble
-          this.mapUi.addBubble(bubble);
-          this.currentlyOpenedInfoBubble = bubble;
+          // read custom data
+          const groupDetails: PollingStationGroup = evt.target.getData();
+          this.pollingStatationsGroup$.next(groupDetails);
         }, false);
 
         // add markers to the group
@@ -109,20 +111,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
       });
   }
 
-  getPollingStationinfoBubble(group: PollingStationGroup): string {
-    return group.pollingStations.reduce((accumulator, currentValue) =>
-      accumulator + `<div class="ps-card">
-      <div class="ps-title"> Sectia de votare ${currentValue.pollingStationNumber},  ${currentValue.locality}</div>
-      <div class="ps-description">
-          <p class="ps-address-label">Adresa:</p>
-      <u>${currentValue.address}</u></div>
-      <hr></div>` + '</div>'
-      , '');
-
-  }
-
   private initializeMap() {
-
     const pixelRatio = window.devicePixelRatio || 1;
     const defaultLayers = this.platform.createDefaultLayers({
       tileSize: pixelRatio === 1 ? 256 : 512,
@@ -136,6 +125,9 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         zoom: 7,
         pixelRatio: pixelRatio
       });
+
+    this.behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(this.hereMap));
+    this.behavior.disable(H.mapevents.Behavior.WHEELZOOM);
 
     this.mapUi = H.ui.UI.createDefault(this.hereMap, defaultLayers);
   }

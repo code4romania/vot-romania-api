@@ -1,0 +1,92 @@
+.details-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 160;
+    display: flex;
+
+    .details {
+        background-color: white;
+        border: 1px solid gray;
+        z-index: inherit;
+
+        .header {
+            background-color: #fff;
+            z-index: 21;
+            top: 0;
+            left: 0;
+            padding: 30px 40px;
+
+            .cross-icon {
+                position: absolute;
+                right: 32px;
+                top: 32px;
+                width: 32px;
+                height: 32px;
+                opacity: 0.3;
+                cursor: pointer;
+
+                &:hover {
+                    opacity: 1;
+                }
+
+                &:before {
+                    position: absolute;
+                    left: 15px;
+                    content: " ";
+                    height: 33px;
+                    width: 2px;
+                    background-color: #333;
+                    transform: rotate(45deg);
+                }
+
+                &:after {
+                    position: absolute;
+                    left: 15px;
+                    content: " ";
+                    height: 33px;
+                    width: 2px;
+                    background-color: #333;
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+
+        .details-content {
+            overflow-y: auto;
+            overflow-x: hidden;
+            height: 100%;
+            padding: 0 40px;
+        }
+    }
+
+    .ps-card {
+        width: 472px;
+
+        .ps-title {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .ps-description {
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+
+            .ps-address-label {
+                background: #ffcc00;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 16px;
+            }
+        }
+    }
+}

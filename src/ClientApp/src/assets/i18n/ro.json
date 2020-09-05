@@ -36,6 +36,9 @@
 		"case3_title": "Poți ajunge în secția de votare dar ai nevoie de ajutor pentru a aplica ștampila",
 		"case3_p1": "Dacă ești un cetățean cu dizabilități și te prezinți în secție și nu poți semna pe lista electorală din motive de invaliditate sau nu poți aplica ștampila pe buletin și președintele secției de votare constată acest lucru, poți fi însoțit în cabină de un însoțitor pe care îl alegi tu și care nu este din rândul persoanelor acreditate, al membrilor biroului electoral al secţiei de votare sau al candidaţilor."
 	},
+	"pollingStationSearch": {
+		"searchPlaceholder":"Caută adresa ta pentru a afla la ce secție ești arondat"
+	},
 	"back_button": "Înapoi",
 	"back_to_start_button": "Înapoi la început",
 	"introduction": "Pe 27 septembrie au loc alegeri locale în România. Românii și cetățenii altor state din Uniunea Europeană cu domiciliul sau reședința pe teritoriul României au dreptul de a-și alege primarii, consilierii locali și consilierii județeni. Descoperă cu ajutorul Vot România unde poți vota, în ce condiții și care sunt actele de care ai nevoie pentru a face acest lucru.",
