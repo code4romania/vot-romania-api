@@ -62,8 +62,6 @@
     }
 
     .ps-card {
-        width: 472px;
-
         .ps-title {
             font-style: normal;
             font-weight: 600;
@@ -87,6 +85,17 @@
                 font-weight: normal;
                 font-size: 16px;
             }
+        }
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .details-wrapper{
+        width: 100%;
+
+        .details-content{
+            padding-left: 20px;
+            padding-right: 20px;
         }
     }
 }

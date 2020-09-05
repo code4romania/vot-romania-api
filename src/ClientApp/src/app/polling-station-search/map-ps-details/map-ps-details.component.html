@@ -8,8 +8,7 @@
             <div class="ps-card" *ngFor="let ps of pollingStations; trackBy: trackFn">
                 <div class="ps-title"> Sectia de votare {{ps.pollingStationNumber}}, {{ps.locality}}</div>
                 <div class="ps-description">
-                    <p class="ps-address-label">Adresa:</p>
-                    <u>{{ps.address}}</u>
+                    <div><span class="ps-address-label">Adresa:</span><u>{{ps.address}}</u></div>
                 </div>
                 <hr>
             </div>
