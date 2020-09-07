@@ -53,7 +53,7 @@
 		"p7": "developed pro-bono by:",
 		"p8": "in partnership with:"
 	},
-	"map_hero": "This is where you’ll soon be able to find a map with a search form that will help you locate the polling place you are assigned to. <br> This is a project we developed completely Pro Bono.<br> If we helped you here, consider making <a href='https://code4.ro/ro/doneaza/' target='_blank'>a donation</a> for Code for Romania, so we’ll be able to keep helping people even more.",
+	"map_hero": "This is where you’ll soon be able to find a map with a search form that will help you locate the polling place you are assigned to. <br> This is a project we developed completely Pro Bono.<br> If we helped you here, consider making <a href='https://code4.ro/ro/doneaza/' target='_blank' rel='noopener' rel='noreferrer'>a donation</a> for Code for Romania, so we’ll be able to keep helping people even more.",
 	"social_share": {
 		"title": "Share with your friends",
 		"text": "Share this information on social media to help more Romanians find out where they can vote for the local elections in 2020, what documents they will need and other useful advice."
