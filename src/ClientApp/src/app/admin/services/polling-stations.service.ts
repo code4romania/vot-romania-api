@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthService } from './auth.service';
 import { ErrorService } from 'src/app/services/error.service';
 import { RequestHttpParams } from 'src/app/services/params-builder';
+
+import { AuthService } from './auth.service';
 
 export interface Option {
     title: string;
@@ -97,7 +97,7 @@ export interface PaginatedResponse<T> {
 
 export interface ImportJobDetails {
     jobId: string;
-    fileName: string
+    fileName: string;
     status: string;
 }
 
@@ -129,17 +129,21 @@ export class PollingStationsService {
     }
 
     getPollingStations(latitude: number, longitude: number): Observable<PollingStationGroup[]> {
-        let params = RequestHttpParams
+        const params = RequestHttpParams
             .create()
             .append('latitude', latitude.toString())
             .append('longitude', longitude.toString())
             .please();
 
-        return this.http.get<PollingStationGroup[]>('api/polling-station/near-me', { params: params },)
+        return this.http.get<PollingStationGroup[]>('api/polling-station/near-me', { params: params })
             .pipe(catchError(this.errorService.handleError));
     }
 
-    getImportedPollingStations(jobId: string, filter: ImportedPollingStationsFilter, pagination: PaginationDetails): Observable<PaginatedResponse<ImportedPollingStation>> {
+    getImportedPollingStations(
+        jobId: string,
+        filter: ImportedPollingStationsFilter,
+        pagination: PaginationDetails
+    ): Observable<PaginatedResponse<ImportedPollingStation>> {
         const token = this.authService.getToken();
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
@@ -155,7 +159,9 @@ export class PollingStationsService {
             .append('pageSize', pagination.pageSize)
             .please();
 
-        return this.http.get<PaginatedResponse<ImportedPollingStation>>(`/api/admin/import/${jobId}/imported-polling-stations`, { params: params, headers })
+        const path = `/api/admin/import/${jobId}/imported-polling-stations`;
+        return this.http
+            .get<PaginatedResponse<ImportedPollingStation>>(path, { params: params, headers })
             .pipe(catchError(this.errorService.handleError));
     }
 
@@ -175,26 +181,35 @@ export class PollingStationsService {
             .pipe(catchError(this.errorService.handleError));
     }
 
-    addImportedPollingStation(jobId: string, importedPollingStation: ImportedPollingStation, adddresses: AssignedAddress[]): Observable<any> {
+    addImportedPollingStation(
+        jobId: string,
+        importedPollingStation: ImportedPollingStation,
+        adddresses: AssignedAddress[]): Observable<any> {
         const token = this.authService.getToken();
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
         const data = {
             ...importedPollingStation,
             assignedAddresses: adddresses
-        }
+        };
+
         return this.http.post(`/api/admin/import/${jobId}/imported-polling-stations`, data, { headers })
             .pipe(catchError(this.errorService.handleError));
     }
 
-    updateImportedPollingStation(jobId: string, pollingStationId: number, importedPollingStation: ImportedPollingStation, adddresses: AssignedAddress[]): Observable<any> {
+    updateImportedPollingStation(
+        jobId: string,
+        pollingStationId: number,
+        importedPollingStation: ImportedPollingStation,
+        adddresses: AssignedAddress[]): Observable<any> {
         const token = this.authService.getToken();
         const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
         const data = {
             ...importedPollingStation,
             assignedAddresses: adddresses
-        }
+        };
+
         return this.http.post(`/api/admin/import/${jobId}/imported-polling-stations/${pollingStationId}`, data, { headers })
             .pipe(catchError(this.errorService.handleError));
     }

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-//cdk
+// cdk
 import { Overlay } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { MatSpinner } from '@angular/material';
 
-//rxjs
-import { Subject } from 'rxjs'
-import { scan, map } from 'rxjs/operators'
+// rxjs
+import { Subject } from 'rxjs';
+import { scan, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class SpinnerService {
 
   private spinnerTopRef = this.cdkSpinnerCreate();
 
-  private spin$: Subject<boolean> = new Subject()
+  private spin$: Subject<boolean> = new Subject();
 
   constructor(private overlay: Overlay) {
     this.spin$
@@ -27,12 +27,15 @@ export class SpinnerService {
       )
       .subscribe(
         (res) => {
-          if (res === 1) { this.showSpinner() }
-          else if (res == 0) {
-            this.spinnerTopRef.hasAttached() ? this.stopSpinner() : null;
+          if (res === 1) {
+            this.showSpinner();
+          } else {
+            if (res === 0) {
+              this.spinnerTopRef.hasAttached() ? this.stopSpinner() : null;
+            }
           }
         }
-      )
+      );
   }
 
   public display(isDisplayed: boolean): void {
@@ -47,7 +50,7 @@ export class SpinnerService {
         .global()
         .centerHorizontally()
         .centerVertically()
-    })
+    });
   }
 
   private showSpinner() {

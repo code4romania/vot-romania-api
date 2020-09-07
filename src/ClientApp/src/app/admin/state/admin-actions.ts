@@ -18,10 +18,10 @@ export function actionType<T extends string>(label: T): T {
 
 export function ShowLoader() {
     return function (Class: Function) {
-        Object.defineProperty(Class.prototype,'showLoader', {
+        Object.defineProperty(Class.prototype, 'showLoader', {
             value: true
         });
-    }
+    };
 }
 
 export function HideLoader() {
@@ -29,7 +29,7 @@ export function HideLoader() {
         Object.defineProperty(Class.prototype, 'showLoader', {
             value: false
         });
-    }
+    };
 }
 
 export class AdminActionTypes {
@@ -88,11 +88,11 @@ export class AdminActionTypes {
     static readonly DISPLAY_TOASTER_MESSAGE = actionType('[ToasterService] Show message');
 }
 
-export interface FailedAction extends Action{
+export interface FailedAction extends Action {
     error: ProblemDetails;
 }
 
-export interface SuccessAction extends Action{
+export interface SuccessAction extends Action {
     message: string;
 }
 
@@ -109,7 +109,7 @@ export class LoadDataAction implements Action {
 @HideLoader()
 export class LoadErrorAction implements FailedAction {
     readonly type = AdminActionTypes.LOAD_ERROR;
-    constructor(public error: ProblemDetails) { }    ;
+    constructor(public error: ProblemDetails) { }
 }
 
 @HideLoader()
@@ -146,7 +146,7 @@ export class UpdateDataAction implements Action {
 @HideLoader()
 export class UpdateDataErrorAction implements FailedAction {
     readonly type = AdminActionTypes.UPDATE_DATA_ERROR;
-    constructor(public error: ProblemDetails) {}
+    constructor(public error: ProblemDetails) { }
 }
 
 @HideLoader()
@@ -280,7 +280,11 @@ export class CreateImportedPollingStationFailAction implements FailedAction {
 @ShowLoader()
 export class UpdateImportedPollingStationAction implements Action {
     public readonly type = AdminActionTypes.UPDATE_IMPORTED_POLLING_STATION;
-    constructor(public jobId: string, public pollingStationId: number, public importedPollingStation: ImportedPollingStation, public adddresses: AssignedAddress[]) { }
+    constructor(
+        public jobId: string,
+        public pollingStationId: number,
+        public importedPollingStation: ImportedPollingStation,
+        public adddresses: AssignedAddress[]) { }
 }
 
 @HideLoader()

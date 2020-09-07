@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using VotRomania.Extensions;
 using VotRomania.Models;
+using VotRomania.Services.Location;
 using VotRomania.Stores.Entities;
 
 namespace VotRomania.Stores
@@ -141,6 +142,7 @@ namespace VotRomania.Stores
                           Institution = pollingStation.Institution,
                           JobId = pollingStation.JobId,
                           ResolvedAddressStatus = pollingStation.ResolvedAddressStatus,
+                          FailMessage = pollingStation.FailMessage,
                           AssignedAddresses = pollingStation.AssignedAddresses.Select(x => new AssignedAddressModel()
                           {
                               HouseNumbers = x.HouseNumbers,
@@ -200,7 +202,6 @@ namespace VotRomania.Stores
                 pollingStation.FailMessage = importedPollingStation.FailMessage;
                 pollingStation.JobId = jobId.ToString();
 
-
                 if (importedPollingStation.AssignedAddresses != null)
                 {
                     if (pollingStation.AssignedAddresses != null)
@@ -249,7 +250,8 @@ namespace VotRomania.Stores
                         Locality = ps.Locality,
                         Institution = ps.Institution,
                         JobId = ps.JobId,
-                        ResolvedAddressStatus = ps.ResolvedAddressStatus
+                        ResolvedAddressStatus = ps.ResolvedAddressStatus,
+                        FailMessage = ps.FailMessage
                     })
                     .FirstOrDefaultAsync();
 
@@ -281,13 +283,19 @@ namespace VotRomania.Stores
             return result;
         }
 
-
         private ImportedPollingStationEntity MapToImportEntity(PollingStationModel ps, Guid jobId)
         {
+            var county = Counties.GetByCode(ps.County);
+            var address = ps.Address;
+            if (address.StartsWith("Loc. ", StringComparison.InvariantCultureIgnoreCase))
+            {
+                address = address.Replace("Loc. ", "", StringComparison.InvariantCultureIgnoreCase);
+            }
+
             var entity = new ImportedPollingStationEntity
             {
-                Address = ps.Address,
-                County = ps.County,
+                Address = address,
+                County = county,
                 Institution = ps.Institution,
                 Locality = ps.Locality,
                 PollingStationNumber = ps.PollingStationNumber,

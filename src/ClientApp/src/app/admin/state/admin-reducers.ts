@@ -23,7 +23,7 @@ export interface AdminState {
     auth: {
         token: string;
     };
-    import: ImportPollingStationsState
+    import: ImportPollingStationsState;
 }
 
 const DEFAULT_IPS_FILTER: ImportedPollingStationsFilter = {
@@ -161,7 +161,7 @@ export function adminStateReducer(state: AdminState = initialState, action: Admi
                     ...state.import,
                     importedPollingStationsFilter: DEFAULT_IPS_FILTER
                 }
-            }
+            };
 
         case AdminActionTypes.UPDATE_FILTER:
             if (isEqual(state.import.importedPollingStationsFilter, action.payload)) {
@@ -174,7 +174,7 @@ export function adminStateReducer(state: AdminState = initialState, action: Admi
                     ...state.import,
                     importedPollingStationsFilter: action.payload
                 }
-            }
+            };
 
         case AdminActionTypes.UPDATE_PAGINATION:
             return {
@@ -183,7 +183,7 @@ export function adminStateReducer(state: AdminState = initialState, action: Admi
                     ...state.import,
                     importedPollingStationsPagination: action.payload
                 }
-            }
+            };
         default:
             return state;
     }

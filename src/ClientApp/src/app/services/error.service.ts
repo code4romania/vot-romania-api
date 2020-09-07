@@ -6,7 +6,7 @@ export class ErrorService {
   constructor() { }
 
   public handleError(err) {
-    console.error(err.error)
+    console.error(err.error);
     return throwError(err.error);
   }
 }

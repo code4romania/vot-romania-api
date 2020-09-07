@@ -66,6 +66,6 @@ export class ImportPollingStationsComponent implements OnInit, AfterViewInit {
         this.spinnerService.display(false);
 
         console.log(error);
-      })
+      });
   }
 }

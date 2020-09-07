@@ -1,17 +1,33 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Store, select } from '@ngrx/store';
-import { MatPaginator } from '@angular/material/paginator';
-import { merge, Subscription } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
-import { ApplicationState } from 'src/app/state/reducers';
+import { select, Store } from '@ngrx/store';
 import { get } from 'lodash';
-import { MatDialog } from '@angular/material';
+import { merge, Subscription } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { ApplicationState } from 'src/app/state/reducers';
+
 import { PollingStationEditorComponent } from '../../imported-polling-station-editor/polling-station-editor.component';
-import { ImportedPollingStation, ImportedPollingStationsFilter, ImportJobDetails } from '../../services/polling-stations.service';
-import { UpdatePagination, UpdateFilter, ResetFilter, DeleteImportedPollingStationAction, LoadImportedPollingStationsAction } from '../../state/admin-actions';
-import { getImportedPollingStations, getCurrentImportJobDetails, getImportedPollingStationsTotal, getCurrentImportedPollingStationsFilter } from '../../state/admin-selectors';
+import {
+  ImportedPollingStation,
+  ImportedPollingStationsFilter,
+  ImportJobDetails,
+} from '../../services/polling-stations.service';
+import {
+  DeleteImportedPollingStationAction,
+  LoadImportedPollingStationsAction,
+  ResetFilter,
+  UpdateFilter,
+  UpdatePagination,
+} from '../../state/admin-actions';
+import {
+  getCurrentImportedPollingStationsFilter,
+  getCurrentImportJobDetails,
+  getImportedPollingStations,
+  getImportedPollingStationsTotal,
+} from '../../state/admin-selectors';
 
 @Component({
   selector: 'app-imported-polling-stations-table',
@@ -68,7 +84,7 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
   }
 
   updateFilter() {
-    this.store.dispatch(new UpdateFilter(this.filter))
+    this.store.dispatch(new UpdateFilter(this.filter));
   }
 
   public resetFilter(): void {
@@ -77,7 +93,7 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
   }
 
   deleteImportedPollingStation(pollingStation: ImportedPollingStation) {
-    if (confirm("Are you sure you want to delete this polling station?")) {
+    if (confirm('Are you sure you want to delete this polling station?')) {
       this.store.dispatch(new DeleteImportedPollingStationAction(
         this.currentJob.jobId,
         pollingStation.id

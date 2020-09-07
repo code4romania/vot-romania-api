@@ -39,9 +39,8 @@ namespace VotRomania.Services.Location.HereMaps
                 {
                     return locationSearchResult;
                 }
-                // TODO: Add county
-                // TODO: Add mnemonics for counties
-                using (var response = await _client.GetAsync($"/v1/geocode?q={fullAddress}&apiKey={_apiKey}&countryCode:ROU"))
+
+                using (var response = await _client.GetAsync($"/v1/geocode?q={county} {fullAddress}&apiKey={_apiKey}&countryCode:ROU"))
                 {
                     var responseString = await response.Content.ReadAsStringAsync();
 
@@ -52,7 +51,7 @@ namespace VotRomania.Services.Location.HereMaps
                         // TODO: should we handle multiple responses ?
                         if (geocodeResponse.Items.Length > 1)
                         {
-                            _logger.LogWarning($"Found {geocodeResponse.Items.Length} locations for address '{fullAddress}");
+                            _logger.LogWarning($"Found {geocodeResponse.Items.Length} locations for address '{county} {fullAddress}'");
                         }
 
                         if (geocodeResponse.Items.Any())

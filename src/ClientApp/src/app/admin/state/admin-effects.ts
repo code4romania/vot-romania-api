@@ -33,7 +33,7 @@ import {
     FinishImportJobSuccessAction,
     FailedAction
 } from './admin-actions';
-import { Observable, of, empty } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
 import { mergeMap, map, catchError, switchMap, tap, withLatestFrom, filter } from 'rxjs/operators';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
@@ -118,9 +118,9 @@ export class AdminEffects {
             this.store$.select(getCurrentImportedPollingStationsFilter),
             this.store$.select(getCurrentImportedPollingStationsPagination)
         ),
-        filter(([, jobDetails,]) => jobDetails ? true : false),
-        switchMap(([, jobDetails, filter, pagination]) =>
-            this.dataService.getImportedPollingStations(jobDetails.jobId, filter, pagination).pipe(
+        filter(([, jobDetails, ]) => jobDetails ? true : false),
+        switchMap(([, jobDetails, importJobFilter, pagination]) =>
+            this.dataService.getImportedPollingStations(jobDetails.jobId, importJobFilter, pagination).pipe(
                 map((response: PaginatedResponse<ImportedPollingStation>) => new LoadImportedPollingStationsSuccessAction(response)),
                 catchError((error) => of(new LoadImportedPollingStationsFailAction(error)))
             )
@@ -132,7 +132,12 @@ export class AdminEffects {
         ofType<LoadImportJobDetailsAction>(AdminActionTypes.LOAD_IMPORT_JOB_DETAILS),
         mergeMap(() =>
             this.dataService.getImportJobDetails().pipe(
-                switchMap((data) => [new LoadImportJobDetailsSuccessAction(data), new LoadImportedPollingStationsAction()]),
+                switchMap((data) => {
+                    if (data) {
+                        return [new LoadImportJobDetailsSuccessAction(data), new LoadImportedPollingStationsAction()];
+                    }
+                    return [new LoadImportJobDetailsSuccessAction(data)];
+                }),
                 catchError(err => of(new LoadImportJobDetailsFailAction(err)))
             )
         )
@@ -144,7 +149,11 @@ export class AdminEffects {
         map((action) => ({ jobId: action.jobId, importedPollingStationId: action.importedPollingStationId })),
         mergeMap(({ jobId, importedPollingStationId }) =>
             this.dataService.deleteImportedPollingStationId(jobId, importedPollingStationId).pipe(
-                switchMap(() => [new DeleteImportedPollingStationSuccessAction(), new LoadImportedPollingStationsAction(), new DisplayToasterMessage("Delete successfull", 'success')]),
+                switchMap(() => [
+                    new DeleteImportedPollingStationSuccessAction(),
+                    new LoadImportedPollingStationsAction(),
+                    new DisplayToasterMessage('Delete successfull', 'success')
+                ]),
                 catchError(err => of(new DeleteImportedPollingStationFailAction(err)))
             )
         )
@@ -162,7 +171,11 @@ export class AdminEffects {
         map((action) => ({ jobId: action.jobId, importedPollingStation: action.importedPollingStation, addresses: action.adddresses })),
         mergeMap(({ jobId, importedPollingStation, addresses }) =>
             this.dataService.addImportedPollingStation(jobId, importedPollingStation, addresses).pipe(
-                switchMap(() => [new CreateImportedPollingStationSuccessAction(), new LoadImportedPollingStationsAction(), new DisplayToasterMessage("Create successfull", 'success')]),
+                switchMap(() => [
+                    new CreateImportedPollingStationSuccessAction(),
+                    new LoadImportedPollingStationsAction(),
+                    new DisplayToasterMessage('Create successfull', 'success')
+                ]),
                 catchError(err => of(new CreateImportedPollingStationFailAction(err)))
             )
         )
@@ -171,10 +184,20 @@ export class AdminEffects {
     @Effect()
     updateImportedPollingStation$: Observable<Action> = this.actions$.pipe(
         ofType<UpdateImportedPollingStationAction>(AdminActionTypes.UPDATE_IMPORTED_POLLING_STATION),
-        map((action) => ({ jobId: action.jobId, pollingStaionId: action.pollingStationId, importedPollingStation: action.importedPollingStation, addresses: action.adddresses })),
+        map((action) => (
+            {
+                jobId: action.jobId,
+                pollingStaionId: action.pollingStationId,
+                importedPollingStation: action.importedPollingStation,
+                addresses: action.adddresses
+            })),
         mergeMap(({ jobId, pollingStaionId, importedPollingStation, addresses }) =>
             this.dataService.updateImportedPollingStation(jobId, pollingStaionId, importedPollingStation, addresses).pipe(
-                switchMap(() => [new CreateImportedPollingStationSuccessAction(), new LoadImportedPollingStationsAction(), new DisplayToasterMessage("Create successfull", 'success')]),
+                switchMap(() => [
+                    new CreateImportedPollingStationSuccessAction(),
+                    new LoadImportedPollingStationsAction(),
+                    new DisplayToasterMessage('Create successfull', 'success')
+                ]),
                 catchError(err => of(new CreateImportedPollingStationFailAction(err)))
             )
         )
@@ -186,7 +209,7 @@ export class AdminEffects {
         map((action) => ({ jobId: action.jobId })),
         mergeMap(({ jobId }) =>
             this.dataService.restartJob(jobId).pipe(
-                switchMap(() => [new RestartImportJobSuccessAction(), new LoadImportJobDetailsAction(), new DisplayToasterMessage("Restart successfull", 'success')]),
+                switchMap(() => [new RestartImportJobSuccessAction(), new LoadImportJobDetailsAction(), new DisplayToasterMessage('Restart successfull', 'success')]),
                 catchError(err => of(new RestartImportJobFailAction(err)))
             )
         )
@@ -198,7 +221,7 @@ export class AdminEffects {
         map((action) => ({ jobId: action.jobId })),
         mergeMap(({ jobId }) =>
             this.dataService.cancelJob(jobId).pipe(
-                switchMap(() => [new CancelImportJobSuccessAction(), new LoadImportJobDetailsAction(), new DisplayToasterMessage("Cancel successfull", 'success')]),
+                switchMap(() => [new CancelImportJobSuccessAction(), new LoadImportJobDetailsAction(), new DisplayToasterMessage('Cancel successfull', 'success')]),
                 catchError(err => of(new CancelImportJobFailAction(err)))
             )
         )
@@ -210,7 +233,7 @@ export class AdminEffects {
         map((action) => ({ jobId: action.jobId })),
         mergeMap(({ jobId }) =>
             this.dataService.completeJob(jobId).pipe(
-                switchMap(() => [new FinishImportJobSuccessAction(), new LoadImportJobDetailsAction(), new DisplayToasterMessage("Finish successfull", 'success')]),
+                switchMap(() => [new FinishImportJobSuccessAction(), new LoadImportJobDetailsAction(), new DisplayToasterMessage('Finish successfull', 'success')]),
                 catchError(err => of(new CancelImportJobFailAction(err)))
             )
         )
@@ -228,19 +251,19 @@ export class AdminEffects {
             AdminActionTypes.LOAD_IPS_ERROR,
             AdminActionTypes.LOAD_IMPORT_JOB_DETAILS_ERROR,
             AdminActionTypes.DELETE_IMPORTED_POLLING_STATION_ERROR,
-            AdminActionTypes.CREATE_IMPORTED_POLLING_STATION_ERROR ,
+            AdminActionTypes.CREATE_IMPORTED_POLLING_STATION_ERROR,
             AdminActionTypes.UPDATE_IMPORTED_POLLING_STATION_ERROR,
             AdminActionTypes.RESTART_JOB_ERROR,
             AdminActionTypes.CANCEL_JOB_ERROR,
             AdminActionTypes.FINISH_JOB_ERROR
         ),
-        tap(details => {this.toasterService.show(details.error.detail , 'warning'); return empty();})
+        tap(details => { this.toasterService.show(details.error.detail, 'warning'); return EMPTY; })
     );
 
-    @Effect({dispatch: false})
+    @Effect({ dispatch: false })
     showLoader$ = this.actions$.pipe(
-      filter((action: any) => action && action.showLoader !== undefined),
-      map((action: any) => this.spinnerService.display(action.showLoader))
+        filter((action: any) => action && action.showLoader !== undefined),
+        map((action: any) => this.spinnerService.display(action.showLoader))
     );
 }
 
