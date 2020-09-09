@@ -10,7 +10,7 @@ using VotRomania.Stores;
 namespace VotRomania.Migrations
 {
     [DbContext(typeof(VotRomaniaContext))]
-    [Migration("20200902145925_InitialCreate")]
+    [Migration("20200909133456_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,10 @@ namespace VotRomania.Migrations
 
                     b.Property<int>("ImportedPollingStationId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Locality")
+                        .HasColumnName("Locality")
+                        .HasColumnType("text");
 
                     b.Property<string>("Remarks")
                         .HasColumnName("Remarks")
@@ -147,6 +151,11 @@ namespace VotRomania.Migrations
                     b.Property<string>("HouseNumbers")
                         .IsRequired()
                         .HasColumnName("HouseNumbers")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Locality")
+                        .IsRequired()
+                        .HasColumnName("Locality")
                         .HasColumnType("text");
 
                     b.Property<int>("PollingStationId")

@@ -94,6 +94,7 @@ namespace VotRomania.CommandsHandlers
                 {
                     entity.PollingStationAddresses.Add(new PollingStationAddressEntity
                     {
+                        Locality = assignedAddress.Locality,
                         HouseNumbers = assignedAddress.HouseNumbers,
                         Remarks = assignedAddress.Remarks,
                         Street = assignedAddress.Street,

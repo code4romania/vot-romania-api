@@ -50,6 +50,10 @@ namespace VotRomania.Migrations
                     b.Property<int>("ImportedPollingStationId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Locality")
+                        .HasColumnName("Locality")
+                        .HasColumnType("text");
+
                     b.Property<string>("Remarks")
                         .HasColumnName("Remarks")
                         .HasColumnType("text");
@@ -145,6 +149,11 @@ namespace VotRomania.Migrations
                     b.Property<string>("HouseNumbers")
                         .IsRequired()
                         .HasColumnName("HouseNumbers")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Locality")
+                        .IsRequired()
+                        .HasColumnName("Locality")
                         .HasColumnType("text");
 
                     b.Property<int>("PollingStationId")

@@ -146,6 +146,7 @@ namespace VotRomania.Stores
                           AssignedAddresses = pollingStation.AssignedAddresses.Select(x => new AssignedAddressModel()
                           {
                               HouseNumbers = x.HouseNumbers,
+                              Locality = x.Locality,
                               Remarks = x.Remarks,
                               Street = x.Street,
                               PollingStationId = x.ImportedPollingStationId,
@@ -225,6 +226,7 @@ namespace VotRomania.Stores
                 Id = assignedAddress.Id,
                 ImportedPollingStationId = pollingStation.Id,
                 ImportedPollingStation = pollingStation,
+                Locality = assignedAddress.Locality,
                 HouseNumbers = assignedAddress.HouseNumbers,
                 Remarks = assignedAddress.Remarks,
                 Street = assignedAddress.Street,
@@ -285,17 +287,10 @@ namespace VotRomania.Stores
 
         private ImportedPollingStationEntity MapToImportEntity(PollingStationModel ps, Guid jobId)
         {
-            var county = Counties.GetByCode(ps.County);
-            var address = ps.Address;
-            if (address.StartsWith("Loc. ", StringComparison.InvariantCultureIgnoreCase))
-            {
-                address = address.Replace("Loc. ", "", StringComparison.InvariantCultureIgnoreCase);
-            }
-
             var entity = new ImportedPollingStationEntity
             {
-                Address = address,
-                County = county,
+                Address = ps.Address,
+                County = ps.County,
                 Institution = ps.Institution,
                 Locality = ps.Locality,
                 PollingStationNumber = ps.PollingStationNumber,
@@ -310,6 +305,7 @@ namespace VotRomania.Stores
                 {
                     entity.AssignedAddresses.Add(new ImportedPollingStationAddressEntity
                     {
+                        Locality = assignedAddress.Locality,
                         HouseNumbers = assignedAddress.HouseNumbers,
                         Remarks = assignedAddress.Remarks,
                         Street = assignedAddress.Street,

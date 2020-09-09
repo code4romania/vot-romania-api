@@ -85,6 +85,7 @@ namespace VotRomania.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Locality = table.Column<string>(nullable: true),
                     StreetCode = table.Column<string>(nullable: true),
                     Street = table.Column<string>(nullable: true),
                     HouseNumbers = table.Column<string>(nullable: true),
@@ -108,6 +109,7 @@ namespace VotRomania.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Locality = table.Column<string>(nullable: false),
                     StreetCode = table.Column<string>(nullable: false),
                     Street = table.Column<string>(nullable: false),
                     HouseNumbers = table.Column<string>(nullable: false),

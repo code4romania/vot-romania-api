@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VotRomania.Services.Location
+namespace VotRomania.Services
 {
     public class Counties
     {

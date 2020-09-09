@@ -64,17 +64,17 @@ namespace VotRomania.Stores
                 entity.HasKey(m => m.Id);
                 entity.HasIndex(m => m.Id);
 
+                entity.Property(m => m.Locality)
+                    .HasColumnName("Locality");
+
                 entity.Property(m => m.StreetCode)
-                    .HasColumnName("StreetCode")
-                    .IsRequired();
+                    .HasColumnName("StreetCode");
 
                 entity.Property(m => m.Street)
-                    .HasColumnName("Street")
-                    .IsRequired();
+                    .HasColumnName("Street");
 
                 entity.Property(m => m.HouseNumbers)
-                    .HasColumnName("HouseNumbers")
-                    .IsRequired();
+                    .HasColumnName("HouseNumbers");
 
                 entity.Property(m => m.Remarks)
                     .HasColumnName("Remarks");
@@ -188,6 +188,9 @@ namespace VotRomania.Stores
                 entity.Property(m => m.Id).IsRequired();
                 entity.HasKey(m => m.Id);
                 entity.HasIndex(m => m.Id);
+
+                entity.Property(m => m.Locality)
+                    .HasColumnName("Locality");
 
                 entity.Property(m => m.StreetCode)
                     .HasColumnName("StreetCode");

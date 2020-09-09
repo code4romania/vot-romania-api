@@ -39,7 +39,7 @@ namespace VotRomania.Stores
                         PollingStationNumber = pollingStation.PollingStationNumber,
                         Locality = pollingStation.Locality,
                         Institution = pollingStation.Institution,
-                        //AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a)).ToList()
+                        AssignedAddresses = pollingStation.PollingStationAddresses.Select(a => MapToAssignedAddresses(a)).ToList()
                     });
 
                 if (query != null)
@@ -110,6 +110,7 @@ namespace VotRomania.Stores
             {
                 Id = pollingStationAssignedAddress.Id,
                 PollingStationId = pollingStationAssignedAddress.PollingStationId,
+                Locality = pollingStationAssignedAddress.Locality,
                 HouseNumbers = pollingStationAssignedAddress.HouseNumbers,
                 Remarks = pollingStationAssignedAddress.Remarks,
                 Street = pollingStationAssignedAddress.Street,
