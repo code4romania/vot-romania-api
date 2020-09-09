@@ -9,6 +9,10 @@ import { AdminContentComponent } from './admin-content/admin-content.component';
 import { VotersOptionEditorComponent } from './admin-content/voters-option-editor/voters-option-editor.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { DataService } from './../services/data.service';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { appStateReducer } from '../state/reducers';
+import { AuthEffects } from '../state/auth';
 
 
 @NgModule({
@@ -29,8 +33,10 @@ import { DataService } from './../services/data.service';
     MatDialogModule,
     ReactiveFormsModule,
     AngularEditorModule,
+    StoreModule.forFeature('admin', appStateReducer),
+    EffectsModule.forFeature([ AuthEffects ]),
   ],
-   providers: [
+  providers: [
     DataService
   ],
 })
