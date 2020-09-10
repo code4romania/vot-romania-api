@@ -27,6 +27,7 @@ export interface AssignedAddress {
   remarks: string;
   street: string;
   streetCode: string;
+  locality: string;
 }
 
 export interface PollingStation {
