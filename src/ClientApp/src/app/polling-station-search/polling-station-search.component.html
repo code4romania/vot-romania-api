@@ -23,21 +23,31 @@
     </div>
   </form>
 
-  <div class="container" *ngIf="pollingStations">
-    <p class="text-padding"><b>Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este secția
-        dedicată unde poți vota:</b></p>
-    <app-polling-station-card-info [pollingStation]="pollingStations[0]" [distance]="1" [lightTheme]="true"
-      class="ps-item margin-bottom-80">
-    </app-polling-station-card-info>
+  <div *ngIf="pollingStations" class="container">
+    <div *ngIf="pollingStationsForAddress.length > 0">
+      <p class="text-padding"><b>Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este
+        secția dedicată unde poți vota:</b></p>
+
+      <div class="ps-list">
+        <app-polling-station-card-info *ngFor="let pollingStation of pollingStationsForAddress"
+                                       [distance]="1" [lightTheme]="true" [pollingStation]="pollingStation"
+                                       class="ps-item margin-bottom-80">
+        </app-polling-station-card-info>
+      </div>
+    </div>
 
     <div class="text-padding">
-      <p><b>Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș. Cele mai
-          apropiate secții de tine sunt:</b></p>
+      <p *ngIf="pollingStationsForAddress.length === 0">
+        <b>Nu am găsit strada introdusă.</b>
+      </p>
+      <p><b>Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș.</b></p>
+      <p><b>Cele mai apropiate secții de tine sunt:</b></p>
     </div>
 
     <div class="ps-list">
-      <app-polling-station-card-info *ngFor="let pollingStation of pollingStations | slice:1"
-        [pollingStation]="pollingStation" [lightTheme]="false" [distance]="1" class="ps-item">
+      <app-polling-station-card-info *ngFor="let pollingStation of pollingStations"
+                                     [distance]="1" [lightTheme]="false" [pollingStation]="pollingStation"
+                                     class="ps-item">
       </app-polling-station-card-info>
     </div>
   </div>
