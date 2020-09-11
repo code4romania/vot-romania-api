@@ -107,6 +107,12 @@ namespace VotRomania
                 });
 
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddCors(options => options.AddPolicy("Permissive", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
 
             services.AddSwaggerGen(c =>
             {
@@ -181,6 +187,7 @@ namespace VotRomania
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VotRomaniaContext dbContext)
         {
             dbContext.Database.Migrate();
+            app.UseCors("Permissive");
 
             if (env.IsDevelopment())
             {
