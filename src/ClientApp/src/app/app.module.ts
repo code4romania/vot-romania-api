@@ -30,6 +30,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { JoinTranslationsPipe } from './join-translations.pipe';
 import { MapPsDetailsComponent } from './polling-station-search/map-ps-details/map-ps-details.component';
+import { PollingStationMatcherService } from './services/polling-station-matcher.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -80,7 +81,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     HereAddressService,
-    DataService
+    DataService,
+    PollingStationMatcherService,
   ],
   bootstrap: [AppComponent]
 })
