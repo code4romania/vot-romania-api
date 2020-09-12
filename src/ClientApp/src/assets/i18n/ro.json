@@ -37,7 +37,20 @@
 		"case3_p1": "Dacă ești un cetățean cu dizabilități și te prezinți în secție și nu poți semna pe lista electorală din motive de invaliditate sau nu poți aplica ștampila pe buletin și președintele secției de votare constată acest lucru, poți fi însoțit în cabină de un însoțitor pe care îl alegi tu și care nu este din rândul persoanelor acreditate, al membrilor biroului electoral al secţiei de votare sau al candidaţilor."
 	},
 	"pollingStationSearch": {
-		"searchPlaceholder":"Caută adresa ta pentru a afla la ce secție ești arondat"
+		"question": "Unde stai?",
+		"callToAction": "Introduceți numele străzii pe care locuiți, urmat de numele orașului",
+		"searchPlaceholder":"Caută adresa ta pentru a afla la ce secție ești arondat",
+		"addressNotFound": "Nu am găsit strada introdusă.",
+		"hasPermanentResidence": "Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este secția dedicată unde poți vota:",
+		"doesNotHavePermanentResidence": "Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș.",
+		"closestPollingStations": "Cele mai apropiate secții de tine sunt:"
+	},
+	"pollingStationCard": {
+		"distance": "Distanța:",
+		"seeStreets": "Vezi lista de străzi",
+		"pollingStationNumber":"Secția de votare Nr.",
+		"address": "Adresa:",
+		"assignedStreetsLabel": "La această secție pot vota persoanele care locuiesc pe următoarele străzi:"
 	},
 	"back_button": "Înapoi",
 	"back_to_start_button": "Înapoi la început",

@@ -40,11 +40,13 @@ export interface PollingStation {
   institution: string;
   address: string;
   assignedAddresses: AssignedAddress[];
+  distance?: number;
 }
 
 export interface PollingStationGroup {
   latitude: number;
   longitude: number;
+  distance: number;
   pollingStations: PollingStation[];
 }
 

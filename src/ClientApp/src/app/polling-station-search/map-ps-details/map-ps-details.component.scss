@@ -21,7 +21,7 @@
             .cross-icon {
                 position: absolute;
                 right: 32px;
-                top: 32px;
+                top: 16px;
                 width: 32px;
                 height: 32px;
                 opacity: 0.3;
@@ -56,37 +56,17 @@
         .details-content {
             overflow-y: auto;
             overflow-x: hidden;
-            height: 100%;
+            height: 90%;
             padding: 0 40px;
         }
     }
 
-    .ps-card {
-        .ps-title {
-            font-style: normal;
-            font-weight: 600;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            text-align: center;
-        }
-
-        .ps-description {
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            text-align: center;
-
-            .ps-address-label {
-                background: #ffcc00;
-                font-style: normal;
-                font-weight: normal;
-                font-size: 16px;
-            }
-        }
-    }
+    .card {
+        margin-bottom: 20px;
+        margin-left: 20px;
+        box-sizing: border-box;
+        display: block;
+      }
 }
 
 @media screen and (max-width: 575px) {

@@ -5,12 +5,11 @@
         </div>
 
         <div class="details-content">
-            <div class="ps-card" *ngFor="let ps of pollingStations; trackBy: trackFn">
-                <div class="ps-title"> Sectia de votare {{ps.pollingStationNumber}}, {{ps.locality}}</div>
-                <div class="ps-description">
-                    <div><span class="ps-address-label">Adresa:</span><u>{{ps.address}}</u></div>
-                </div>
-                <hr>
+            <div>
+                <app-polling-station-card-info *ngFor="let pollingStation of pollingStations"
+                    [distance]="pollingStation.distance" [lightTheme]="true" [pollingStation]="pollingStation"
+                    class="card">
+                </app-polling-station-card-info>
             </div>
         </div>
     </div>

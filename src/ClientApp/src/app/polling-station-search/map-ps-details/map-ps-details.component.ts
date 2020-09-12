@@ -45,7 +45,7 @@ export class MapPsDetailsComponent implements OnInit {
       .pipe(filter(data => data !== undefined && data.pollingStations !== undefined))
       .subscribe(group => {
         this.isVisible = true;
-        this.pollingStations = group.pollingStations;
+        this.pollingStations = [].concat(group.pollingStations.map(ps => ({ ...ps, distance: group.distance })));
       });
   }
 

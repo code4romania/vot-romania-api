@@ -28,9 +28,9 @@ import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
 import { AdminModule } from './admin/admin.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { JoinTranslationsPipe } from './join-translations.pipe';
 import { MapPsDetailsComponent } from './polling-station-search/map-ps-details/map-ps-details.component';
 import { PollingStationMatcherService } from './services/polling-station-matcher.service';
+import { FormatDistancePipe } from './format-distance.pipe';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -56,8 +56,8 @@ const appRoutes: Routes = [
     PollingStationSearchComponent,
     AboutComponent,
     CookiePolicyComponent,
-    JoinTranslationsPipe,
     MapPsDetailsComponent,
+    FormatDistancePipe,
   ],
   imports: [
     BrowserAnimationsModule,

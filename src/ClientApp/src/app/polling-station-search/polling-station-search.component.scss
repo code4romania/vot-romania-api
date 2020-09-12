@@ -55,7 +55,7 @@
   margin-bottom: 20px;
   margin-left: 20px;
   box-sizing: border-box;
-  max-width: 45%;
+  width: 45%;
   display: block;
 }
 
@@ -64,17 +64,15 @@
   height: 596px;
   display: inline-block;
   position: relative;
-  margin-bottom: 80px;
   .map {
     height: 596px;
     width: 100%;
-    margin-bottom: 80px;
   }
 }
 
 @media screen and (max-width: 575px) {
   .ps-item{
-    max-width: 100%;
+    width: 100%;
     margin-left: 0;
 
   }

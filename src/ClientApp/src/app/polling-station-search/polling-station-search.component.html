@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div class="w-100 centered-items title-block">
-    <h4 class="question"><b>Unde stai?</b></h4>
-    <h5>Introduceți numele străzii pe care locuiți, urmat de numele orașului</h5>
+    <h4 class="question"><b>{{'pollingStationSearch.question' | translate }}</b></h4>
+    <h5>{{'pollingStationSearch.callToAction' | translate }}</h5>
   </div>
   <form>
     <div class="w-100 centered-items">
@@ -25,28 +25,27 @@
 
   <div *ngIf="pollingStations" class="container">
     <div *ngIf="pollingStationsForAddress.length > 0">
-      <p class="text-padding"><b>Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este
-        secția dedicată unde poți vota:</b></p>
+      <p class="text-padding"><b>{{'pollingStationSearch.hasPermanentResidence' | translate }}</b></p>
 
-      <div class="ps-list">
+      <div class="ps-list margin-bottom-80">
         <app-polling-station-card-info *ngFor="let pollingStation of pollingStationsForAddress"
-                                       [distance]="1" [lightTheme]="true" [pollingStation]="pollingStation"
-                                       class="ps-item margin-bottom-80">
+                                       [distance]="pollingStation.distance" [lightTheme]="true" [pollingStation]="pollingStation"
+                                       class="ps-item">
         </app-polling-station-card-info>
       </div>
     </div>
 
     <div class="text-padding">
       <p *ngIf="pollingStationsForAddress.length === 0">
-        <b>Nu am găsit strada introdusă.</b>
+        <b>{{'pollingStationSearch.addressNotFound' | translate }}</b>
       </p>
-      <p><b>Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș.</b></p>
-      <p><b>Cele mai apropiate secții de tine sunt:</b></p>
+      <p><b>{{'pollingStationSearch.doesNotHavePermanentResidence' | translate }}</b></p>
+      <p><b>{{'pollingStationSearch.closestPollingStations' | translate }}</b></p>
     </div>
 
     <div class="ps-list">
       <app-polling-station-card-info *ngFor="let pollingStation of pollingStations"
-                                     [distance]="1" [lightTheme]="false" [pollingStation]="pollingStation"
+                                     [distance]="pollingStation.distance" [lightTheme]="false" [pollingStation]="pollingStation"
                                      class="ps-item">
       </app-polling-station-card-info>
     </div>
@@ -57,4 +56,5 @@
     </div>
     <app-map-ps-details [dataSource]="pollingStatationsGroup$"></app-map-ps-details>
   </div>
+  <div class="spacer margin-bottom-80"></div>
 </div>

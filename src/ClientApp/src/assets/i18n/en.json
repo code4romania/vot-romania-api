@@ -37,7 +37,20 @@
 		"case3_p1": "Citizens with disability who arrive at the polling place and cannot sign the electoral list from reasons of impairment or cannot correctly apply the rubber voting stamp on the ballot may, upon confirmation of the impairment from the polling station president, be accompanied by a person of their own choosing as long as that person is not one of the polling station committee members, observers or one of the candidates."
 	},
 	"pollingStationSearch": {
-		"searchPlaceholder":"[EN] Caută adresa ta pentru a afla la ce secție ești arondat"
+		"question": "[EN] Unde stai?",
+		"callToAction": "[EN] Introduceți numele străzii pe care locuiți, urmat de numele orașului",
+		"searchPlaceholder":"[EN] Caută adresa ta pentru a afla la ce secție ești arondat",
+		"addressNotFound": "[EN] Nu am găsit strada introdusă.",
+		"hasPermanentResidence": "[EN] Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este secția dedicată unde poți vota:",
+		"doesNotHavePermanentResidence": "[EN] Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș.",
+		"closestPollingStations": "[EN] Cele mai apropiate secții de tine sunt:"
+	},
+	"pollingStationCard": {
+		"distance": "[EN] Distanța:",
+		"seeStreets": "[EN] Vezi lista de străzi",
+		"pollingStationNumber":"[EN] Secția de votare Nr.",
+		"address": "[EN] Adresa:",
+		"assignedStreetsLabel": "[EN] La această secție pot vota persoanele care locuiesc pe următoarele străzi:"
 	},
 	"back_button": "Back",
 	"back_to_start_button": "Back to start",

@@ -54,8 +54,8 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
   private subscription: Subscription;
 
   constructor(private addressSuggest: HereAddressService,
-              private store: Store<ApplicationState>,
-              private pollingStationMatcher: PollingStationMatcherService) {
+    private store: Store<ApplicationState>,
+    private pollingStationMatcher: PollingStationMatcherService) {
     this.platform = new H.service.Platform({
       apikey: hereMapsToken
     });
@@ -82,7 +82,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         userAddressMarker.setData('locatia ta');
         const mapMarkers: any[] = [];
         mapMarkers.push(userAddressMarker);
-        this.pollingStations = [].concat(...pollingStationsGroups.map(p => p.pollingStations));
+        this.pollingStations = [].concat(...pollingStationsGroups.map(g => g.pollingStations.map(ps => ({ ...ps, distance: g.distance }))));
         this.pollingStationsForAddress = this.pollingStationMatcher.findPollingStation(this.pollingStations, userAddress.address);
         pollingStationsGroups.forEach(pollingStationGroup => {
           const pollingStationMarker = new H.map.Marker(

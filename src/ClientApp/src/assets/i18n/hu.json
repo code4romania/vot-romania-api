@@ -36,7 +36,20 @@
 		"case3_p1": "DHa mozgássérült vagy és a szavazó irodában nem tudod rokkantsági okokból aláírni és lepecsételni a szavazólapot, a szavazo iroda elnoke tudatositássával lehet kísérőt kérni a szavazófülkében ameddig az illetékes vállasza a kísérőt, és ez nem egy a szavazó irodához vagy a versenyben lévő egyik jelölt. "
 	},
 	"pollingStationSearch": {
-		"searchPlaceholder":"Caută adresa ta pentru a afla la ce secție ești arondat"
+		"question": "[HU] Unde stai?",
+		"callToAction": "[HU] Introduceți numele străzii pe care locuiți, urmat de numele orașului",
+		"searchPlaceholder":"[HU] Caută adresa ta pentru a afla la ce secție ești arondat",
+		"addressNotFound": "[HU] Nu am găsit strada introdusă.",
+		"hasPermanentResidence": "[HU] Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este secția dedicată unde poți vota:",
+		"doesNotHavePermanentResidence": "[HU] Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș.",
+		"closestPollingStations": "[HU] Cele mai apropiate secții de tine sunt:"
+	},
+	"pollingStationCard": {
+		"distance": "[HU] Distanța:",
+		"seeStreets": "[HU] Vezi lista de străzi",
+		"pollingStationNumber":"[HU] Secția de votare Nr.",
+		"address": "[HU] Adresa:",
+		"assignedStreetsLabel": "[HU] La această secție pot vota persoanele care locuiesc pe următoarele străzi:"
 	},
 	"back_button": "Viszza",
 	"back_to_start_button": "Vissza az elejére",
