@@ -35,19 +35,14 @@
       </div>
     </div>
 
-    <div class="text-padding">
-      <p *ngIf="pollingStationsForAddress.length === 0">
-        <b>{{'pollingStationSearch.addressNotFound' | translate }}</b>
-      </p>
-      <p><b>{{'pollingStationSearch.doesNotHavePermanentResidence' | translate }}</b></p>
-      <p><b>{{'pollingStationSearch.closestPollingStations' | translate }}</b></p>
-    </div>
-
-    <div class="ps-list">
-      <app-polling-station-card-info *ngFor="let pollingStation of pollingStations"
-                                     [distance]="pollingStation.distance" [lightTheme]="false" [pollingStation]="pollingStation"
-                                     class="ps-item">
-      </app-polling-station-card-info>
+    <div *ngIf="pollingStationsForAddress.length === 0">
+      <div class="ps-list">
+        <p><b>{{'pollingStationSearch.addressNotFound' | translate }}</b></p>
+          <app-polling-station-card-info *ngFor="let pollingStation of pollingStations"
+                                      [distance]="pollingStation.distance" [lightTheme]="false" [pollingStation]="pollingStation"
+                                      class="ps-item">
+        </app-polling-station-card-info>
+      </div>
     </div>
   </div>
 

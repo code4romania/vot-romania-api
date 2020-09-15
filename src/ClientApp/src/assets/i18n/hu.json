@@ -39,8 +39,8 @@
     "question": "Hol laksz?",
     "callToAction": "Írd be az utca nevét majd a településnevet.",
     "searchPlaceholder":"Keresd meg a lakcímed hogy tudd melyik szavazókörzethez tartozol.",
-    "addressNotFound": "Nem találtuk meg a beírt utcat",
-    "hasPermanentResidence": "Ha a lakcímed ugyanabban a városban van ahol szeretnél szavazni, ebben a szavazókörzetben teheted ezt meg: ",
+    "addressNotFound": "Nem talàltuk meg a megadott utcához tartozó szavazókörzetett. Lejjebb lathatod a legközelebbi szavazókörzeteket a megadott címhez és a hozzájuk tartozó utcákat, így azonosíthatód hogy hol tudsz szavazi.",
+    "hasPermanentResidence": "A keresett cím a következő szavazókörzethez van kiosztva: ",
     "doesNotHavePermanentResidence": "Ha a lakcímed mas mint az említett cím akkor a városban lévő bar melyik szavazókörzetben szavazhatsz ",
     "closestPollingStations": "A legközelebbi szavazókörzetek hozzád:"
   },
@@ -68,7 +68,7 @@
 		"p7": "pro bono fejlesztés:",
 		"p8": "partnerek:"
 	},
-	"map_hero": "Hamarosan találsz itt egy térképet és egy keresőt, melyek segítenek megtalálni a szavazókörzetet, amelyhez tartozol.<br> Ha a Vot Romania segített küldhetsz egy  <a href='https://code4.ro/ro/doneaza/' target='_blank' rel='noopener' rel='noreferrer'>bàrmilyen kis adományt</a> a Code for Romania-nak mely pro bono fejlesztette eszt az eszközt",
+	"map_hero": "Hamarosan találsz itt egy térképet és egy keresőt, melyek segítenek megtalálni a szavazókörzetet, amelyhez tartozol.<br> Ha a Vot Romania segített küldhetsz egy <a href='https://code4.ro/ro/doneaza/' target='_blank' rel='noopener' rel='noreferrer'>bàrmilyen kis adományt</a> a Code for Romania-nak mely pro bono fejlesztette eszt az eszközt",
 	"social_share": {
 		"title": "Tájékoztasd a barátaidat",
 		"text": "Oszd meg ezeket az információkat a közösségi medián, hogy minél több román állampolgár megtudhassa, hol szavazhat a 2020-as önkormányzati választásokon, milyen iratokra lesz szüksége és más hasznos tanácsot."
