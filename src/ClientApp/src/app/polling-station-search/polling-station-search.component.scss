@@ -19,25 +19,6 @@
   }
 }
 
-
-@media screen and (max-width: 575px) {
-  .search-input {
-    width: 90%;
-    min-width: 90%;
-  }
-
-  .map {
-    height: 70vh;
-  }
-}
-
-@media screen and (max-height: 575px) {
-  .map {
-    height: 70vh;
-  }
-}
-
-
 .text-padding {
   padding-bottom: 32px;
 }
@@ -64,8 +45,9 @@
   height: 596px;
   display: inline-block;
   position: relative;
-  .map {
-    height: 596px;
+
+  #map {
+    height: 100%;
     width: 100%;
   }
 }
@@ -79,5 +61,14 @@
 
   h5 {
     text-align: center;
+  }
+
+  .search-input {
+    width: 90%;
+    min-width: 90%;
+  }
+
+  .map-wrapper {
+    height: 70vh;
   }
 }
