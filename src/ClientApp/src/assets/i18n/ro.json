@@ -40,8 +40,8 @@
 		"question": "Unde stai?",
 		"callToAction": "Introduceți numele străzii pe care locuiți, urmat de numele orașului",
 		"searchPlaceholder":"Caută adresa ta pentru a afla la ce secție ești arondat",
-		"addressNotFound": "Nu am găsit strada introdusă.",
-		"hasPermanentResidence": "Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este secția dedicată unde poți vota:",
+		"addressNotFound": "Nu am găsit secția corespunzătoare străzii tale. Iată cele mai apropiate secții de adresa căutată și lista străzilor arondate lor pentru a identifica unde anume trebuie să votezi.",
+		"hasPermanentResidence": "Adresa căutată este arondată la secția:",
 		"doesNotHavePermanentResidence": "Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș.",
 		"closestPollingStations": "Cele mai apropiate secții de tine sunt:"
 	},
