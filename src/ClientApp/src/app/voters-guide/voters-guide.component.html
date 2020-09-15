@@ -25,10 +25,10 @@
       </ng-container>
     </div>
 
-    <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row">
-      <button (click)="startOver()" class="btn col-6">
+    <ng-container *ngIf="isBeyondInitialQuestion$ | async" class="row justify-content-between">
+      <button (click)="startOver()" class="btn col-4 default">
         << {{ 'back_to_start_button' | translate }}</button>
-          <button (click)="back()" class="btn col-6">
+          <button (click)="back()" class="btn col-4 default">
             < {{ 'back_button' | translate }}</button>
     </ng-container>
 
