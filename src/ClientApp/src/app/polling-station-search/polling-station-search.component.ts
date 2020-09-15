@@ -32,7 +32,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
   filteredAddresses: Observable<AddressSuggestion[]>;
   pollingStations: PollingStation[];
   pollingStationsForAddress: PollingStation[];
-  pollingStatationsGroup$: Subject<PollingStationGroup> = new Subject<PollingStationGroup>();
+  pollingStatationsGroup$: Subject<PollingStation[]> = new Subject<PollingStation[]>();
 
   private platform: any;
   private hereMap: any;
@@ -75,27 +75,34 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         userAddressMarker.setData('locatia ta');
         const mapMarkers: any[] = [];
         mapMarkers.push(userAddressMarker);
-        this.pollingStations = [].concat(...pollingStationsGroups.map(g => g.pollingStations.map(ps => ({ ...ps, distance: g.distance }))));
+        this.pollingStations = [].concat(...pollingStationsGroups.map(g => g.pollingStations.map(ps =>
+          ({
+            ...ps,
+            distance: g.distance,
+            latitude: g.latitude,
+            longitude: g.longitude
+          }))));
+
         this.pollingStationsForAddress = this.pollingStationMatcher.findPollingStation(this.pollingStations, userAddress.address);
-        pollingStationsGroups.forEach(pollingStationGroup => {
+        this.pollingStationsForAddress.forEach(pollingStation => {
           const pollingStationMarker = new H.map.Marker(
             {
-              lat: pollingStationGroup.latitude,
-              lng: pollingStationGroup.longitude
+              lat: pollingStation.latitude,
+              lng: pollingStation.longitude
             },
             {
               icon: this.pollingStationIcon
             });
 
-          pollingStationMarker.setData(pollingStationGroup);
+          pollingStationMarker.setData([ pollingStation ]);
           mapMarkers.push(pollingStationMarker);
         });
 
         const group = new H.map.Group();
         group.addEventListener('tap', (evt) => {
           // read custom data
-          const groupDetails: PollingStationGroup = evt.target.getData();
-          this.pollingStatationsGroup$.next(groupDetails);
+          const pollingStations: PollingStation[] = evt.target.getData();
+          this.pollingStatationsGroup$.next(pollingStations);
         }, false);
 
         // add markers to the group

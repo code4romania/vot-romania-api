@@ -36,16 +36,16 @@ export class MapPsDetailsComponent implements OnInit {
   pollingStations: PollingStation[];
   isVisible: boolean;
 
-  @Input() dataSource: Subject<PollingStationGroup>;
+  @Input() dataSource: Subject<PollingStation[]>;
 
   constructor() { }
 
   ngOnInit() {
     this.dataSource
-      .pipe(filter(data => data !== undefined && data.pollingStations !== undefined))
-      .subscribe(group => {
+      .pipe(filter(data => data !== undefined))
+      .subscribe((pollingStations) => {
         this.isVisible = true;
-        this.pollingStations = [].concat(group.pollingStations.map(ps => ({ ...ps, distance: group.distance })));
+        this.pollingStations = pollingStations;
       });
   }
 
