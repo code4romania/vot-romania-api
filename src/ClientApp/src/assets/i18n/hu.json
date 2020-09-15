@@ -39,8 +39,8 @@
     "question": "Hol laksz?",
     "callToAction": "Írd be az utca nevét majd a településnevet.",
     "searchPlaceholder":"Keresd meg a lakcímed hogy tudd melyik szavazókörzethez tartozol.",
-    "addressNotFound": "Nem találtuk meg a beírt utcat",
-    "hasPermanentResidence": "Ha a lakcímed ugyanabban a városban van ahol szeretnél szavazni, ebben a szavazókörzetben teheted ezt meg: ",
+    "addressNotFound": "Nem talàltuk meg a megadott utcához tartozó szavazókörzetett. Lejjebb lathatod a legközelebbi szavazókörzeteket a megadott címhez és a hozzájuk tartozó utcákat, így azonosíthatód hogy hol tudsz szavazi.",
+    "hasPermanentResidence": "A keresett cím a következő szavazókörzethez van kiosztva: ",
     "doesNotHavePermanentResidence": "Ha a lakcímed mas mint az említett cím akkor a városban lévő bar melyik szavazókörzetben szavazhatsz ",
     "closestPollingStations": "A legközelebbi szavazókörzetek hozzád:"
   },
