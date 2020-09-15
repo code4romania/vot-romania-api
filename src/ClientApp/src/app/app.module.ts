@@ -21,14 +21,16 @@ import { ShareCardComponent } from './share-card/share-card.component';
 import { DonateCardComponent } from './donate-card/donate-card.component';
 import { PollingStationCardInfoComponent } from './polling-station-card-info/polling-station-card-info.component';
 import { PollingStationSearchComponent } from './polling-station-search/polling-station-search.component';
-// import { HereAddressService } from './services/here-address.service';
+import { HereAddressService } from './services/here-address.service';
 import { DataService } from './services/data.service';
 import { AboutComponent } from './about/about.component';
 import { CookiePolicyComponent } from './cookie-policy/cookie-policy.component';
 import { AdminModule } from './admin/admin.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { JoinTranslationsPipe } from './join-translations.pipe';
+import { MapPsDetailsComponent } from './polling-station-search/map-ps-details/map-ps-details.component';
+import { PollingStationMatcherService } from './services/polling-station-matcher.service';
+import { FormatDistancePipe } from './format-distance.pipe';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -54,7 +56,8 @@ const appRoutes: Routes = [
     PollingStationSearchComponent,
     AboutComponent,
     CookiePolicyComponent,
-    JoinTranslationsPipe,
+    MapPsDetailsComponent,
+    FormatDistancePipe,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -70,15 +73,16 @@ const appRoutes: Routes = [
     MatAutocompleteModule,
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
       }
-  })
+    })
   ],
   providers: [
-    // HereAddressService,
-    DataService
+    HereAddressService,
+    DataService,
+    PollingStationMatcherService,
   ],
   bootstrap: [AppComponent]
 })
