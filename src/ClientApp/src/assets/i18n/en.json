@@ -40,8 +40,8 @@
 		"question": "Where do you live?",
 		"callToAction": "Insert the name of the street and the city where you live",
 		"searchPlaceholder":"Search for your address to find out the polling section you are assigned to",
-		"addressNotFound": "We were not able to find the polling station",
-		"hasPermanentResidence": "If you are a citizen domiciled in the city where you want to vote, this is the dedicated section where you can vote:",
+		"addressNotFound": "We didn`t find the polling station your street is attributed to. Please find below the closest polling stations for the searched address, and the list of streets that are attributed to them. This way you can manually match/check them, and see where you can vote. Please remember that you can only vote in the polling station your street has been attributed to.",
+		"hasPermanentResidence": "The searched address is allocated to the section:",
 		"doesNotHavePermanentResidence": "If you do not have a permanent address at the address mentioned, you can vote in any of the polling sections in the city.",
 		"closestPollingStations": "The closest polling stations are:"
 	},
