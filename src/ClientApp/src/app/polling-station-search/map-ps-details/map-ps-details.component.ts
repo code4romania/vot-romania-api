@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subject } from 'rxjs';
-import { PollingStationGroup, PollingStation } from 'src/app/services/data.service';
+import { PollingStation } from 'src/app/services/data.service';
 import { filter } from 'rxjs/operators';
 import { trigger, style, transition, animate } from '@angular/animations';
 
