@@ -42,7 +42,7 @@ export class MapPsDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource
-      .pipe(filter(data => data !== undefined))
+      .pipe(filter(data => data !== undefined && data.length !== 0))
       .subscribe((pollingStations) => {
         this.isVisible = true;
         this.pollingStations = pollingStations;

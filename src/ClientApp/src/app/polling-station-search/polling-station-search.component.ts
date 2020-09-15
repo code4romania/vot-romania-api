@@ -32,7 +32,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
   filteredAddresses: Observable<AddressSuggestion[]>;
   pollingStations: PollingStation[];
   pollingStationsForAddress: PollingStation[];
-  pollingStatationsGroup$: Subject<PollingStation[]> = new Subject<PollingStation[]>();
+  selectedPollingStations$: Subject<PollingStation[]> = new Subject<PollingStation[]>();
 
   private platform: any;
   private hereMap: any;
@@ -84,6 +84,11 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
           }))));
 
         this.pollingStationsForAddress = this.pollingStationMatcher.findPollingStation(this.pollingStations, userAddress.address);
+
+        if (this.pollingStationsForAddress === undefined || this.pollingStationsForAddress.length === 0) {
+          this.pollingStationsForAddress = this.pollingStations;
+        }
+
         this.pollingStationsForAddress.forEach(pollingStation => {
           const pollingStationMarker = new H.map.Marker(
             {
@@ -102,7 +107,7 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         group.addEventListener('tap', (evt) => {
           // read custom data
           const pollingStations: PollingStation[] = evt.target.getData();
-          this.pollingStatationsGroup$.next(pollingStations);
+          this.selectedPollingStations$.next(pollingStations);
         }, false);
 
         // add markers to the group
