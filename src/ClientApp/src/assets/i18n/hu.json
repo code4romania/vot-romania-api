@@ -25,32 +25,33 @@
 		"label011110": "Ha nincs, aki befogadjon a lakcímére a választások időpontjáig, azon a településen fogsz tudni szavazni, ahova a személyi igazolványod szól, a lakcímed szerinti szavazókörzetben. Ezt megtalálhatod az alábbi térképen. Ott fel kell mutatnod egy érvényes személyazonosságot igazoló iratot. Az elfogadott személyazonossági iratok: személyi igazolvány (buletin), elektronikus személyi igazolvány, ideiglenes személyi igazolvány, diplomata útlevél, elektronikus diplomata útlevél, szolgálati útlevél, elektronikus szolgálati útlevél, a katonaképzők diákjai esetében a katonai szolgálatot igazoló dokumentum. <br>Nagyon fontos, hogy az iratok érvényesek legyenek a szavazás napján.",
 		"label1000": "A 2015/115-ös számú törvény értelmében az Európai Unió tagállamainak azon állampolgárai, akiknek lakcíme vagy tartózkodási címe van Romániában, és nincsenek nyilvántartásba véve a Bevándorlási Hivatalban, szavazhatnak a választásokon, ha a polgármesteri hivatalban kérik a felvételüket a kiegészítő listára. <br><br>A kérvénnyel együtt a lakcímet igazoló iratokat is be kell nyújtani, az alábbiak egyikét:<br>a) a) Adásvételi szerződés, bérleti szerződés vagy egyéb<br>b) A befogadó fél – aki lehet jogi vagy magánszemély – írásban való beleegyezése, hogy befogadja az adott címre az a) pontnál említett dokumentumok alapján<br>c) A kérvényező saját felelősségre írt nyilatkozata, amelyet ellenőriz a közrendi rendőrség, melyben az eljáró rendőr ellenőrzi és hitelesíti, hogy az adott címen létezik egy lakás és a kérelmező valóban ott lakik – azon magánszemélyek esetében, akik nem tudják felmutatni az a). vagy b). pontban előírt dokumentumokat<br>d) d) A polgármesteri hivatal által kiállított dokumentum, mely igazolja, hogy a kérelmező szerepel a Mezőgazdasági nyilvántartásban azok esetében, akik vidéken élnek",
 		"label1010": "Ha az Európai Unió egyik tagállamának szavazati joggal rendelkező állampolgára vagy, és lakcímed vagy tartózkodási címed van Romániában, a település polgármestere automatikusan felír a kiegészítő listára a Bevándorlási Hivatal nyilvántartása alapján. Ezek a listák állandó jellegűek. Ha ellenőrizni szeretnéd, hogy szerepelsz-e a nyilvántartásban, fel kell venned a kapcsolatot a helyi polgármesteri hivatallal, és ha rendellenességet észlelsz, azt mihamarabb jelezni kell a polgármesternek.",
-		"label110": "Ha az Európai Unió egyik tagállamának állampolgára vagy és lemaradtál a kiegészítő listáról, vagy megváltozott a lakcímed a listák véglegesítése és a választások időpontja között (23 nappal a választások előtt), abban a szavazókörzetben szavazhatsz, ahova a lakcímed szerint tartózol egy érvényes személyazonosságot igazoló irattal, melyhez kötelező módon csatolni kell a következő dokumentumokat: Bejelentkezési határozat, melyben fel van tüntetve az új címed, vagy esettől függően az állandó tartózkodási engedély a régi címmel és egy igazolás a Bevándorlási Hivataltól, mely igazolja az új címet.<br><br>UUgyanakkor a választások előtt be lehet nyújtani egy kérvényt a település polgármesteréhez, ahova az új lakcímed szól a fenti dokumentumokkal, és ez majd tájékoztatja az esetről a szavazókörzetet, amelyhez tartózol és kiegészítő listán szavazhatsz."},
-	"exceptional_cases": {
-		"case1_title": "Mozgásképtelen otthonában vagy speciális ellátó intézetben (pl: korház)",
-		"case1_p1": "a nem tudsz elmenni egészen a szavazó irodához mivel beteg vagy mozgásképtelen vagy kérhetsz mobil szavazó urnát. Ennek érdekében egy kérést kell továbbítani a szavazóiroda elnökéhez az egészségi állapotot igazoló dokumentumokkal együtt. ",
-		"case1_p2": "Ha szabadságvesztés miatt, azaz letartóztatás, előzetes letartóztatás, vagy olyan szabadságvesztési határozatot kaplál ami nem jár a szavazói jog elvesztésével, a központi szavazó irodától kérheted a mobil urnát.",
-		"case2_title": "COVID fertőzött és karanténban vagy kórházi ellátás alatt?",
-		"case2_p1": "A AEP elnökének kijelentése alapján, a corona vírussal fertőzöttek melyek karanténban vannak vagy kórházba beutalva,  lesz lehetőségük a szavazásra a mobil urna kérelmezése által. Csak az intenziv osztalyokon ellátott betegeknek nem lesz lehetőségük a szavazásra. Hogy mobil szavazó urnát kérj továbbítani kell egy kérést  a szavazóiroda elnökéhez az egészségi állapotot igazoló dokumentumokkal együtt.",
-		"case3_title": "Olyan állampolgár aki aláirási vagy pecsételési képessége nincs",
-		"case3_p1": "DHa mozgássérült vagy és a szavazó irodában nem tudod rokkantsági okokból aláírni és lepecsételni a szavazólapot, a szavazo iroda elnoke tudatositássával lehet kísérőt kérni a szavazófülkében ameddig az illetékes vállasza a kísérőt, és ez nem egy a szavazó irodához vagy a versenyben lévő egyik jelölt. "
+		"label110": "Ha az Európai Unió egyik tagállamának állampolgára vagy és lemaradtál a kiegészítő listáról, vagy megváltozott a lakcímed a listák véglegesítése és a választások időpontja között (23 nappal a választások előtt), abban a szavazókörzetben szavazhatsz, ahova a lakcímed szerint tartózol egy érvényes személyazonosságot igazoló irattal, melyhez kötelező módon csatolni kell a következő dokumentumokat: Bejelentkezési határozat, melyben fel van tüntetve az új címed, vagy esettől függően az állandó tartózkodási engedély a régi címmel és egy igazolás a Bevándorlási Hivataltól, mely igazolja az új címet.<br><br>UUgyanakkor a választások előtt be lehet nyújtani egy kérvényt a település polgármesteréhez, ahova az új lakcímed szól a fenti dokumentumokkal, és ez majd tájékoztatja az esetről a szavazókörzetet, amelyhez tartózol és kiegészítő listán szavazhatsz."
 	},
-  "pollingStationSearch": {
-    "question": "Hol laksz?",
-    "callToAction": "Írd be az utca nevét majd a településnevet.",
-    "searchPlaceholder":"Keresd meg a lakcímed hogy tudd melyik szavazókörzethez tartozol.",
-    "addressNotFound": "Nem talàltuk meg a megadott utcához tartozó szavazókörzetett. Lejjebb lathatod a legközelebbi szavazókörzeteket a megadott címhez és a hozzájuk tartozó utcákat, így azonosíthatód hogy hol tudsz szavazi.",
-    "hasPermanentResidence": "A keresett cím a következő szavazókörzethez van kiosztva: ",
-    "doesNotHavePermanentResidence": "Ha a lakcímed mas mint az említett cím akkor a városban lévő bar melyik szavazókörzetben szavazhatsz ",
-    "closestPollingStations": "A legközelebbi szavazókörzetek hozzád:"
-  },
-  "pollingStationCard": {
-    "distance": "Távolság:",
-    "seeStreets": "Utcanevek listája",
-    "pollingStationNumber":"Szavazókörzet szám .",
-    "address": "Cim:",
-    "assignedStreetsLabel": "Ebben a szavazókörzetben azok a személyek tudnak szavazni akik a következő utcákon laknak:"
-  },
+	"exceptional_cases": {
+		"case1_title": "Ágyhoz kötött beteg, mozgásképtelen vagy, speciális ellátó intézetben ápolnak (pl: kórház)",
+		"case1_p1": "Ha nem tudsz elmenni szavazni, mivel beteg vagy mozgásképtelen vagy, kérheted a mobil urnát. Ennek érdekében kéréssel kell fordulnod a szavazókörzet elnökéhez, melyhez csatolod az egészségi állapotot igazoló dokumentumokat.",
+		"case1_p2": "Ha szabadságvesztésre ítéltek, azaz letartóztatási, előzetes letartóztatási, vagy olyan szabadságvesztést előíró parancs érvényes rád, amely nem jár a szavazati jog elvesztésével, igényelheted a mobil urnát a Központi Választási Iroda által meghatározott előírások alapján.",
+		"case2_title": "COVID 19-el diagnosztizáltak, karanténba helyeztek vagy kórházban ápolnak?",
+		"case2_p1": "Az AEP-elnök kijelentése alapján a koronavírussal fertőzött személyek, akik otthoni elkülönítőben, karanténban vannak vagy kórházban ápolják őket, szavazhatnak a helyhatósági választásokon a mobil urna igénylésével. Csak az intenzív osztályokon ápolt betegek nem élhetnek szavazati jogukkal. A mobil urna igényléséhez továbbítani kell egy kérést a szavazókörzet elnökéhez, melyhez csatolod az egészségi állapotodat igazoló dokumentumokat.",
+		"case3_title": "El tudsz jutni a szavazóhelyiségbe, de segítségre van szükséged a pecsét használatához",
+		"case3_p1": "Ha mozgássérült vagy fogyatékkal élő személy vagy, és ezen okból a szavazókörzetben nem tudod aláírni a választási listát és lepecsételni a szavazólapot, elkísérhet a szavazófülkébe egy általad kiválasztott kísérő. Ez nem lehet a szavazókörzet akkreditált beosztottja, a választási iroda tagja vagy versenyben lévő jelölt."
+	},
+	"pollingStationSearch": {
+		"question": "Hol laksz?",
+		"callToAction": "Írd be az utca nevét majd a településnevet.",
+		"searchPlaceholder": "Keresd meg a lakcímed hogy tudd melyik szavazókörzethez tartozol.",
+		"addressNotFound": "Nem talàltuk meg a megadott utcához tartozó szavazókörzetett. Lejjebb lathatod a legközelebbi szavazókörzeteket a megadott címhez és a hozzájuk tartozó utcákat, így azonosíthatód hogy hol tudsz szavazi.",
+		"hasPermanentResidence": "A keresett cím a következő szavazókörzethez van kiosztva: ",
+		"doesNotHavePermanentResidence": "Ha a lakcímed mas mint az említett cím akkor a városban lévő bar melyik szavazókörzetben szavazhatsz ",
+		"closestPollingStations": "A legközelebbi szavazókörzetek hozzád:"
+	},
+	"pollingStationCard": {
+		"distance": "Távolság:",
+		"seeStreets": "Utcanevek listája",
+		"pollingStationNumber": "Szavazókörzet szám .",
+		"address": "Cim:",
+		"assignedStreetsLabel": "Ebben a szavazókörzetben azok a személyek tudnak szavazni akik a következő utcákon laknak:"
+	},
 	"back_button": "Viszza",
 	"back_to_start_button": "Vissza az elejére",
 	"introduction": "2020. szeptember 27-én önkormányzati választások vannak Romániában. A román állampolgárok és az Európai Unió azon tagállamainak polgárai, akiknek lakcímük vagy tartózkodási helyük van Románia területén, polgármestert, helyi és megyei önkormányzati képviselőket (tanácsosokat) és megyei tanácselnököt választanak. Keresd meg a Vot Romania segítségével, hogy hol és milyen feltételek között tudsz szavazni, és milyen iratokra lesz szükséged.",
