@@ -17,6 +17,7 @@ import { getMapPins } from '../state/selectors';
 import { PollingStationGroup, PollingStation } from '../services/data.service';
 import { LoadLocations } from '../state/actions';
 import { PollingStationMatcherService } from '../services/polling-station-matcher.service';
+import { intersectionBy } from 'lodash';
 
 declare var H: any;
 @Component({
@@ -68,15 +69,27 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
       .pipe(filter(data => data !== undefined && data.pollingStations !== undefined && data.userAddress !== undefined))
       .subscribe((details: { userAddress: LocationDetails, pollingStations: PollingStationGroup[] }) => {
         this.clearMap();
-        const { userAddress, pollingStations: pollingStationsGroups } = details;
+        const userAddress = details.userAddress;
+        let pollingStationsGroups = details.pollingStations;
 
         const position = userAddress.displayPosition;
         const userAddressMarker = new H.map.Marker({ lat: position.latitude, lng: position.longitude }, { icon: this.userIcon });
-        userAddressMarker.setData('locatia ta');
         const mapMarkers: any[] = [];
-        mapMarkers.push(userAddressMarker);
+        this.hereMap.addObject(userAddressMarker);
+
         this.pollingStations = [].concat(...pollingStationsGroups.map(g => g.pollingStations.map(ps => ({ ...ps, distance: g.distance }))));
         this.pollingStationsForAddress = this.pollingStationMatcher.findPollingStation(this.pollingStations, userAddress.address);
+
+        if (this.pollingStationsForAddress !== undefined && this.pollingStationsForAddress.length !== 0) {
+
+          pollingStationsGroups = pollingStationsGroups
+            .filter(g => intersectionBy(g.pollingStations, this.pollingStationsForAddress, 'id').length > 0);
+
+          pollingStationsGroups.forEach(g => {
+            g.pollingStations = intersectionBy(g.pollingStations, this.pollingStationsForAddress, 'id');
+          });
+        }
+
         pollingStationsGroups.forEach(pollingStationGroup => {
           const pollingStationMarker = new H.map.Marker(
             {
@@ -102,10 +115,21 @@ export class PollingStationSearchComponent implements OnInit, AfterViewInit, OnD
         group.addObjects(mapMarkers);
         this.hereMap.addObject(group);
 
-        // get geo bounding box for the group and set it to the map
-        this.hereMap.getViewModel().setLookAtData({
-          bounds: group.getBoundingBox()
-        });
+        if (mapMarkers.length > 1) {
+          // look at whole group of polling stations
+          this.hereMap.getViewModel().setLookAtData({
+            bounds: group.getBoundingBox(),
+          });
+        } else if (mapMarkers.length === 0) {
+          // look at user location
+          this.hereMap.setCenter({ lat: position.latitude, lng: position.longitude });
+          this.hereMap.setZoom(16);
+        } else {
+          // look at assigned polling station
+          this.hereMap.setCenter({ lat: pollingStationsGroups[0].latitude, lng: pollingStationsGroups[0].longitude });
+          this.hereMap.setZoom(16);
+        }
+
       });
   }
 
