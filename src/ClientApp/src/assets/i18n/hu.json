@@ -1,7 +1,7 @@
 {
 	"donate": "Adományozz",
 	"nav_about": "Rólunk",
-	"guide_title": "Válaszd ki azt a választ ami legjobban illik a helyzetedhez",
+	"guide_title": "Válaszd ki azt a választ, ami legjobban illik a helyzetedhez",
 	"votersGuide": {
 		"callToAction": "Válassz egyet az alábbi opciókból",
 		"label0": "Román állampolgár vagy?",
@@ -52,11 +52,11 @@
 		"address": "Cim:",
 		"assignedStreetsLabel": "Ebben a szavazókörzetben azok a személyek tudnak szavazni akik a következő utcákon laknak:"
 	},
-	"back_button": "Viszza",
+	"back_button": "Vissza",
 	"back_to_start_button": "Vissza az elejére",
 	"introduction": "2020. szeptember 27-én önkormányzati választások vannak Romániában. A román állampolgárok és az Európai Unió azon tagállamainak polgárai, akiknek lakcímük vagy tartózkodási helyük van Románia területén, polgármestert, helyi és megyei önkormányzati képviselőket (tanácsosokat) és megyei tanácselnököt választanak. Keresd meg a Vot Romania segítségével, hogy hol és milyen feltételek között tudsz szavazni, és milyen iratokra lesz szükséged.",
 	"about": {
-		"title": "A projektröl",
+		"title": "A projektről",
 		"p1": "A Vot România egy olyan platform, ami leegyszerűsítheti a választópolgárok számára a 2020. szeptember végén tartandó önkormányzati választások útmutatóját. A Vot România a Code for Romania szervezet negyedik projektje, melyet azért hoztak létre, hogy megkönnyítse a választópolgárok információkhoz való hozzáférését és elősegítse a választási folyamat minél nagyobb átláthatóságát.",
 		"p21": "Belépve a",
 		"p22": " a szavazáshoz szükséges iratok és procedúrák mellett, bármely állampolgár azt is ellenőrizheti, melyik az a szavazókörzet, ahova helyzetének függvényében be van osztva. A weboldalt minden újabb romániai választás alkalmával frissítik az új információkkal. A Vot Romania platformon található tartalom az Observatorul Electoral szakembereivel együttműködésben készült.",
