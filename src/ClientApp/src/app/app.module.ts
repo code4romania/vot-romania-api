@@ -37,7 +37,7 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
   { path: 'cookies-policy', component: CookiePolicyComponent },
-  { path: 'siguranta', component: SafetyComponent },
+  { path: 'siguranta-la-vot', component: SafetyComponent },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
