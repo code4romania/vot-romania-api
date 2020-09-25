@@ -132,5 +132,43 @@
 		"p26": "Este posibila setarea din browser pentru ca aceste cookie-uri sa nu mai fie acceptate sau poti seta browserul sa accepte cookie-uri de la un site anume. Dar, de exemplu, daca nu doresti sa folosesti cookie-urile nu poti sa urmezi si pasii urmatori dupa inregistrarea completarea formularului.",
 		"p27": "Toate browserele moderne ofera posibilitatea de a schimba setarile cookie-urilor. Aceste setari se gasesc de regula in optiuni sau in meniul de preferinte al browserului tau.",
 		"p28": "Pentru setarile cookie-urilor generate de terti, si pentru mai multe informatii privind confidentialitatea legata de publicitatea online, IAB Romania pune la dispozitie urmatorul site: http://www.youronlinechoices.com/ro/"
+	},
+	"safety": {
+		"title": "[Titlu] Reguli votare",
+		"button": "Siguranță",
+
+		"step1.1": "Dacă este febril este anunțată comisia și este condus la secția sa, unde va vota în prima cabină",
+		"step3.2": "Distanța față de alte persoane trebuie să fie de cel puțin un metru",
+		"step4.1": "Se poate vota cu documente de identitate expirate între 1.03-27.09",
+		"step5.1": "Numai un timp foarte scurt și la distanță de 1,5 m față de alte persoane",
+		"step6.1": "La locale votăm numai unde suntem arondați",
+		"step7.1": "Comisia trebuie să o poată citi fără să o atingă",
+		"step9.1": "Este recomandat să aducem un pix de acasă",
+		"step10.1": "Numai un buletin de  vot din fiecare",
+		"step.exceptional": "Alegătorul care nu poate vota singur are dreptul la însoțitor(care nu poate fi membru al comisiei sau observator)",
+		
+		
+		"step1": "1. Alegătorului i se măsoară temperatura la intrarea în clădire",
+		"step2": "2. Alegătorul își dezinfectează mâinile",
+		"step3": "3. Alegătorul intră în secția de votare",
+		"step4": "4. Alegătorul își pune singur cartea de identitate în scannerul SIMPV",
+		"step5": "5. Alegătorul își scoate masca pentru identificare",
+		"step6": "6. Pe tabletă apare mesajul că alegătorul poate vota",
+		"step7": "7. Alegătorul pune cartea de identitate pe masa comisiei",
+		"step8": "8. Comisia de votare găsește numele alegătorului pe listă",
+		"step9": "9. Alegătorul semnează lista electorală",
+		"step10": "10. Alegătorul își ia singur de pe masă ștampila și buletinele de vot",
+		"step11": "11. Alegătorul intră în cabina de vot și votează în secret",
+		"step12": "12. Alegătorul pune buletinele de vot în urne",
+		"step13": "13. Alegătorul pune ștampila pe masa comisiei, își ia cartea de identitate și aplică singur autocolantul",
+		"step14": "14. Alegătorul își dezinfectează mâinile la ieșirea din secția de votare",
+		
+		"step2.1": "Secția de votare trebuie să aibă dezinfectant",
+		"step3.1": "Numai cu mască; dacă nu are, o primește la secția de votare",
+		"step4.2": "Se mai poate vota și cu: cartea electronică de identitate, cartea de identitate provizorie, buletinul de identitate, pașaportul diplomatic, pașaportul diplomatic electronic, pașaportul de serviciu, pașaportul de serviciu electronic, carnetul de serviciu militar (doar elevii școlilor militare)",
+		"step8.1": "Dacă este omis din listă, votează pe lista suplimentară",
+		"step11.1.1": "Buletinul de vot greșit este anulat",
+		"step11.1": "Dacă alegătorul anunță că a greșit, are dreptul să mai ia un buletin de vot (doar o singură dată)",
+		"step12.1": "Buletinul de vot introdus în urna greșită nu se anulează"
 	}
 }
