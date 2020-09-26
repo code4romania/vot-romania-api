@@ -1,0 +1,30 @@
+li{
+    margin-bottom: 20px;
+}
+
+ul{
+    list-style-image: url('../../assets/corner-down-right.svg');
+}
+
+.title {
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.about {
+    p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+.dotted-line{
+    border: 2px dotted black;
+}
+
+
+.exceptional-case{
+    margin-left: 20px;
+    list-style-image: url('../../assets/corner-left-up.svg');
+
+}
