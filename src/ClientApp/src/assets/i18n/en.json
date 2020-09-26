@@ -134,8 +134,8 @@
 		"p28": "For third-party cookies settings and for more information about online ad confidentiality, IAB Romania offers the following website: http://www.youronlinechoices.com/ro/"
 	},
 	"safety": {
-		"title": "[EN] [Titlu] Reguli votare",
-		"button": "[EN] siguranță",
+		"title": "Rules that apply to the voting process",
+		"button": "Safety",
 		"step1.1": "If the voter has a fever the voting committee is notified and the voter is ushered to their polling station where they will vote in the first polling booth",
 		"step3.2": "The distance from other persons has to be at least one meter at all times",
 		"step4.1": "You can still vote with ids expired between the 1st of March and the 27th of September",

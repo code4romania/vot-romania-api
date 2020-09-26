@@ -132,8 +132,8 @@
 		"p28": "A harmadik felek által létrehozott sütik beállításaihoz és az online hirdetésekkel kapcsolatos adatvédelemről az IAB Romania a következő webhelyet biztosítja: http://www.youronlinechoices.com/ro/"
 	},
 	"safety": {
-		"title": "[HU] [Titlu] Reguli votare",
-		"button": "[HU] siguranță",
+		"title": "Választási szabályzat",
+		"button": "Biztonság",
 		"step1.1": "Ha a választópolgár lázas, beteges értesíti a szavazó bizottságot aki elvezeti a saját szavazókörzethez, ahól az első szavazófülkében fog szavazni",
 		"step3.2": "Minimálisan egy méter távolság tartása más személyekhez képest",
 		"step4.1": "Lehet szavazni olyan dokumentumokkal melyek érvényességüket vesztették 1.03 - 27.09 között",
