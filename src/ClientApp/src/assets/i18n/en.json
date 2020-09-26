@@ -132,5 +132,40 @@
 		"p26": "You can set up your browser to reject cookies automatically or you can select only some websites where cookies are enabled. But, for example, if you turn off cookies on this website you can not follow through with the next steps in filling out the form.",
 		"p27": "Modern browsers offer the ability to change cookie settings. You can usually find cookie settings under the “options” tab or the “preferences” menu of your browser.",
 		"p28": "For third-party cookies settings and for more information about online ad confidentiality, IAB Romania offers the following website: http://www.youronlinechoices.com/ro/"
-	}
+	},
+	"safety": {
+		"title": "Rules that apply to the voting process",
+		"button": "Safety",
+		"step1.1": "If the voter has a fever the voting committee is notified and the voter is ushered to their polling station where they will vote in the first polling booth",
+		"step3.2": "The distance from other persons has to be at least one meter at all times",
+		"step4.1": "You can still vote with ids expired between the 1st of March and the 27th of September",
+		"step5.1": "Only for a short time and at a distance of at least 1.5 m from other persons",
+		"step6.1": "For local elections you can only vote in your allotted precinct",
+		"step7.1": "The committee must be able to read it without touching it",
+		"step9.1": "It is recommended that you bring your own pen",
+		"step10.1": "A single ballot for each race",
+		"step.exceptional": "The voter who cannot vote alone can bring along a chaperone (a person who cannot be a committee member or an observer)",
+		"step1": "1. The voter has their temperature taken at the building entrance",
+		"step2": "2. The voter disinfects their hands",
+		"step3": "3. The voter enters the polling station",
+		"step4": "4. The voter places their ID in the SIMPV scanner",
+		"step5": "5. The voter removes their mask for identification",
+		"step6": "6. The SIMPV tablet displays a message saying that the voter can vote",
+		"step7": "7. The voter places their id on the polling committee’s table",
+		"step8": "8. The polling committee identifies the voter’s name on the list",
+		"step9": "9. The voter signs the voting presence sheet",
+		"step10": "10. The voter picks up the voting stamp and ballots off the table",
+		"step11": "11. The voter enters the polling booth and votes, in secret",
+		"step12": "12. The voter places the ballots in their respective boxes",
+		"step13": "13. The voter places the voting stamp on the committee table, picks up their id and applies the voting sticker to the back of their id",
+		"step14": "14. The voter disinfects their hands when exiting the polling station",
+		"step2.1": "The polling station must have disinfectant",
+		"step3.1": "Only while wearing a mask. If they do not have a mask they will be given one from the polling station",
+		"step4.2": "You can also vote with: an electronic Id card, a temporary ID card, ID booklet, diplomatic passport, electronic  diplomatic passport, service passport, electronic service passport, military service booklet (only for military school pupils)",
+		"step8.1": "If the voter is not on the list they vote on the supplementary lists",
+		"step11.1.1": "The erroneous ballot is declared invalid",
+		"step11.1": "If the voter says they made a mistake in voting they have a right to one (and one only) extra ballot",
+		"step12.1": "The ballot cast into the wrong box shall NOT be declared invalid"
+	  }
+	  
 }

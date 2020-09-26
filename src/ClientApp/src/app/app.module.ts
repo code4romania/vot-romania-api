@@ -31,11 +31,13 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { MapPsDetailsComponent } from './polling-station-search/map-ps-details/map-ps-details.component';
 import { PollingStationMatcherService } from './services/polling-station-matcher.service';
 import { FormatDistancePipe } from './format-distance.pipe';
+import { SafetyComponent } from './safety/safety.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
   { path: 'cookies-policy', component: CookiePolicyComponent },
+  { path: 'siguranta-la-vot', component: SafetyComponent },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
@@ -58,6 +60,7 @@ const appRoutes: Routes = [
     CookiePolicyComponent,
     MapPsDetailsComponent,
     FormatDistancePipe,
+    SafetyComponent,
   ],
   imports: [
     BrowserAnimationsModule,

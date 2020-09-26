@@ -130,5 +130,40 @@
 		"p26": "Lehetőség van a böngészőben úgy beállítani, hogy ezeket a cookie-kat már ne fogadják el, vagy beállíthatja, hogy a böngésző elfogadja egy adott webhely cookie-jait. De például, ha nem akar sütiket használni, akkor a regisztráció után nem követheti a következő lépéseket, kitöltheti az űrlapot.",
 		"p27": "Minden modern böngésző lehetővé teszi a cookie-beállítások megváltoztatását. Ezek a beállítások általában a böngésző beállításai vagy beállításai menüben találhatók.",
 		"p28": "A harmadik felek által létrehozott sütik beállításaihoz és az online hirdetésekkel kapcsolatos adatvédelemről az IAB Romania a következő webhelyet biztosítja: http://www.youronlinechoices.com/ro/"
-	}
+	},
+	"safety": {
+		"title": "Választási szabályzat",
+		"button": "Biztonság",
+		"step1.1": "Ha a választópolgár lázas, beteges értesíti a szavazó bizottságot aki elvezeti a saját szavazókörzethez, ahól az első szavazófülkében fog szavazni",
+		"step3.2": "Minimálisan egy méter távolság tartása más személyekhez képest",
+		"step4.1": "Lehet szavazni olyan dokumentumokkal melyek érvényességüket vesztették 1.03 - 27.09 között",
+		"step5.1": "Csak nagyon rövid időre és az 1,5m távolság betartásával más személyektől",
+		"step6.1": "Az önkormányzati választásokon csak ott tudunk szavazni ahová ki vagyunk osztva",
+		"step7.1": "A bizottság el kell tudja olvasni anélkül hogy megérintené",
+		"step9.1": "Javasolt hogy hozzunk otthonról golyóstollat, tollat, pixet",
+		"step10.1": "Csak egy szavazólap mindegyik személynek",
+		"step.exceptional": "Annak a szavazó állampolgárnak aki nem tud egyedül szavazni joga van kísérőre (nem lehet bizottsági tag vagy megfigyelő)",
+		"step1": "1. A választópolgárnak megmérik a hőmérsékletét az épület bejáratánál",
+		"step2": "2. A választópolgár fertőtleníti kezeit",
+		"step3": "3. A választópolgár belép az szavazókörzetbe",
+		"step4": "4. A választópolgár saját kezűleg behelyezi a személyazonosító kártyát a SIMPV olvasóban (scannerbe)",
+		"step5": "5. A választópolgár leveszi a maszkot azonosítás céljából",
+		"step6": "6. A tableten megjelenik az üzenet hogy a választópolgár szavazhat",
+		"step7": "7. A választópolgár letesz a személyazonosító kártyát a bizottság asztalára",
+		"step8": "8. A bizottság megtalálja a választópolgár nevét a listán",
+		"step9": "9. A választópolgár aláírja a választólistát",
+		"step10": "10. A választópolgár önkezűleg elveszi a szavazó pecsétet és a szavazólapokat",
+		"step11": "11. A választópolgár belép a szavazófülkébe és titokban szavaz",
+		"step12": "12. A választópolgár a szavazólapokat behelyezi az urnákba",
+		"step13": "13. A választópolgár visszateszi a szavazó pecsétet a bizottság asztalára, elveszi a személyazonosító kártyát és önkezűleg fel ragassza az öntapadós matricát",
+		"step14": "14. A választópolgár fertőtleníti kezeit a választókörzet kijáratánál",
+		"step2.1": "A szavazókörzet köteles fertőtlenítőt biztositson",
+		"step3.1": "Csak maskal, abban az esetben ha nincs kap a szavazókörzetben",
+		"step4.2": "Szavazni lehet még: elektronikus személyi igazolvány, ideiglenes személyi igazolvány, diplomata útlevél, elektronikus diplomata útlevél, szolgálati útlevél, elektronikus szolgálati útlevél, a katonaképzők diákjainak a katonai szolgálat igazoló irat",
+		"step8.1": "Ha nem jelenik meg a listán, pótlistán szavaz",
+		"step11.1.1": "A hibásan kitöltött szavazólapot érvénytelenítik",
+		"step11.1": "Ha a választópolgár jelzi hogy hibázott, joga ban egy újabb szavazólaphoz (egy alkalommal)",
+		"step12.1": "A rossz urnába helyezett szavazólapot nem érvénytelenítik"
+	  }
+	  
 }
