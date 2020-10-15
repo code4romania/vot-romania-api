@@ -76,7 +76,7 @@ namespace VotRomania
                     ValidateAudience = false
                 };
             });
-            
+
             services.AddCors(o => o.AddPolicy("Permissive", builder =>
             {
                 builder.AllowAnyOrigin()
