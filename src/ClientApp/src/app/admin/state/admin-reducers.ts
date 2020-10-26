@@ -1,9 +1,12 @@
-import { AdminActionTypes, AdminActions } from './admin-actions';
-import { AuthActions, AuthActionTypes } from './auth';
+import { PaginatedResponse, PaginationDetails, StaticData, VotingGuide } from 'src/app/services/data.service';
 
-import { isEqual } from 'lodash';
-import { PaginationDetails, PaginatedResponse, VotingGuide, StaticData } from 'src/app/services/data.service';
-import { ImportedPollingStationsFilter, ImportJobDetails, ImportedPollingStation } from '../services/polling-stations.service';
+import {
+    ImportedPollingStation,
+    ImportedPollingStationsFilter,
+    ImportJobDetails,
+} from '../services/polling-stations.service';
+import { AdminActions, AdminActionTypes } from './admin-actions';
+import { AuthActions, AuthActionTypes } from './auth';
 
 export interface ImportPollingStationsState {
     importedPollingStationsPagination: PaginationDetails;
