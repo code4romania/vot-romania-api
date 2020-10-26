@@ -1,7 +1,6 @@
 <form [formGroup]="form" class="normal-form" (submit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
 
     <mat-dialog-content class="mat-typography">
-
         <div class="container">
             <div class="row">
 
@@ -47,18 +46,27 @@
                         <mat-option value="failed">Failed</mat-option>
                     </mat-select>
                 </mat-form-field>
-
-
             </div>
 
             <div class="row">
-                <div class="w-100">Assigned addresses</div>
+                <div class="w-100"><p><b>Assigned addresses</b></p></div>
                 <div class="w-100">
                     <button class="btn btn-outline-primary filter-field" type="button"
                         (click)="newAddress()">Add</button>
                 </div>
                 <div>
                     <mat-table #table [dataSource]="assignedAddresses" class="w-100">
+                        <!-- locality -->
+                        <ng-container matColumnDef="locality">
+                            <mat-header-cell *matHeaderCellDef> Locality</mat-header-cell>
+                            <mat-cell *matCellDef="let address">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput placeholder="Street Code" [value]="address.locality"
+                                        [(ngModel)]="address.locality" [ngModelOptions]="{standalone: true}">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
                         <!-- street code-->
                         <ng-container matColumnDef="streetCode">
                             <mat-header-cell *matHeaderCellDef> Street Code</mat-header-cell>

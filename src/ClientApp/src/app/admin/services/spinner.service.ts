@@ -54,7 +54,9 @@ export class SpinnerService {
   }
 
   private showSpinner() {
-    this.spinnerTopRef.attach(new ComponentPortal(MatSpinner));
+    if (!this.spinnerTopRef.hasAttached()) {
+      this.spinnerTopRef.attach(new ComponentPortal(MatSpinner));
+    }
   }
 
   private stopSpinner() {

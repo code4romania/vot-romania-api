@@ -50,7 +50,7 @@ export const getCurrentImportJobDetails = createSelector(
 );
 export const getCurrentImportedPollingStationsFilter = createSelector(
     getAdminState,
-    state => state.import.importedPollingStationsFilter
+    state =>  state.import.importedPollingStationsFilter
 );
 export const getCurrentImportedPollingStationsPagination = createSelector(
     getAdminState,

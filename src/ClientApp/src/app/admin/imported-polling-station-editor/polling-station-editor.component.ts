@@ -16,7 +16,7 @@ import { UpdateImportedPollingStationAction, CreateImportedPollingStationAction 
 export class PollingStationEditorComponent implements OnInit {
   form: FormGroup;
   assignedAddresses: MatTableDataSource<AssignedAddress>;
-  assignedAddressesColumns = ['streetCode', 'street', 'houseNumbers', 'remarks', 'delete'];
+  assignedAddressesColumns = ['locality', 'streetCode', 'street', 'houseNumbers', 'remarks', 'delete'];
 
   constructor(
     public dialogRef: MatDialogRef<PollingStationEditorComponent>,
@@ -51,7 +51,8 @@ export class PollingStationEditorComponent implements OnInit {
 
   onSubmit() {
     if (this.form.value.id) {
-      this.store.dispatch(new UpdateImportedPollingStationAction(this.data.jobId, this.form.value.id, this.form.value, this.assignedAddresses.data));
+      this.store.dispatch(
+        new UpdateImportedPollingStationAction(this.data.jobId, this.form.value.id, this.form.value, this.assignedAddresses.data));
     } else {
       this.store.dispatch(new CreateImportedPollingStationAction(this.data.jobId, this.form.value, this.assignedAddresses.data));
     }
@@ -65,7 +66,8 @@ export class PollingStationEditorComponent implements OnInit {
         houseNumbers: '',
         remarks: '',
         street: '',
-        streetCode: ''
+        streetCode: '',
+        locality: ''
       },
       ...this.assignedAddresses.data];
   }

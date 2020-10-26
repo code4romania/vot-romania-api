@@ -1,51 +1,55 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action, Store } from '@ngrx/store';
+import { EMPTY, Observable, of } from 'rxjs';
+import { catchError, filter, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { PaginatedResponse } from 'src/app/services/data.service';
+import { HereAddressService } from 'src/app/services/here-address.service';
+
+import { ImportedPollingStation, PollingStationsService } from '../services/polling-stations.service';
+import { SpinnerService } from '../services/spinner.service';
+import { ToasterService } from '../services/toaster.service';
 import {
-    LoadDataDoneAction,
-    LoadErrorAction,
     AdminActionTypes,
-    LoadLocationDone,
-    LoadLocationError,
-    LoadLocations,
-    UpdateDataAction,
-    UpdateDataDoneAction,
-    UpdateDataErrorAction,
-    LoadImportedPollingStationsAction,
-    LoadImportedPollingStationsSuccessAction,
-    LoadImportedPollingStationsFailAction,
-    LoadImportJobDetailsAction,
-    LoadImportJobDetailsSuccessAction,
-    LoadImportJobDetailsFailAction,
+    CancelImportJobAction,
+    CancelImportJobFailAction,
+    CancelImportJobSuccessAction,
+    CreateImportedPollingStationAction,
+    CreateImportedPollingStationFailAction,
+    CreateImportedPollingStationSuccessAction,
     DeleteImportedPollingStationAction,
     DeleteImportedPollingStationFailAction,
     DeleteImportedPollingStationSuccessAction,
     DisplayToasterMessage,
-    CreateImportedPollingStationAction,
-    CreateImportedPollingStationSuccessAction,
-    CreateImportedPollingStationFailAction,
-    UpdateImportedPollingStationAction,
-    RestartImportJobAction,
-    RestartImportJobSuccessAction,
-    RestartImportJobFailAction,
-    CancelImportJobFailAction,
-    CancelImportJobSuccessAction,
-    CancelImportJobAction,
+    FailedAction,
     FinishImportJobAction,
     FinishImportJobSuccessAction,
-    FailedAction
+    LoadDataDoneAction,
+    LoadErrorAction,
+    LoadImportedPollingStationsAction,
+    LoadImportedPollingStationsFailAction,
+    LoadImportedPollingStationsSuccessAction,
+    LoadImportJobDetailsAction,
+    LoadImportJobDetailsFailAction,
+    LoadImportJobDetailsSuccessAction,
+    LoadLocationDone,
+    LoadLocationError,
+    LoadLocations,
+    RestartImportJobAction,
+    RestartImportJobFailAction,
+    RestartImportJobSuccessAction,
+    UpdateDataAction,
+    UpdateDataDoneAction,
+    UpdateDataErrorAction,
+    UpdateImportedPollingStationAction,
 } from './admin-actions';
-import { Observable, of, EMPTY } from 'rxjs';
-import { mergeMap, map, catchError, switchMap, tap, withLatestFrom, filter } from 'rxjs/operators';
-import { Action, Store } from '@ngrx/store';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-
-import { Router } from '@angular/router';
-import { getCurrentImportedPollingStationsFilter, getCurrentImportJobDetails, getCurrentImportedPollingStationsPagination } from './admin-selectors';
-import { PaginatedResponse } from 'src/app/services/data.service';
-import { HereAddressService } from 'src/app/services/here-address.service';
-import { ToasterService } from '../services/toaster.service';
-import { ApplicationState } from 'src/app/state/reducers';
-import { ImportedPollingStation, PollingStationsService } from '../services/polling-stations.service';
-import { SpinnerService } from '../services/spinner.service';
+import { AdminState } from './admin-reducers';
+import {
+    getCurrentImportedPollingStationsFilter,
+    getCurrentImportedPollingStationsPagination,
+    getCurrentImportJobDetails,
+} from './admin-selectors';
 
 @Injectable({ providedIn: 'root' })
 export class AdminEffects {
@@ -56,7 +60,7 @@ export class AdminEffects {
         private actions$: Actions,
         private toasterService: ToasterService,
         private spinnerService: SpinnerService,
-        private store$: Store<ApplicationState>) {
+        private store$: Store<AdminState>) {
     }
 
     @Effect()
@@ -162,6 +166,7 @@ export class AdminEffects {
     @Effect()
     fetchImportedPollingStations$: Observable<Action> = this.actions$.pipe(
         ofType(AdminActionTypes.RESET_FILTER, AdminActionTypes.UPDATE_FILTER, AdminActionTypes.UPDATE_PAGINATION),
+        tap(() => console.log('effect')),
         switchMap(() => of(new LoadImportedPollingStationsAction()))
     );
 

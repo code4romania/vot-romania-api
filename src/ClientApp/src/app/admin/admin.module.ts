@@ -1,28 +1,44 @@
-import { NgModule } from '@angular/core';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatAutocompleteModule,
+  MatButtonModule,
+  MatCheckboxModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatIconModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSelectModule,
+  MatSnackBarModule,
+  MatSortModule,
+  MatSpinner,
+  MatTableModule,
+  MatToolbarModule,
+} from '@angular/material';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { MatInputModule, MatDialogModule, MatAutocompleteModule, MatPaginatorModule, MatTableModule, MatSelectModule, MatSnackBarModule, MatToolbarModule, MatGridListModule, MatFormFieldModule, MatCheckboxModule, MatNativeDateModule, MatButtonModule, MatIconModule, MatSortModule, MatProgressSpinnerModule, MatSpinner } from '@angular/material';
-import { LoginComponent } from './login/login.component';
-import { AdminComponent } from './admin.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+
+import { DataService } from './../services/data.service';
 import { AdminContentComponent } from './admin-content/admin-content.component';
 import { VotersOptionEditorComponent } from './admin-content/voters-option-editor/voters-option-editor.component';
 import { AdminRoutingModule } from './admin-routing.module';
-import { DataService } from './../services/data.service';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { appStateReducer } from '../state/reducers';
-import { AuthEffects } from '../state/auth';
+import { AdminComponent } from './admin.component';
 import { ImportPollingStationsComponent } from './import-polling-stations/import-polling-stations.component';
-import { ImportedPollingStationsTableComponent } from './import-polling-stations/imported-polling-stations-table/imported-polling-stations-table.component';
+import {
+  ImportedPollingStationsTableComponent,
+} from './import-polling-stations/imported-polling-stations-table/imported-polling-stations-table.component';
 import { PollingStationEditorComponent } from './imported-polling-station-editor/polling-station-editor.component';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
+import { LoginComponent } from './login/login.component';
 import { AdminEffects } from './state/admin-effects';
 import { adminStateReducer } from './state/admin-reducers';
 import { AuthEffects } from './state/auth';
-import { OverlayModule } from '@angular/cdk/overlay';
-
 
 @NgModule({
   imports: [
@@ -46,10 +62,10 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MatSortModule,
     ReactiveFormsModule,
     AngularEditorModule,
-    MatProgressSpinnerModule, 
-    OverlayModule ,
+    MatProgressSpinnerModule,
+    OverlayModule,
     StoreModule.forFeature('admin', adminStateReducer),
-    EffectsModule.forFeature([ AdminEffects, AuthEffects ]),
+    EffectsModule.forFeature([AdminEffects, AuthEffects]),
   ],
   declarations: [
     LoginComponent,
@@ -59,7 +75,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     ImportPollingStationsComponent,
     ImportedPollingStationsTableComponent,
     PollingStationEditorComponent
-    ],
+  ],
   entryComponents: [
     VotersOptionEditorComponent,
     PollingStationEditorComponent,

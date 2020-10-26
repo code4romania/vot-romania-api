@@ -84,10 +84,12 @@ export class ImportedPollingStationsTableComponent implements OnInit, OnDestroy,
   }
 
   updateFilter() {
+    this.paginator.firstPage();
     this.store.dispatch(new UpdateFilter(this.filter));
   }
 
   public resetFilter(): void {
+    this.paginator.firstPage();
     this.filter = {};
     this.store.dispatch(new ResetFilter());
   }

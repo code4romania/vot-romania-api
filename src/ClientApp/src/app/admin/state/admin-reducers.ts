@@ -159,14 +159,11 @@ export function adminStateReducer(state: AdminState = initialState, action: Admi
                 ...state,
                 import: {
                     ...state.import,
-                    importedPollingStationsFilter: DEFAULT_IPS_FILTER
+                    importedPollingStationsFilter: {...DEFAULT_IPS_FILTER}
                 }
             };
 
         case AdminActionTypes.UPDATE_FILTER:
-            if (isEqual(state.import.importedPollingStationsFilter, action.payload)) {
-                return state;
-            }
 
             return {
                 ...state,
