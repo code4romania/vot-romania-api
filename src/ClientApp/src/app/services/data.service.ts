@@ -27,6 +27,7 @@ export interface AssignedAddress {
   remarks: string;
   street: string;
   streetCode: string;
+  locality: string;
 }
 
 export interface PollingStation {
@@ -39,6 +40,7 @@ export interface PollingStation {
   institution: string;
   address: string;
   assignedAddresses: AssignedAddress[];
+  distance?: number;
 }
 
 export interface PaginationDetails {
@@ -56,6 +58,7 @@ export interface AssignedAddress {
 export interface PollingStationGroup {
   latitude: number;
   longitude: number;
+  distance: number;
   pollingStations: PollingStation[];
 }
 

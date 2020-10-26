@@ -10,6 +10,16 @@
 
     button {
         font-size: 20px;
+        border-radius: 5px;
+    }
+
+    .default {
+      border-color: #352245;
+      color: #352245;
+    }
+
+    .default:hover {
+      background: #e7e7e7;
     }
 
     .options-list {
@@ -115,5 +125,9 @@
         p {
             font-size: 18px;
         }
+    }
+    .guide-buttons {
+        display: flex;
+        justify-content: space-evenly;
     }
 }

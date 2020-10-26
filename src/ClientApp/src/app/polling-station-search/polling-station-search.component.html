@@ -1,13 +1,13 @@
 <div class="wrapper">
   <div class="w-100 centered-items title-block">
-    <h4 class="question"><b>Unde stai?</b></h4>
-    <h5>Introduceți numele străzii pe care locuiți, urmat de numele orașului</h5>
+    <h4 class="question"><b>{{'pollingStationSearch.question' | translate }}</b></h4>
+    <h5>{{'pollingStationSearch.callToAction' | translate }}</h5>
   </div>
   <form>
     <div class="w-100 centered-items">
       <div class="input-group search-input">
         <input type="text" class="form-control" [formControl]="control" [matAutocomplete]="auto"
-          [attr.placeholder]="searchText" [attr.aria-label]="searchText">
+          [attr.placeholder]="'pollingStationSearch.searchPlaceholder' | translate" [attr.aria-label]="'pollingStationSearch.searchPlaceholder' | translate">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button">
             <i class="fas fa-search"></i>
@@ -23,25 +23,33 @@
     </div>
   </form>
 
-  <div class="container" *ngIf="pollingStations">
-    <p class="text-padding"><b>Dacă ești cetățean cu domiciliul în orașul în care dorești să votezi aceasta este secția
-        dedicată unde poți vota:</b></p>
-    <app-polling-station-card-info [pollingStation]="pollingStations[0]" [distance]="1" [lightTheme]="true"
-      class="ps-item margin-bottom-80">
-    </app-polling-station-card-info>
+  <div *ngIf="pollingStations" class="container">
+    <div *ngIf="pollingStationsForAddress.length > 0">
+      <p class="text-padding"><b>{{'pollingStationSearch.hasPermanentResidence' | translate }}</b></p>
 
-    <div class="text-padding">
-      <p><b>Dacă nu ai domiciliul permanent la adresa menționată poți vota în oricare dintre secțiile din oraș. Cele mai
-          apropiate secții de tine sunt:</b></p>
+      <div class="ps-list margin-bottom-80">
+        <app-polling-station-card-info *ngFor="let pollingStation of pollingStationsForAddress"
+                                       [distance]="pollingStation.distance" [lightTheme]="true" [pollingStation]="pollingStation"
+                                       class="ps-item">
+        </app-polling-station-card-info>
+      </div>
     </div>
 
-    <div class="ps-list">
-      <app-polling-station-card-info *ngFor="let pollingStation of pollingStations | slice:1"
-        [pollingStation]="pollingStation" [lightTheme]="false" [distance]="1" class="ps-item">
-      </app-polling-station-card-info>
+    <div *ngIf="pollingStationsForAddress.length === 0">
+      <div class="ps-list">
+        <p><b>{{'pollingStationSearch.addressNotFound' | translate }}</b></p>
+          <app-polling-station-card-info *ngFor="let pollingStation of pollingStations"
+                                      [distance]="pollingStation.distance" [lightTheme]="false" [pollingStation]="pollingStation"
+                                      class="ps-item">
+        </app-polling-station-card-info>
+      </div>
     </div>
   </div>
 
-  <div #map id="map" style="height: 596px;" class="map">
+  <div class="map-wrapper">
+    <div #map id="map" class="map">
+    </div>
+    <app-map-ps-details [dataSource]="pollingStatationsGroup$"></app-map-ps-details>
   </div>
+  <div class="spacer margin-bottom-80"></div>
 </div>

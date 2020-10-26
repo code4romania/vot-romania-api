@@ -19,62 +19,6 @@
   }
 }
 
-.map {
-  height: 596px;
-  width: 100%;
-  margin-bottom: 80px;
-}
-
-@media screen and (max-width: 575px) {
-  .search-input {
-    width: 90%;
-    min-width: 90%;
-  }
-
-  .map {
-    height: 70vh;
-  }
-}
-
-@media screen and (max-height: 575px) {
-  .map {
-    height: 70vh;
-  }
-}
-
-.ps-card {
-  width: 472px;
-
-    .ps-title {
-      font-family: "Titillium Web";
-      font-style: normal;
-      font-weight: 600;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      text-align: center;
-    }
-
-    .ps-description {
-      font-family: 'Titillium Web';
-      font-style: normal;
-      font-weight: 500;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      text-align: center;
-
-      .ps-address-label {
-        background: #FFCC00;
-        font-family: 'Titillium Web';
-        font-style: normal;
-        font-weight: normal;
-        font-size: 16px;
-      }
-    }
-
-}
-
 .text-padding {
   padding-bottom: 32px;
 }
@@ -92,18 +36,39 @@
   margin-bottom: 20px;
   margin-left: 20px;
   box-sizing: border-box;
-  max-width: 45%;
+  width: 45%;
   display: block;
+}
+
+.map-wrapper {
+  width: 100%;
+  height: 596px;
+  display: inline-block;
+  position: relative;
+
+  #map {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 575px) {
   .ps-item{
-    max-width: 100%;
+    width: 100%;
     margin-left: 0;
 
   }
 
   h5 {
     text-align: center;
+  }
+
+  .search-input {
+    width: 90%;
+    min-width: 90%;
+  }
+
+  .map-wrapper {
+    height: 70vh;
   }
 }

@@ -5,7 +5,7 @@
 	"votersGuide": {
 		"callToAction": "Start out by picking one of the options below",
 		"label0": "You are a Romanian citizen",
-		"label1": "You are a citizen of anoter country within the European Union",
+		"label1": "You are a citizen of another country within the European Union",
 		"label00": "You will be in another country, outside Romanian, on September 27th",
 		"label01": "You will be in Romania on September 27th",
 		"label010": "You're currently living at the address which is printed on your ID card",
@@ -21,7 +21,7 @@
 		"label000": "Citizens who live abroad or are travelling internationally at the time of elections cannot cast a vote, the only citizens who can vote in local elections being those present in Romania in the municipality where they currently live.",
 		"label0100": "If you want to vote in the municipality where you are registered all you have to do is show up at your allotted polling station with a valid ID on the day of the vote. You can find out the polling place where you are registered on the permanent lists by using the map below. Accepted ID documents include: Identity Cards, Electronic Identity cards, temporary identity cards, identity booklets (buletin), diplomatic passports, electronic diplomatic passports, service passports, electronic service passports and (for students in military schools) military service cards. It is very important for the document you plan to use to be valid on the day of the vote.",
 		"label01100": "If you have temporary residency in the municipality where you are planning to vote all you have to do is show up at the polling station with the identity document bearing your temporary residency sticker and you will be able to vote on either the permanent or supplemental lists. If you figure on the electoral registry lists as living at the address where you currently have residency, your name will be on the permanent lists. Registering for the Electoral Registry is still open until the 4th of September and all you have to do is apply at your local city/town hall (Primărie), at the population records office (Biroul de Evidență a Populației).<br>If you do not figure in the Registry you can still vote on a supplemental list at the polling station where the street you live on  is allotted.",
-		"label011100": "There are two ways in which you can be accommodated as a lodger by somebody else - either by changing your listed domicile altogether or by applying for temporary residency.<br><br><h3>Changing your listed domicile</h3><br> In order to change your listed domicile you must go to the Population Records Office from the municipality where you live, with your landlord or host (if you do not own the place where you live). You will <br>need the following documents: <br>a. An ID card issue request form; <br>b. Your current ID card and voter card (if applicable); <br>c. Your birth certificate, original and copy; <br>d. Your marriage certificate, original and copy (if applicable); <br>e. Your divorce ruling, legalised by the court, final and irrevocable, original and copy (if applicable); <br>f. Your spouse‘s death certificate, for the surviving spouse, original and copy; <br>g. The birth certificates of children under 14 years of age, original and copy; <br>h. A document serving as proof of domicile and (if applicable) a document serving as proof of residence,  original and copy; <br>i. A receipt for the ID card costs - 7 lei;. <br>The owner of the location of your new domicile will sign an affidavit on your ID card request form, in the presence of the population records employee. If the owner cannot accompany you to the Office, they <br>can also submit the same affidavit to a notary public or, for rural areas, to the local police officer. Your new ID card will be issued in 10 to 30 days. <br><h3>Temporary Residency</h3><br>In order to obtain temporary residency you must go to the Population Records Office from the municipality where you live. You will need the following documents: <br>A temporary residency request form <br>Your current ID card, original and copy; <br>A document serving as proof of residence,  original and copy; <br>The home owner‘s lodger accommodation affidavit <br>Issuing a temporary residency and obtaining the temporary residency sticker can take up to 30 days, depending on how backed up your local Population Registry office is.",
+		"label011100": "There are two ways in which you can be accommodated as a lodger by somebody else - either by changing your listed domicile altogether or by applying for temporary residency.<br><br><h3>Changing your listed domicile</h3><br> In order to change your listed domicile you must go to the Population Records Office from the municipality where you live, with your landlord or host (if you do not own the place where you live). You will <br>need the following documents: <br>a. An ID card issue request form; <br>b. Your current ID card and voter card (if applicable); <br>c. Your birth certificate, original and copy; <br>d. Your marriage certificate, original and copy (if applicable); <br>e. Your divorce ruling, legalised by the court, final and irrevocable, original and copy (if applicable); <br>f. Your spouse‘s death certificate, for the surviving spouse, original and copy; <br>g. The birth certificates of children under 14 years of age, original and copy; <br>h. A document serving as proof of domicile and (if applicable) a document serving as proof of residence,  original and copy; <br>i. A receipt for the ID card costs - 7 lei;. <br>The owner of the location of your new domicile will sign an affidavit on your ID card request form, in the presence of the population records employee. If the owner cannot accompany you to the Office, they <br>can also submit the same affidavit to a notary public or, for rural areas, to the local police officer. Your new ID card will be issued in 10 to 30 days. <br><h3>Temporary Residency</h3><br>In order to obtain temporary residency you must go to the Population Records Office from the municipality where you live. You will need the following documents:<br><br>a. A temporary residency request form <br>b. Your current ID card, original and copy; <br>c. A document serving as proof of residence,  original and copy; <br>d. The home owner‘s lodger accommodation affidavit <br><br>Issuing a temporary residency and obtaining the temporary residency sticker can take up to 30 days, depending on how backed up your local Population Registry office is.",
 		"label011110": "If nobody can accommodate you as a lodger until the elections you will only be able to vote at the address and in the municipality on your ID card. <br><br>If you want to vote in the municipality where you are registered all you have to do is show up at your allotted polling station with a valid ID on the day of the vote. You can find out the polling place where you are registered on the permanent lists by using the map below. Accepted ID documents include: Identity Cards, Electronic Identity cards, temporary identity cards, identity booklets (buletin), diplomatic passports, electronic diplomatic passports, service passports, electronic service passports and (for students in military schools) military service cards. It is very important for the document you plan to use to be valid on the day of the vote.",
 		"label1000": "Romanian Law 115/2015 states that European Union Citizens with full voting rights domiciled or with residency in Romania who have not been registered by the General Immigrations Inspectorate are registered, following a written registration request to their local City/Town Hall on complementary lists.<br><br>With the written registration request to their local City/Town Hall citizens have to also submit a document showing proof of legal right of residency or domicile at their stated adress:<br><br>a) a home purchase contract, rental agreement or similar document, <br>b) The home owner‘s (physical or legal person) written affidavit of lodger accommodation along with one of the documents from a)<br>c) a legally binding affidavit from the applicant along with the public order police officer‘s proof of verification, certifying that the applicant lives at the stated address and that the address exists in case the documents listed at a) and b) cannot be provided;<br>d) A document issued by the City/Town Hall stating that the applicant is registered in the agricultural registry, for rural areas.",
 		"label1010": "If you are an EU citizen and you have been omitted from the complementary lists or you have changed your address to a different electoral constituency between the time when the complementary lists have been closed and submitted to the electoral office and the actual date of the local elections (a 23 day window according to the electoral calendar) you can vote in the constituency where you currently reside by using any valid ID along with<br>:<br>the registration certificate attesting your new address or<br>Your permanent residency card or permanent residency permit attesting your previous address along with official written proof from the General Immigrations Inspectorate, attesting your current address.<br>You can also, prior to the elections, submit a written request to the mayor‘s office of the municipality where you have just moved, along with the documents stated above. The mayor’s office will inform the polling place where you will be voting in writing and you should be able to vote on supplementary lists. ",
@@ -35,6 +35,22 @@
 		"case2_p1": "According to a statement by the AEP (Permanent Electoral Authority) president, persons infected with the novel coronavirus who are in quarantine, isolation or hospitalized will be able to vote in local elections by requesting a mobile ballot box. Only patients in intensive care will have special voting conditions. To request a mobile ballot box you have to make a written request for one and submit it, along with documents certifying your health status to the president of the polling station where you would normally cast your ballot.",
 		"case3_title": "You are unable to sign or apply the rubber stamp at the polling station due to disability",
 		"case3_p1": "Citizens with disability who arrive at the polling place and cannot sign the electoral list from reasons of impairment or cannot correctly apply the rubber voting stamp on the ballot may, upon confirmation of the impairment from the polling station president, be accompanied by a person of their own choosing as long as that person is not one of the polling station committee members, observers or one of the candidates."
+	},
+	"pollingStationSearch": {
+		"question": "Where do you live?",
+		"callToAction": "Insert the name of the street and the city where you live",
+		"searchPlaceholder":"Search for your address to find out the polling section you are assigned to",
+		"addressNotFound": "We didn`t find the polling station your street is attributed to. Please find below the closest polling stations for the searched address, and the list of streets that are attributed to them. This way you can manually match/check them, and see where you can vote. Please remember that you can only vote in the polling station your street has been attributed to.",
+		"hasPermanentResidence": "The searched address is allocated to the section:",
+		"doesNotHavePermanentResidence": "If you do not have a permanent address at the address mentioned, you can vote in any of the polling sections in the city.",
+		"closestPollingStations": "The closest polling stations are:"
+	},
+	"pollingStationCard": {
+		"distance": "Distance: ",
+		"seeStreets": "Street list",
+		"pollingStationNumber":"Polling station no.",
+		"address": "Address: ",
+		"assignedStreetsLabel": "In this polling section, people living on the following streets can vote:"
 	},
 	"back_button": "Back",
 	"back_to_start_button": "Back to start",
@@ -53,7 +69,7 @@
 		"p7": "developed pro-bono by:",
 		"p8": "in partnership with:"
 	},
-	"map_hero": "This is where you’ll soon be able to find a map with a search form that will help you locate the polling place you are assigned to. <br> This is a project we developed completely Pro Bono.<br> If we helped you here, consider making <a href='https://code4.ro/ro/doneaza/' target='_blank'>a donation</a> for Code for Romania, so we’ll be able to keep helping people even more.",
+	"map_hero": "This is where you’ll soon be able to find a map with a search form that will help you locate the polling place you are assigned to. <br> This is a project we developed completely Pro Bono.<br> If we helped you here, consider making <a href='https://code4.ro/ro/doneaza/' target='_blank' rel='noopener' rel='noreferrer'>a donation</a> for Code for Romania, so we’ll be able to keep helping people even more.",
 	"social_share": {
 		"title": "Share with your friends",
 		"text": "Share this information on social media to help more Romanians find out where they can vote for the local elections in 2020, what documents they will need and other useful advice."
@@ -116,5 +132,40 @@
 		"p26": "You can set up your browser to reject cookies automatically or you can select only some websites where cookies are enabled. But, for example, if you turn off cookies on this website you can not follow through with the next steps in filling out the form.",
 		"p27": "Modern browsers offer the ability to change cookie settings. You can usually find cookie settings under the “options” tab or the “preferences” menu of your browser.",
 		"p28": "For third-party cookies settings and for more information about online ad confidentiality, IAB Romania offers the following website: http://www.youronlinechoices.com/ro/"
-	}
+	},
+	"safety": {
+		"title": "Rules that apply to the voting process",
+		"button": "Safety",
+		"step1.1": "If the voter has a fever the voting committee is notified and the voter is ushered to their polling station where they will vote in the first polling booth",
+		"step3.2": "The distance from other persons has to be at least one meter at all times",
+		"step4.1": "You can still vote with ids expired between the 1st of March and the 27th of September",
+		"step5.1": "Only for a short time and at a distance of at least 1.5 m from other persons",
+		"step6.1": "For local elections you can only vote in your allotted precinct",
+		"step7.1": "The committee must be able to read it without touching it",
+		"step9.1": "It is recommended that you bring your own pen",
+		"step10.1": "A single ballot for each race",
+		"step.exceptional": "The voter who cannot vote alone can bring along a chaperone (a person who cannot be a committee member or an observer)",
+		"step1": "1. The voter has their temperature taken at the building entrance",
+		"step2": "2. The voter disinfects their hands",
+		"step3": "3. The voter enters the polling station",
+		"step4": "4. The voter places their ID in the SIMPV scanner",
+		"step5": "5. The voter removes their mask for identification",
+		"step6": "6. The SIMPV tablet displays a message saying that the voter can vote",
+		"step7": "7. The voter places their id on the polling committee’s table",
+		"step8": "8. The polling committee identifies the voter’s name on the list",
+		"step9": "9. The voter signs the voting presence sheet",
+		"step10": "10. The voter picks up the voting stamp and ballots off the table",
+		"step11": "11. The voter enters the polling booth and votes, in secret",
+		"step12": "12. The voter places the ballots in their respective boxes",
+		"step13": "13. The voter places the voting stamp on the committee table, picks up their id and applies the voting sticker to the back of their id",
+		"step14": "14. The voter disinfects their hands when exiting the polling station",
+		"step2.1": "The polling station must have disinfectant",
+		"step3.1": "Only while wearing a mask. If they do not have a mask they will be given one from the polling station",
+		"step4.2": "You can also vote with: an electronic Id card, a temporary ID card, ID booklet, diplomatic passport, electronic  diplomatic passport, service passport, electronic service passport, military service booklet (only for military school pupils)",
+		"step8.1": "If the voter is not on the list they vote on the supplementary lists",
+		"step11.1.1": "The erroneous ballot is declared invalid",
+		"step11.1": "If the voter says they made a mistake in voting they have a right to one (and one only) extra ballot",
+		"step12.1": "The ballot cast into the wrong box shall NOT be declared invalid"
+	  }
+	  
 }

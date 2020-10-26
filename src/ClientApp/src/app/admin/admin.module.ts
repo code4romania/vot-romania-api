@@ -9,6 +9,10 @@ import { AdminContentComponent } from './admin-content/admin-content.component';
 import { VotersOptionEditorComponent } from './admin-content/voters-option-editor/voters-option-editor.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { DataService } from './../services/data.service';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { appStateReducer } from '../state/reducers';
+import { AuthEffects } from '../state/auth';
 import { ImportPollingStationsComponent } from './import-polling-stations/import-polling-stations.component';
 import { ImportedPollingStationsTableComponent } from './import-polling-stations/imported-polling-stations-table/imported-polling-stations-table.component';
 import { PollingStationEditorComponent } from './imported-polling-station-editor/polling-station-editor.component';
@@ -61,8 +65,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     PollingStationEditorComponent,
     MatSpinner
   ],
-  
-   providers: [
+  providers: [
     DataService
   ],
 })

@@ -236,7 +236,7 @@ export class VotersDecisionTreeService {
       },
       '1000': {
         id: '1000',
-        text: 'votersGuide.label1000'
+        text: 'votersGuide.label110'
       },
       '101': {
         id: '101',
@@ -258,7 +258,7 @@ export class VotersDecisionTreeService {
       },
       '110': {
         id: '110',
-        text: 'votersGuide.label110'
+        text: 'votersGuide.label1000'
       },
     };
 

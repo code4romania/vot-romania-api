@@ -58,7 +58,8 @@ namespace VotRomania.Services
                 {
                     Latitude = x.Coordinates.Latitude,
                     Longitude = x.Coordinates.Longitude,
-                    PollingStations = x.PollingStations
+                    PollingStations = x.PollingStations,
+                    Distance = x.Coordinates.GetDistanceTo(userLocation)
                 })
                 .ToArray();
 

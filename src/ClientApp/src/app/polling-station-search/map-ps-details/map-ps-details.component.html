@@ -1,0 +1,16 @@
+<div *ngIf="isVisible" class="details-wrapper" [@inOutAnimation]>
+    <div class="details">
+        <div class="header">
+            <span class="cross-icon" (click)="close()"></span>
+        </div>
+
+        <div class="details-content">
+            <div>
+                <app-polling-station-card-info *ngFor="let pollingStation of pollingStations"
+                    [distance]="pollingStation.distance" [lightTheme]="true" [pollingStation]="pollingStation"
+                    class="card">
+                </app-polling-station-card-info>
+            </div>
+        </div>
+    </div>
+</div>
