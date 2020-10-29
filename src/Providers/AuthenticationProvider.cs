@@ -30,18 +30,21 @@ namespace VotRomania.Providers
             _userProvider = userProvider;
         }
 
-        public async Task<TokenResponseModel> CreateUserTokenAsync(string username, string password)
+        public async Task<TokenResponseModel?> CreateUserTokenAsync(string username, string password)
         {
             var userInfo = await _userProvider.GetUserAsync(username, password);
             if (userInfo == null)
+            {
+                _logger.LogWarning("Could not find specific user");
                 return null;
+            }
 
             var expires = DateTime.Now.AddDays(365);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_authSettings.Secret);
 
-            var identityClaims = new List<Claim>(new Claim[]
+            var identityClaims = new List<Claim>(new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, username),
                 new Claim(ClaimTypes.Name, userInfo.Name),

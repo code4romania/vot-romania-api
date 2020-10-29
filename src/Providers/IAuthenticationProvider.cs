@@ -5,6 +5,6 @@ namespace VotRomania.Providers
 {
     public interface IAuthenticationProvider
     {
-        Task<TokenResponseModel> CreateUserTokenAsync(string username, string password);
+        Task<TokenResponseModel?> CreateUserTokenAsync(string username, string password);
     }
 }

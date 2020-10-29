@@ -1,0 +1,144 @@
+<form [formGroup]="form" class="normal-form" (submit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
+
+    <mat-dialog-content class="mat-typography">
+        <div class="container">
+            <div class="row">
+
+                <input type="hidden" formControlName="id">
+                <input type="hidden" formControlName="jobId">
+                <input type="hidden" formControlName="failMessage">
+                <mat-form-field>
+                    <input formControlName="pollingStationNumber" matInput placeholder="P.S. Number">
+                    <mat-error>P.S. Number is mandatory.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="county" matInput placeholder="County">
+                    <mat-error>County is mandatory.</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="locality" matInput placeholder="Locality">
+                    <mat-error>Locality is mandatory.</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                    <input formControlName="institution" matInput placeholder="Institution">
+                    <mat-error>Institution is mandatory.</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                    <input formControlName="address" matInput placeholder="Address">
+                    <mat-error>Address is mandatory.</mat-error>
+                </mat-form-field>
+
+                <div class="w-100">
+                    <mat-form-field>
+                        <input formControlName="latitude" matInput placeholder="Latitude" type="number" step="0.005">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input formControlName="longitude" matInput placeholder="Longitude" type="number" step="0.005">
+                    </mat-form-field>
+
+                </div>
+                <mat-form-field>
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="resolvedAddressStatus" matInput placeholder="Status">
+                        <mat-option value="notProcessed">Not processed</mat-option>
+                        <mat-option value="success">Success</mat-option>
+                        <mat-option value="notFound">Not found</mat-option>
+                        <mat-option value="failed">Failed</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <div class="w-100"><p><b>Assigned addresses</b></p></div>
+                <div class="w-100">
+                    <button class="btn btn-outline-primary filter-field" type="button"
+                        (click)="newAddress()">Add</button>
+                </div>
+                <div>
+                    <mat-table #table [dataSource]="assignedAddresses" class="w-100">
+                        <!-- locality -->
+                        <ng-container matColumnDef="locality">
+                            <mat-header-cell *matHeaderCellDef> Locality</mat-header-cell>
+                            <mat-cell *matCellDef="let address">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput placeholder="Street Code" [value]="address.locality"
+                                        [(ngModel)]="address.locality" [ngModelOptions]="{standalone: true}">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- street code-->
+                        <ng-container matColumnDef="streetCode">
+                            <mat-header-cell *matHeaderCellDef> Street Code</mat-header-cell>
+                            <mat-cell *matCellDef="let address">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput placeholder="Street Code" [value]="address.streetCode"
+                                        [(ngModel)]="address.streetCode" [ngModelOptions]="{standalone: true}">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- Street -->
+                        <ng-container matColumnDef="street">
+                            <mat-header-cell *matHeaderCellDef> Street </mat-header-cell>
+                            <mat-cell *matCellDef="let address">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput placeholder="Street" [value]="address.street"
+                                        [(ngModel)]="address.street" [ngModelOptions]="{standalone: true}">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- House numbers Column-->
+                        <ng-container matColumnDef="houseNumbers">
+                            <mat-header-cell *matHeaderCellDef> House numbers </mat-header-cell>
+                            <mat-cell *matCellDef="let address">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput placeholder="House numbers" [value]="address.houseNumbers"
+                                        [(ngModel)]="address.houseNumbers" [ngModelOptions]="{standalone: true}">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- remarks Column -->
+                        <ng-container matColumnDef="remarks">
+                            <mat-header-cell *matHeaderCellDef> remarks </mat-header-cell>
+                            <mat-cell *matCellDef="let address">
+                                <mat-form-field floatLabel="never">
+                                    <input matInput placeholder="Remarks" [value]="address.remarks"
+                                        [(ngModel)]="address.remarks" [ngModelOptions]="{standalone: true}">
+                                </mat-form-field>
+                            </mat-cell>
+                        </ng-container>
+
+                        <!-- delete Column -->
+                        <ng-container matColumnDef="delete">
+                            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+
+                            <mat-cell *matCellDef="let address;let i = index">
+                                <button class="btn btn-outline-danger btn-sm" type="button"
+                                (click)="deleteAddress(i)">
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </mat-cell>
+
+                        
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="assignedAddressesColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: assignedAddressesColumns;"></mat-row>
+                    </mat-table>
+                </div>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Save</button>
+        <button mat-raised-button color="warn" type="button" (click)="onClose()">Close</button>
+
+    </mat-dialog-actions>
+
+</form>

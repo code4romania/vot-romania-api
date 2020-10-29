@@ -1,0 +1,49 @@
+<div class="container">
+
+    <div class="new-job" *ngIf="!currentJob">
+        <div class="file-upload">
+
+
+            <div class="progress-container">
+              <p>Progress <span style='float:right;'>{{progress.percentage}}</span>
+            
+            </p>
+               
+            <div class="progress">
+              <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width':progress.percentage}" aria-valuemin="0" aria-valuemax="100">
+                
+              </div>
+              
+            </div>
+            <p>File name: <span style='float:right'>{{selectedFile?.name}}</span></p>
+              
+            </div>
+            <button class="btn btn-primary" (click)="fileInput.click()">
+                <input style="display: none" type="file" (change)="onFileSelected($event)" #fileInput>
+                Browse file
+            
+            </button>
+            
+            </div>
+            
+    </div>
+
+    <div class="in-progress-job" *ngIf="currentJob">
+        <div class="container py-2">
+            <div class="row">
+                <div class="col">
+                    <p><b>JobId:</b> {{currentJob.jobId}}</p>
+                    <p><b>File name:</b> {{currentJob.fileName}}</p>
+                    <p><b>Status:</b> {{currentJob.status}}</p>
+                </div>
+                <div class="col-xs">
+                    <button type="button" class="btn btn-danger btn-block" (click)="cancelCurrentJob()">Cancel current job</button>
+                    <button type="button" class="btn btn-warning btn-block" (click)="restartCurrentJob()">Restart current job</button>
+                    <button type="button" class="btn btn-success btn-block" (click)="finishImport()">Finish import</button>
+                </div>
+            </div>
+        </div>
+
+        <app-imported-polling-stations-table></app-imported-polling-stations-table>
+    </div>
+</div>

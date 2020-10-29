@@ -13,7 +13,6 @@ namespace VotRomania.Stores.Entities
         public string Institution { get; set; }
         public string Address { get; set; }
         public ICollection<PollingStationAddressEntity> PollingStationAddresses { get; set; }
-
     }
 
     public class PollingStationAddressEntity

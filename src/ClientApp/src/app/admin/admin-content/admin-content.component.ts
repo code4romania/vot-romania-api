@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { VotingGuide, Option } from '../../services/data.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { select, Store } from '@ngrx/store';
-import { ApplicationState } from '../../state/reducers';
 import { getError, getGeneralInfo, getSelectedLanguage, getVotingGuide } from '../../state/selectors';
-import { ClearErrorAction, UpdateDataAction } from '../../state/actions';
 import { MatDialog } from '@angular/material/dialog';
 import { VotersOptionEditorComponent } from './voters-option-editor/voters-option-editor.component';
+import { UpdateDataAction, ClearErrorAction } from '../state/admin-actions';
+import { AdminState } from '../state/admin-reducers';
 
 @Component({
   selector: 'app-admin-content',
@@ -51,7 +51,7 @@ export class AdminContentComponent implements OnInit {
     ]
   };
 
-  constructor(private store: Store<ApplicationState>,
+  constructor(private store: Store<AdminState>,
     public dialog: MatDialog) {
   }
 

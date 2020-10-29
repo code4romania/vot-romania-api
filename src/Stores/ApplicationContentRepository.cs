@@ -32,27 +32,21 @@ namespace VotRomania.Stores
         {
             try
             {
-                using (var transaction = _context.Database.BeginTransaction())
+                var languageContent = await _context.ApplicationContent.FirstOrDefaultAsync(x => x.Language == content.Language);
+                if (languageContent != null)
                 {
-
-                    var languageContent = await _context.ApplicationContent.FirstOrDefaultAsync(x => x.Language == content.Language);
-                    if (languageContent != null)
-                    {
-                        return (false, $"Content for language {content.Language} already exists");
-                    }
-
-                    var entity = new ApplicationContentEntity()
-                    {
-                        Language = content.Language,
-                        ApplicationContent = content
-                    };
-
-                    await _context.ApplicationContent.AddAsync(entity);
-                    _context.SaveChanges();
-
-                    transaction.Commit();
-                    return (true, string.Empty);
+                    return (false, $"Content for language {content.Language} already exists");
                 }
+
+                var entity = new ApplicationContentEntity()
+                {
+                    Language = content.Language,
+                    ApplicationContent = content
+                };
+
+                await _context.ApplicationContent.AddAsync(entity);
+
+                return (true, string.Empty);
             }
             catch (Exception e)
             {
@@ -65,22 +59,17 @@ namespace VotRomania.Stores
         {
             try
             {
-                using (var transaction = _context.Database.BeginTransaction())
+                var entity = await _context.ApplicationContent.FirstOrDefaultAsync(x => x.Language == language);
+                if (entity == null)
                 {
-                    var entity = await _context.ApplicationContent.FirstOrDefaultAsync(x => x.Language == language);
-                    if (entity == null)
-                    {
-                        return (false, $"Could not find content for language = {language}");
-
-                    }
-
-                    _context.ApplicationContent.Remove(entity);
-                    _context.SaveChanges();
-
-                    transaction.Commit();
-                    return (true, string.Empty);
+                    return (false, $"Could not find content for language = {language}");
 
                 }
+
+                _context.ApplicationContent.Remove(entity);
+                _context.SaveChanges();
+
+                return (true, string.Empty);
             }
             catch (Exception e)
             {
@@ -93,23 +82,19 @@ namespace VotRomania.Stores
         {
             try
             {
-                using (var transaction = _context.Database.BeginTransaction())
+                var entity = await _context.ApplicationContent.FirstOrDefaultAsync(x => x.Language == content.Language);
+                if (entity == null)
                 {
-                    var entity = await _context.ApplicationContent.FirstOrDefaultAsync(x => x.Language == content.Language);
-                    if (entity == null)
-                    {
-                        return (false, $"Could not find content for language = {content.Language}");
+                    return (false, $"Could not find content for language = {content.Language}");
 
-                    }
-
-                    entity.ApplicationContent = content;
-
-
-                    _context.SaveChanges();
-
-                    transaction.Commit();
-                    return (true, string.Empty);
                 }
+
+                entity.ApplicationContent = content;
+
+
+                _context.SaveChanges();
+
+                return (true, string.Empty);
             }
             catch (Exception e)
             {

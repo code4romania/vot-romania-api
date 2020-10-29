@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthService } from './auth.service';
 import { ErrorService } from './error.service';
+import { RequestHttpParams } from './params-builder';
 
 export interface Option {
   title: string;
@@ -43,6 +43,18 @@ export interface PollingStation {
   distance?: number;
 }
 
+export interface PaginationDetails {
+  pageSize?: number;
+  pageNumber?: number;
+}
+
+export interface AssignedAddress {
+  streetCode: string;
+  street: string;
+  houseNumbers: string;
+  remarks: string;
+}
+
 export interface PollingStationGroup {
   latitude: number;
   longitude: number;
@@ -54,31 +66,40 @@ export interface ApplicationData {
   content: StaticData[];
 }
 
+export interface PaginatedResponse<T> {
+  results: T[];
+  currentPage: number;
+  pageCount: number;
+  pageSize: number;
+  rowCount: number;
+}
+
+export interface ProblemDetails {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  instance: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class DataService {
   constructor(private http: HttpClient,
-              private authService: AuthService,
-              private errorService: ErrorService) { }
+    private errorService: ErrorService) { }
 
   getData(): Observable<ApplicationData> {
     return this.http.get<ApplicationData>('/api/application-content')
       .pipe(catchError(this.errorService.handleError));
   }
 
-  updateData(data: StaticData): Observable<any> {
-    const token = this.authService.getToken();
-    const headers = new HttpHeaders({ Authorization: `Bearer ${token}`});
-    return this.http.post<any>(`/api/application-content/${data.language}`, data, { headers })
-      .pipe(catchError(this.errorService.handleError));
-  }
-
   getPollingStations(latitude: number, longitude: number): Observable<PollingStationGroup[]> {
-    let params = new HttpParams();
+    let params = RequestHttpParams
+      .create()
+      .append('latitude', latitude.toString())
+      .append('longitude', longitude.toString())
+      .please();
 
-    params = params.append('latitude', latitude.toString());
-    params = params.append('longitude', longitude.toString());
-
-    return this.http.get<PollingStationGroup[]>('api/polling-station/near-me', { params: params })
+    return this.http.get<PollingStationGroup[]>('api/polling-station/near-me', { params: params },)
       .pipe(catchError(this.errorService.handleError));
   }
 }

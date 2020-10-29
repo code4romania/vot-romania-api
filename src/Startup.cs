@@ -18,9 +18,14 @@ using Microsoft.OpenApi.Models;
 using VotRomania.Extensions;
 using VotRomania.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using VotRomania.Providers;
 using VotRomania.Services;
+using VotRomania.Services.Location;
+using VotRomania.Services.Location.HereMaps;
 using VotRomania.Stores;
+using Newtonsoft.Json.Converters;
 
 namespace VotRomania
 {
@@ -39,22 +44,31 @@ namespace VotRomania
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             services.AddOptions();
+            services.AddMemoryCache();
+
             services.AddHealthChecks();
-            services.Configure<DatabaseOptions>(Configuration.GetSection("Database"));
+            services.Configure<HereMapsOptions>(Configuration.GetSection("HereMaps"));
 
             var authenticationSection = Configuration.GetSection("Authentication");
             services.Configure<AuthSettingOptions>(authenticationSection);
             services.Configure<ApplicationUsersOptions>(Configuration.GetSection("UserSettings"));
+            services.AddPostgreSqlDbContext(Configuration);
 
-            services.AddDbContext<VotRomaniaContext>(ServiceLifetime.Singleton);
-            services.AddSingleton<IPollingStationsRepository, PollingStationsRepository>();
-            services.AddSingleton<IApplicationContentRepository, ApplicationContentRepository>();
-
+            services.AddScoped<IPollingStationsRepository, PollingStationsRepository>();
+            services.AddScoped<IApplicationContentRepository, ApplicationContentRepository>();
+            services.AddScoped<IImportJobsRepository, ImportJobsRepository>();
+            services.AddScoped<IImportedPollingStationsRepository, ImportedPollingStationsRepository>();
+            services.AddScoped<IAddressLocationSearchService, HereAddressLocationSearchService>();
             services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>();
+
+            services.AddHostedService<QueuedHostedService>();
+            services.AddSingleton<IBackgroundJobsQueue, BackgroundJobsQueue>();
 
             services.AddScoped<IUserProvider, UserProvider>();
             services.AddScoped<IAuthenticationProvider, AuthenticationProvider>();
+            services.AddScoped<IExcelParser, ExcelParser>();
 
             // Authentication
             var appSettings = authenticationSection.Get<AuthSettingOptions>();
@@ -92,10 +106,20 @@ namespace VotRomania
                     .RequireClaim("scope", "polling-stations"));
             });
 
+            services.AddControllersWithViews().
+                AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                });
 
-            services.AddControllersWithViews();
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
+            services.AddCors(options => options.AddPolicy("Permissive", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
 
             services.AddSwaggerGen(c =>
             {
@@ -167,8 +191,11 @@ namespace VotRomania
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, VotRomaniaContext dbContext)
         {
+            dbContext.Database.Migrate();
+            app.UseCors("Permissive");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -200,6 +227,7 @@ namespace VotRomania
             app.UseAuthorization();
             app.UseCors("Permissive");
 
+            app.UseProblemDetails();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

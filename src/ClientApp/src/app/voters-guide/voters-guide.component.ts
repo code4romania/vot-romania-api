@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ApplicationState } from '../state/reducers';
 import { Store, select } from '@ngrx/store';
 import { Subscription, Observable } from 'rxjs';
@@ -32,8 +32,6 @@ export interface VotingGuideViewModel {
   ]
 })
 export class VotersGuideComponent implements OnInit, OnDestroy {
-  @ViewChild('optionTitle', { static: true }) optionTitle: ElementRef;
-
   description: string;
   title: string;
 
