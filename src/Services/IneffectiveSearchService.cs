@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GeoCoordinatePortable;
+using Microsoft.Extensions.DependencyInjection;
 using VotRomania.Models;
 using VotRomania.Stores;
 
@@ -9,25 +11,41 @@ namespace VotRomania.Services
 {
     public class IneffectiveSearchService : IPollingStationSearchService
     {
-        private readonly IPollingStationsRepository _pollingStationsRepository;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-
-        private readonly List<(GeoCoordinate Coordinates, PollingStationModel[] PollingStations)> _pollingStations;
+        private List<(GeoCoordinate Coordinates, PollingStationModel[] PollingStations)> _pollingStations;
 
         // TODO: Change to KDTree
-        public IneffectiveSearchService(IPollingStationsRepository pollingStationsRepository)
+        public IneffectiveSearchService(IServiceScopeFactory serviceScopeFactory)
         {
-            _pollingStationsRepository = pollingStationsRepository;
-            var pollingStations = pollingStationsRepository.GetPollingStationsAsync().GetAwaiter().GetResult();
+            _serviceScopeFactory = serviceScopeFactory;
+            PrefillPollingStationsCache().GetAwaiter().GetResult();
+        }
 
-            _pollingStations = pollingStations
-                .Results
-                .GroupBy(
-                    x => new { lat = x.Latitude, lng = x.Longitude },
-                    p => p,
-                    (key, pollingStationsInfos) => (new GeoCoordinate(key.lat, key.lng), pollingStationsInfos.ToArray())
+        private async Task PrefillPollingStationsCache()
+        {
+
+            using (var scope = _serviceScopeFactory.CreateScope())
+            {
+                var pollingStationsRepository = scope.ServiceProvider.GetService<IPollingStationsRepository>();
+                var pollingStationsResult = await pollingStationsRepository.GetPollingStationsAsync();
+
+                if (pollingStationsResult.IsFailure)
+                {
+                    throw new ApplicationException("could not load polling stations");
+                }
+
+                _pollingStations = pollingStationsResult
+                    .Value
+                    .Results
+                    .GroupBy(
+                        x => new { lat = x.Latitude, lng = x.Longitude },
+                        p => p,
+                        (key, pollingStationsInfos) =>
+                            (new GeoCoordinate(key.lat, key.lng), pollingStationsInfos.ToArray())
                     )
-                .ToList();
+                    .ToList();
+            }
         }
 
         public Task<PollingStationsGroupModel[]> GetNearestPollingStationsAsync(double latitude, double longitude)
@@ -46,6 +64,11 @@ namespace VotRomania.Services
                 .ToArray();
 
             return Task.FromResult(pollingStationsInfos);
+        }
+
+        public async Task BustCache()
+        {
+            await PrefillPollingStationsCache();
         }
     }
 }

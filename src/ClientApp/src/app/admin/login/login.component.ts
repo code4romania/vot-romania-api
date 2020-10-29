@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
-import { LoginRequested } from '../../state/auth';
 import { getError } from '../../state/selectors';
-import { ClearErrorAction } from '../../state/actions';
+import { LoginRequested } from '../state/auth';
+import { ClearErrorAction } from '../state/admin-actions';
 
 @Component({
   selector: 'app-login',

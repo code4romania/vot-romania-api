@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="filter-form">
+    <mat-form-field class="filter-field">
+      <mat-label>County</mat-label>
+      <input matInput [(ngModel)]="filter.county">
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <mat-label>Locality</mat-label>
+      <input matInput [(ngModel)]="filter.locality">
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <mat-label>Number</mat-label>
+      <input matInput [(ngModel)]="filter.pollingStationNumber">
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <mat-label>Address</mat-label>
+      <input matInput [(ngModel)]="filter.address">
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <mat-label>Institution</mat-label>
+      <input matInput [(ngModel)]="filter.institution">
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <mat-label>Status</mat-label>
+      <mat-select [(value)]="filter.resolvedAddressStatus">
+        <mat-option>All</mat-option>
+        <mat-option value="notProcessed">Not processed</mat-option>
+        <mat-option value="success">Success</mat-option>
+        <mat-option value="notFound">Not found</mat-option>
+        <mat-option value="failed">Failed</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="action-group">
+    <button class="btn btn-outline-primary filter-field" (click)="addNewPollingStation()">Add</button>
+    <div>
+      <button class="btn btn-outline-primary filter-field" type="button" (click)="updateFilter()">
+        <i class="fas fa-search"></i>
+      </button>
+
+      <button class="btn btn-outline-danger filter-field" type="button" (click)="resetFilter()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort matSortDisableClear="true">
+      <ng-container matColumnDef="county">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef>County</th>
+        <td mat-cell class="dc-content" *matCellDef="let pollingStation">{{pollingStation.county}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="locality">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef>Locality</th>
+        <td mat-cell class="dc-content" *matCellDef="let pollingStation"> {{ pollingStation.locality }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="pollingStationNumber">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef>Number</th>
+        <td mat-cell class="dc-content" *matCellDef="let pollingStation">{{pollingStation.pollingStationNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="institution">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef>Institution</th>
+        <td mat-cell class="dc-content" *matCellDef="let pollingStation">{{pollingStation.institution}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef>Address</th>
+        <td mat-cell class="dc-content" *matCellDef="let pollingStation">{{pollingStation.address}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="resolvedAddressStatus">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef>Status</th>
+        <td mat-cell class="dc-content" *matCellDef="let pollingStation">{{pollingStation.resolvedAddressStatus}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="failMessage">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef>Fail Message</th>
+        <td mat-cell class="dc-content" *matCellDef="let pollingStation">{{pollingStation.failMessage}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell class="dc-label" *matHeaderCellDef></th>
+        <td mat-cell class="dc-content" *matCellDef="let pollingStation">
+          <div class="action-buttons">
+            <button class="btn btn-outline-primary btn-sm" type="button"
+              (click)="editImportedPollingStation(pollingStation)">
+              <i class="fas fa-edit"></i>
+            </button>
+
+            <button class="btn btn-outline-danger btn-sm" type="button"
+              (click)="deleteImportedPollingStation(pollingStation)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="noData">
+        <td mat-cell class="dc-label no-data-cell" *matCellDef="let pollingStation"
+          [attr.colspan]="displayedColumns.length">
+          <ng-container *ngIf="loading">
+            <span class="dc-label">Retrieving data...</span>
+          </ng-container>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky: true"></tr>
+      <ng-container *ngIf="importedPollingStationsTotal && !loading">
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="ps-row"></tr>
+      </ng-container>
+      <ng-container *ngIf="!importedPollingStationsTotal || loading">
+        <tr mat-row *matRowDef="let row; columns: ['noData'];" class="no-data-row"></tr>
+      </ng-container>
+    </table>
+
+    <mat-paginator [length]="importedPollingStationsTotal" [pageSize]="5" [pageSizeOptions]="[5, 10, 15, 20]">
+    </mat-paginator>
+  </div>
+</div>
