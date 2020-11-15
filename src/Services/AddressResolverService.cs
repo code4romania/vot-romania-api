@@ -11,17 +11,15 @@ using VotRomania.Stores.Entities;
 
 namespace VotRomania.Services
 {
-    public class QueuedHostedService : BackgroundService
+    public class AddressResolverService : BackgroundService
     {
         private readonly IBackgroundJobsQueue _jobsQueue;
         private readonly IServiceScopeFactory _serviceScopeFactory;
+        private readonly ILogger<AddressResolverService> _logger;
 
-        private readonly ILogger<QueuedHostedService> _logger;
-
-
-        public QueuedHostedService(IBackgroundJobsQueue jobsQueue,
+        public AddressResolverService(IBackgroundJobsQueue jobsQueue,
             IServiceScopeFactory serviceScopeFactory,
-            ILogger<QueuedHostedService> logger)
+            ILogger<AddressResolverService> logger)
         {
             _jobsQueue = jobsQueue;
             _serviceScopeFactory = serviceScopeFactory;
@@ -42,10 +40,9 @@ namespace VotRomania.Services
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     var importJobsRepository = scope.ServiceProvider.GetService<IImportJobsRepository>();
-                    var importedPollingStationsRepository =
-                        scope.ServiceProvider.GetService<IImportedPollingStationsRepository>();
+                    var importedPollingStationsRepository = scope.ServiceProvider.GetService<IImportedPollingStationsRepository>();
                     var locationSearchService = scope.ServiceProvider.GetService<IAddressLocationSearchService>();
-
+                    var addressBank = scope.ServiceProvider.GetService<IAddressBankRepository>();
 
                     try
                     {
@@ -88,12 +85,28 @@ namespace VotRomania.Services
 
                         foreach (var ps in pollingStations.Value.Results)
                         {
-                            var locationSearchResult = await locationSearchService.FindCoordinates(ps.County, ps.Address);
+                            var result = await addressBank.GetAddress(ps.County, ps.Locality, ps.Address);
+                            if (result.IsSuccess && result.Value != null)
+                            {
 
-                            ps.ResolvedAddressStatus = locationSearchResult.OperationStatus;
-                            ps.Latitude = locationSearchResult.Latitude;
-                            ps.Longitude = locationSearchResult.Longitude;
-                            ps.FailMessage = locationSearchResult.ErrorMessage;
+                                ps.ResolvedAddressStatus = ResolvedAddressStatusType.Success;
+                                ps.Latitude = result.Value.Latitude;
+                                ps.Longitude = result.Value.Longitude;
+                            }
+                            else
+                            {
+                                var locationSearchResult = await locationSearchService.FindCoordinates(ps.County, ps.Address);
+
+                                ps.ResolvedAddressStatus = locationSearchResult.OperationStatus;
+                                ps.Latitude = locationSearchResult.Latitude;
+                                ps.Longitude = locationSearchResult.Longitude;
+                                ps.FailMessage = locationSearchResult.ErrorMessage;
+
+                                if (locationSearchResult.OperationStatus == ResolvedAddressStatusType.Success)
+                                {
+                                    await addressBank.StoreAddress(ps.County, ps.Locality, ps.Address, locationSearchResult.Latitude!.Value, locationSearchResult.Longitude!.Value);
+                                }
+                            }
 
                             await importedPollingStationsRepository.UpdateImportedPollingStation(jobId, ps);
                         }
@@ -106,7 +119,6 @@ namespace VotRomania.Services
                             "Error occurred executing {WorkItem}.", nameof(jobId));
                     }
                 }
-
             }
         }
 
