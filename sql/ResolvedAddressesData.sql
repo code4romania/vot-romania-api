@@ -5,7 +5,7 @@
 -- Dumped from database version 12.2 (Debian 12.2-2.pgdg100+1)
 -- Dumped by pg_dump version 12.2
 
--- Started on 2020-11-15 14:09:59
+-- Started on 2020-11-15 14:40:09
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -18772,6 +18772,7 @@ INSERT INTO public."ResolvedAddresses" VALUES (37587, 'Bucharest', 'BUCUREŞTI S
 INSERT INTO public."ResolvedAddresses" VALUES (37588, 'Bucharest', 'BUCUREŞTI SECTORUL 6', 'BUCUREŞTI SECTORUL 6,  Strada Fabricii , Nr. 22', 44.43764877319336, 26.036909103393555);
 INSERT INTO public."ResolvedAddresses" VALUES (37589, 'Bucharest', 'BUCUREŞTI SECTORUL 6', 'BUCUREŞTI SECTORUL 6,  Bulevardul Iuliu Maniu (Bulevardul Armata Poporului, Bulevardul Păcii) , Nr. 15', 44.43415069580078, 26.042390823364258);
 INSERT INTO public."ResolvedAddresses" VALUES (37590, 'Bucharest', 'BUCUREŞTI SECTORUL 6', 'BUCUREŞTI SECTORUL 6,  Bulevardul Iuliu Maniu (Bulevardul Armata Poporului, Bulevardul Păcii) , Nr. 15', 44.43415069580078, 26.042390823364258);
+INSERT INTO public."ResolvedAddresses" VALUES (37654, 'Mureș', 'ALBEŞTI', 'ALBEŞTI,  Strada Lungă , Nr. 123', 46.23973083496094, 24.852449417114258);
 INSERT INTO public."ResolvedAddresses" VALUES (37591, 'Bucharest', 'BUCUREŞTI SECTORUL 6', 'BUCUREŞTI SECTORUL 6,  Bulevardul Iuliu Maniu (Bulevardul Armata Poporului, Bulevardul Păcii) , Nr. 15', 44.43415069580078, 26.042390823364258);
 INSERT INTO public."ResolvedAddresses" VALUES (37592, 'Bucharest', 'BUCUREŞTI SECTORUL 6', 'BUCUREŞTI SECTORUL 6,  Bulevardul Iuliu Maniu (Bulevardul Armata Poporului, Bulevardul Păcii) , Nr. 15', 44.43415069580078, 26.042390823364258);
 INSERT INTO public."ResolvedAddresses" VALUES (37593, 'Bucharest', 'BUCUREŞTI SECTORUL 6', 'BUCUREŞTI SECTORUL 6,  Bulevardul Iuliu Maniu (Bulevardul Armata Poporului, Bulevardul Păcii) , Nr. 15', 44.43415069580078, 26.042390823364258);
@@ -18818,6 +18819,98 @@ INSERT INTO public."ResolvedAddresses" VALUES (37633, 'Bucharest', 'BUCUREŞTI S
 INSERT INTO public."ResolvedAddresses" VALUES (37634, 'Bucharest', 'BUCUREŞTI SECTORUL 6', 'BUCUREŞTI SECTORUL 6,  Drumul Săbăreni , Nr. 21', 44.47209930419922, 26.018489837646484);
 INSERT INTO public."ResolvedAddresses" VALUES (37635, 'Bucharest', 'BUCUREŞTI SECTORUL 6', 'BUCUREŞTI SECTORUL 6,  Strada Centurii , Nr. 4', 44.432861328125, 26.02798080444336);
 INSERT INTO public."ResolvedAddresses" VALUES (37636, 'Bucharest', 'BUCUREŞTI SECTORUL 6', 'BUCUREŞTI SECTORUL 6,  Calea Plevnei , Nr. 234', 44.44667053222656, 26.06545066833496);
+INSERT INTO public."ResolvedAddresses" VALUES (37637, 'Olt', 'SLATINA', 'SLATINA,  Bulevardul Alexandru Ioan Cuza , Nr. 29A', 44.42744827270508, 24.37982940673828);
+INSERT INTO public."ResolvedAddresses" VALUES (37638, 'Mureș', 'TIRIMIA', 'TIRIMIA,  Nr. 136', 46.448970794677734, 24.49017906188965);
+INSERT INTO public."ResolvedAddresses" VALUES (37639, 'Mureș', 'SATU NOU', 'SATU NOU,  Nr. 48', 46.76327133178711, 24.259410858154297);
+INSERT INTO public."ResolvedAddresses" VALUES (37640, 'Mureș', 'DELENI', 'DELENI,  Nr. 128', 46.835411071777344, 24.80406951904297);
+INSERT INTO public."ResolvedAddresses" VALUES (37641, 'Mureș', 'IDECIU DE SUS', 'IDECIU DE SUS,  Nr. 125', 46.842071533203125, 24.771120071411133);
+INSERT INTO public."ResolvedAddresses" VALUES (37642, 'Mureș', 'IDECIU DE JOS', 'IDECIU DE JOS,  Nr. 233', 46.81697082519531, 24.759159088134766);
+INSERT INTO public."ResolvedAddresses" VALUES (37643, 'Neamț', 'RUSENI', 'RUSENI,  Strada Sfântul Lazăr , Nr. 1', 47.207950592041016, 26.36012077331543);
+INSERT INTO public."ResolvedAddresses" VALUES (37644, 'Satu Mare', 'VALEA VINULUI', 'VALEA VINULUI,  Nr. 347', 47.71757125854492, 23.196800231933594);
+INSERT INTO public."ResolvedAddresses" VALUES (37645, 'Sălaj', 'TRESTIA', 'TRESTIA,  Nr. 62', 47.11351013183594, 23.33424949645996);
+INSERT INTO public."ResolvedAddresses" VALUES (37646, 'Prahova', 'VALEA STÂLPULUI', 'VALEA STÂLPULUI,  Nr. 2', 45.21421813964844, 26.023590087890625);
+INSERT INTO public."ResolvedAddresses" VALUES (37647, 'Iași', 'GRAJDURI', 'GRAJDURI,  Strada Principală , Nr. 64', 47.15599060058594, 27.68701934814453);
+INSERT INTO public."ResolvedAddresses" VALUES (37648, 'Ilfov', 'VOLUNTARI', 'VOLUNTARI,  Strada Erou Șerban Ion (Strada Erou Ion Şerban) (D) , Nr. 1', 44.49822998046875, 26.135780334472656);
+INSERT INTO public."ResolvedAddresses" VALUES (37649, 'Ilfov', 'POPEŞTI-LEORDENI', 'POPEŞTI-LEORDENI,  Strada Sf. Nicolae , Nr. 4B bis', 44.38254928588867, 26.157550811767578);
+INSERT INTO public."ResolvedAddresses" VALUES (37650, 'Ilfov', 'DUMBRĂVENI', 'DUMBRĂVENI,  Strada Lahovari , Nr. 20', 44.63058090209961, 26.108049392700195);
+INSERT INTO public."ResolvedAddresses" VALUES (37651, 'Iași', 'Coada Stâncii', 'Coada Stâncii,', 47.20608901977539, 27.71653938293457);
+INSERT INTO public."ResolvedAddresses" VALUES (37652, 'Iași', 'PÂRCOVACI', 'PÂRCOVACI,  Nr. 268', 47.43482971191406, 26.846860885620117);
+INSERT INTO public."ResolvedAddresses" VALUES (37653, 'Mureș', 'ŢOPA', 'ŢOPA,  Nr. 20', 46.256038665771484, 24.87649917602539);
+INSERT INTO public."ResolvedAddresses" VALUES (37655, 'Ilfov', 'MICŞUNEŞTI-MOARA', 'MICŞUNEŞTI-MOARA,  Strada Viitorului , Nr. 2', 44.70124053955078, 26.324689865112305);
+INSERT INTO public."ResolvedAddresses" VALUES (37656, 'Ilfov', 'FUNDENI', 'FUNDENI,  Şoseaua Fundeni , Nr. 134', 44.45637130737305, 26.16320037841797);
+INSERT INTO public."ResolvedAddresses" VALUES (37657, 'Maramureș', 'MIREŞU MARE', 'MIREŞU MARE,  Nr. 453', 47.502899169921875, 23.334030151367188);
+INSERT INTO public."ResolvedAddresses" VALUES (37658, 'Vrancea', 'TULBUREA', 'TULBUREA,', 45.56333923339844, 26.836299896240234);
+INSERT INTO public."ResolvedAddresses" VALUES (37659, 'Vrancea', 'MERA', 'MERA,  Strada Valea Milcovului , Nr. 44', 47.080841064453125, 21.923839569091797);
+INSERT INTO public."ResolvedAddresses" VALUES (37660, 'Vâlcea', 'RÂMNICU VÂLCEA', 'RÂMNICU VÂLCEA,  Strada Cartier Fețeni (Cartierul Feţeni, Cartierul Feteni) (D) , Nr. 25', 45.09429931640625, 24.42258071899414);
+INSERT INTO public."ResolvedAddresses" VALUES (37661, 'Suceava', 'TIȘĂUŢI', 'TIȘĂUŢI,  Nr. 108', 47.62514114379883, 26.309389114379883);
+INSERT INTO public."ResolvedAddresses" VALUES (37662, 'Teleorman', 'ROŞIORI DE VEDE', 'ROŞIORI DE VEDE,  Strada Sergent Ilie Izbiceanu (Strada Sg. Izbiceanu) , Nr. 28', 44.11534118652344, 24.98080062866211);
+INSERT INTO public."ResolvedAddresses" VALUES (37663, 'Teleorman', 'VIDELE', 'VIDELE,  Şoseaua Giurgiului , Nr. 43', 44.271018981933594, 25.52396011352539);
+INSERT INTO public."ResolvedAddresses" VALUES (37664, 'Sibiu', 'IACOBENI', 'IACOBENI,  Nr. 67A', 46.048370361328125, 24.720970153808594);
+INSERT INTO public."ResolvedAddresses" VALUES (37665, 'Suceava', 'VATRA DORNEI', 'VATRA DORNEI,  Calea Transilvaniei , Nr. 137', 47.34836959838867, 25.327259063720703);
+INSERT INTO public."ResolvedAddresses" VALUES (37666, 'Suceava', 'BUDENI', 'BUDENI,', 47.41722869873047, 26.654630661010742);
+INSERT INTO public."ResolvedAddresses" VALUES (37667, 'Sibiu', 'ŞELIMBĂR', 'ŞELIMBĂR,  Nr. 234', 45.76945877075195, 24.187549591064453);
+INSERT INTO public."ResolvedAddresses" VALUES (37668, 'Sibiu', 'METIŞ', 'METIŞ,  Nr. 241', 46.01926040649414, 24.405229568481445);
+INSERT INTO public."ResolvedAddresses" VALUES (37669, 'Sibiu', 'MOŞNA', 'MOŞNA,  Nr. 101', 46.08477020263672, 24.405649185180664);
+INSERT INTO public."ResolvedAddresses" VALUES (37670, 'Sibiu', 'RĂVĂŞEL', 'RĂVĂŞEL,  Nr. 110', 46.00912857055664, 24.369869232177734);
+INSERT INTO public."ResolvedAddresses" VALUES (37671, 'Sibiu', 'SEBEŞU DE JOS', 'SEBEŞU DE JOS,  Nr. 170', 45.648529052734375, 24.335020065307617);
+INSERT INTO public."ResolvedAddresses" VALUES (37672, 'Tulcea', 'BEIDAUD', 'BEIDAUD,  Strada Primăriei , Nr. 19', 44.98944091796875, 23.868560791015625);
+INSERT INTO public."ResolvedAddresses" VALUES (37673, 'Tulcea', 'SARIGHIOL DE DEAL', 'SARIGHIOL DE DEAL,  Strada Şcolii , Nr. 7', 45.02109909057617, 29.12257957458496);
+INSERT INTO public."ResolvedAddresses" VALUES (37674, 'Tulcea', 'NEATÂRNAREA', 'NEATÂRNAREA,  Strada Stejarului , Nr. 19', 44.89207077026367, 28.712690353393555);
+INSERT INTO public."ResolvedAddresses" VALUES (37675, 'Tulcea', 'SĂLCIOARA', 'SĂLCIOARA,  Strada Principală , Nr. 39', 45.407569885253906, 28.051259994506836);
+INSERT INTO public."ResolvedAddresses" VALUES (37676, 'Timiș', 'NERĂU', 'NERĂU,  Nr. 75-76', 45.97254943847656, 20.56321907043457);
+INSERT INTO public."ResolvedAddresses" VALUES (37677, 'Timiș', 'NIŢCHIDORF', 'NIŢCHIDORF,  Nr. 243', 45.58211898803711, 21.531850814819336);
+INSERT INTO public."ResolvedAddresses" VALUES (37678, 'Timiș', 'BREAZOVA', 'BREAZOVA,  Nr. 114', 45.83940887451172, 22.279029846191406);
+INSERT INTO public."ResolvedAddresses" VALUES (37679, 'Timiș', 'GRABAŢ', 'GRABAŢ,  Nr. 236', 45.87791061401367, 20.74250030517578);
+INSERT INTO public."ResolvedAddresses" VALUES (37680, 'Bihor', 'CHERIU', 'CHERIU,  Nr. 30', 47.0128288269043, 22.019800186157227);
+INSERT INTO public."ResolvedAddresses" VALUES (37681, 'Bihor', 'DOLEA', 'DOLEA,  Nr. 17', 47.2752685546875, 22.484939575195312);
+INSERT INTO public."ResolvedAddresses" VALUES (37682, 'Bihor', 'GĂLĂŞENI', 'GĂLĂŞENI,  Nr. 20', 46.98765182495117, 22.426610946655273);
+INSERT INTO public."ResolvedAddresses" VALUES (37683, 'Bistrița-Năsăud', 'NĂSĂUD', 'NĂSĂUD,  Piaţa Unirii (Piaţa Libertăţii) , Nr. 7', 47.28657913208008, 24.40028953552246);
+INSERT INTO public."ResolvedAddresses" VALUES (37684, 'Bistrița-Năsăud', 'COLIBIŢA', 'COLIBIŢA,  Nr. 86', 47.17741012573242, 24.906850814819336);
+INSERT INTO public."ResolvedAddresses" VALUES (37685, 'Buzău', 'AMARU', 'AMARU,  Nr. 48', 44.92832946777344, 26.588590621948242);
+INSERT INTO public."ResolvedAddresses" VALUES (37686, 'Brăila', 'VALEA CÂNEPII', 'VALEA CÂNEPII,  Strada Vizirului , Nr. 43', 45.0761604309082, 27.803630828857422);
+INSERT INTO public."ResolvedAddresses" VALUES (37687, 'Brăila', 'UNIREA', 'UNIREA,  Strada Primăriei , Nr. 71', 44.25764846801758, 27.592769622802734);
+INSERT INTO public."ResolvedAddresses" VALUES (37688, 'Buzău', 'GHERĂSENI', 'GHERĂSENI,  Strada Ioan Gherassy , Nr. 467B', 45.02830123901367, 26.79414939880371);
+INSERT INTO public."ResolvedAddresses" VALUES (37689, 'Brăila', 'GULIANCA', 'GULIANCA,  Strada Brăilei , Nr. 18', 45.43307876586914, 27.523120880126953);
+INSERT INTO public."ResolvedAddresses" VALUES (37690, 'Buzău', 'SĂLCIOARA', 'SĂLCIOARA,  Strada 1 , Nr. 45', 45.309078216552734, 27.179279327392578);
+INSERT INTO public."ResolvedAddresses" VALUES (37691, 'Buzău', 'PLAIU NUCULUI', 'PLAIU NUCULUI,  Strada Plaiul Nucului , Nr. 64', 45.477291107177734, 26.516149520874023);
+INSERT INTO public."ResolvedAddresses" VALUES (37692, 'Brăila', 'BRĂILA', 'BRĂILA,  Aleea Învăţătorilor , Nr. 10', 45.262210845947266, 27.956439971923828);
+INSERT INTO public."ResolvedAddresses" VALUES (37693, 'Bihor', 'VALEA DE SUS', 'VALEA DE SUS,  Nr. 37/B', 46.54595947265625, 22.52519989013672);
+INSERT INTO public."ResolvedAddresses" VALUES (37694, 'Arad', 'ŢIPAR', 'ŢIPAR,  Nr. 452', 46.4734001159668, 21.6341495513916);
+INSERT INTO public."ResolvedAddresses" VALUES (37695, 'Arad', 'VĂRĂDIA DE MUREŞ', 'VĂRĂDIA DE MUREŞ,  Nr. 126', 46.00804901123047, 22.151689529418945);
+INSERT INTO public."ResolvedAddresses" VALUES (37696, 'Arad', 'BOTFEI', 'BOTFEI,  Strada 1 , Nr. 97', 46.171058654785156, 21.069440841674805);
+INSERT INTO public."ResolvedAddresses" VALUES (37697, 'Arad', 'PĂULIAN', 'PĂULIAN,  Nr. 7', 46.334381103515625, 22.15604019165039);
+INSERT INTO public."ResolvedAddresses" VALUES (37698, 'Arad', 'CUIED', 'CUIED,  Nr. 256', 46.33921813964844, 22.015249252319336);
+INSERT INTO public."ResolvedAddresses" VALUES (37699, 'Arad', 'BUTENI', 'BUTENI,  Nr. 4', 46.330230712890625, 22.11874008178711);
+INSERT INTO public."ResolvedAddresses" VALUES (37700, 'Alba', 'MUŞCA', 'MUŞCA,  Nr. FN', 46.37276077270508, 23.167129516601562);
+INSERT INTO public."ResolvedAddresses" VALUES (37701, 'Alba', 'ŞPRING', 'ŞPRING,  Strada Principală , Nr. 334', 46.15599822998047, 23.88739013671875);
+INSERT INTO public."ResolvedAddresses" VALUES (37702, 'Bacău', 'SCURTA', 'SCURTA,  Strada Şcolii , Nr. 349', 46.63814163208008, 26.555740356445312);
+INSERT INTO public."ResolvedAddresses" VALUES (37703, 'Galați', 'TECUCI', 'TECUCI,  Strada 1 Decembrie 1918 (Strada 23 August) , Nr. 26C', 45.85261154174805, 27.427570343017578);
+INSERT INTO public."ResolvedAddresses" VALUES (37704, 'Galați', 'TECUCI', 'TECUCI,  Strada Costache Racoviţă (Strada Dobrogeanu Gherea) , Nr. 20 Bis', 45.84621047973633, 27.4289493560791);
+INSERT INTO public."ResolvedAddresses" VALUES (37705, 'Galați', 'GALAŢI', 'GALAŢI,  Strada Oltului , Nr. 8', 45.416751861572266, 28.0091495513916);
+INSERT INTO public."ResolvedAddresses" VALUES (37706, 'Galați', 'GALAŢI', 'GALAŢI,  Strada Camil Ressu (Strada Dudului) , Nr. 9A', 45.45256042480469, 28.021900177001953);
+INSERT INTO public."ResolvedAddresses" VALUES (37707, 'Dolj', 'BRATOVOEŞTI', 'BRATOVOEŞTI,  Nr. 66', 44.12649154663086, 23.90428924560547);
+INSERT INTO public."ResolvedAddresses" VALUES (37708, 'Dolj', 'LEU', 'LEU,  Nr. 773', 44.18843078613281, 24.002309799194336);
+INSERT INTO public."ResolvedAddresses" VALUES (37709, 'Dolj', 'GOICEA', 'GOICEA,  Nr. 202', 43.92000961303711, 23.615419387817383);
+INSERT INTO public."ResolvedAddresses" VALUES (37710, 'Hunedoara', 'ROŞCANI', 'ROŞCANI,  Nr. 9', 45.864959716796875, 22.56060028076172);
+INSERT INTO public."ResolvedAddresses" VALUES (37711, 'Hunedoara', 'HĂRĂU', 'HĂRĂU,  Nr. 70', 45.90412139892578, 22.95438003540039);
+INSERT INTO public."ResolvedAddresses" VALUES (37712, 'Hunedoara', 'PETRILA', 'PETRILA,  Strada Privighetorilor , Nr. 7', 45.44269943237305, 23.377939224243164);
+INSERT INTO public."ResolvedAddresses" VALUES (37713, 'Cluj', 'BOGATA DE SUS', 'BOGATA DE SUS,  Nr. 26', 47.201011657714844, 23.676700592041016);
+INSERT INTO public."ResolvedAddresses" VALUES (37714, 'Cluj', 'CLAPA', 'CLAPA,  Nr. 23', 46.574520111083984, 24.018619537353516);
+INSERT INTO public."ResolvedAddresses" VALUES (37715, 'Cluj', 'HUTA', 'HUTA,  Nr. 53', 47.325538635253906, 24.00860023498535);
+INSERT INTO public."ResolvedAddresses" VALUES (37716, 'Caraș-Severin', 'GÂRBOVĂŢ', 'GÂRBOVĂŢ,  Nr. 264', 44.86777877807617, 22.007049560546875);
+INSERT INTO public."ResolvedAddresses" VALUES (37717, 'Caraș-Severin', 'BOCŞA', 'BOCŞA,  Aleea Marcu Ioan , Nr. 1', 45.381351470947266, 21.78342056274414);
+INSERT INTO public."ResolvedAddresses" VALUES (37718, 'Călărași', 'CĂLĂRAŞI', 'CĂLĂRAŞI,  Prelungirea Dobrogei , Nr. 65', 44.2036018371582, 27.343990325927734);
+INSERT INTO public."ResolvedAddresses" VALUES (37719, 'Călărași', 'FLORICA', 'FLORICA,  Nr. 1', 44.496971130371094, 26.638309478759766);
+INSERT INTO public."ResolvedAddresses" VALUES (37720, 'Covasna', 'TÂRGU SECUIESC', 'TÂRGU SECUIESC,  Strada Rozelor , Nr. 2', 45.999168395996094, 26.12717056274414);
+INSERT INTO public."ResolvedAddresses" VALUES (37721, 'Dâmbovița', 'PUCHENI', 'PUCHENI,  Strada Principală , Nr. 137', 44.937320709228516, 25.516000747680664);
+INSERT INTO public."ResolvedAddresses" VALUES (37722, 'Constanța', 'MURFATLAR', 'MURFATLAR,  Aleea Mărgăritarelor , Nr. 16', 44.174171447753906, 28.407089233398438);
+INSERT INTO public."ResolvedAddresses" VALUES (37723, 'Constanța', 'MIHAIL KOGĂLNICEANU', 'MIHAIL KOGĂLNICEANU,  Strada Tudor Vladimirescu , Nr. 49', 44.1804313659668, 28.641019821166992);
+INSERT INTO public."ResolvedAddresses" VALUES (37724, 'Constanța', 'NĂVODARI', 'NĂVODARI,  Bulevardul Mamaia Nord (Strada DC86) , Nr. 6', 44.28300857543945, 28.616249084472656);
+INSERT INTO public."ResolvedAddresses" VALUES (37725, 'Constanța', 'NĂVODARI', 'NĂVODARI,  Strada Stadionului', 44.20336151123047, 28.618759155273438);
+INSERT INTO public."ResolvedAddresses" VALUES (37726, 'Constanța', 'CASTELU', 'CASTELU,  Strada 1 Mai , Nr. 11', 43.822139739990234, 28.578170776367188);
+INSERT INTO public."ResolvedAddresses" VALUES (37727, 'Constanța', 'DUNĂREA', 'DUNĂREA,  Strada Prof.Costică Dudu (Strada Prof. Dudu) , Nr. 81', 44.43994812300001, 28.117842962999998);
+INSERT INTO public."ResolvedAddresses" VALUES (37728, 'Mureș', 'TÂRNĂVENI', 'TÂRNĂVENI,  Calea Mediaşului (D) , Nr. 8A', 46.282103120000016, 24.29996043300004);
+INSERT INTO public."ResolvedAddresses" VALUES (37729, 'Olt', 'GRĂDINILE', 'GRĂDINILE,  Strada Neda Marinescu , Nr. 40', 43.94595283999999, 24.394758151);
 
 
 --
@@ -18826,10 +18919,10 @@ INSERT INTO public."ResolvedAddresses" VALUES (37636, 'Bucharest', 'BUCUREŞTI S
 -- Name: ResolvedAddresses_Id_seq; Type: SEQUENCE SET; Schema: public; Owner: docker
 --
 
-SELECT pg_catalog.setval('public."ResolvedAddresses_Id_seq"', 37636, true);
+SELECT pg_catalog.setval('public."ResolvedAddresses_Id_seq"', 37729, true);
 
 
--- Completed on 2020-11-15 14:09:59
+-- Completed on 2020-11-15 14:40:09
 
 --
 -- PostgreSQL database dump complete
