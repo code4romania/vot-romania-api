@@ -128,8 +128,14 @@ namespace VotRomania.CommandsHandlers
                 .Tap(() => _pollingStationsRepository.RemoveAllPollingStations())
                 .Tap(() => AddImportedPollingStationsToPollingStations(request.JobId, cancellationToken))
                 .Tap(() => _importedPollingStationsRepository.RemoveImportedPollingStations(request.JobId))
+                .Tap(() => UpdateAddressBank())
                 .Tap(() => _importJobsRepository.UpdateJobStatus(request.JobId, JobStatus.Imported))
                 .Tap(() => _pollingStationSearchService.BustCache());
+        }
+
+        private async Task UpdateAddressBank()
+        {
+            _ = await _context.Database.ExecuteSqlRawAsync("call PopulateAddressBank()");
         }
 
 
