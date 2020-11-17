@@ -60,10 +60,12 @@ namespace VotRomania
             services.AddScoped<IApplicationContentRepository, ApplicationContentRepository>();
             services.AddScoped<IImportJobsRepository, ImportJobsRepository>();
             services.AddScoped<IImportedPollingStationsRepository, ImportedPollingStationsRepository>();
+            services.AddScoped<IAddressBankRepository, AddressBankRepository>();
+
             services.AddScoped<IAddressLocationSearchService, HereAddressLocationSearchService>();
             services.AddSingleton<IPollingStationSearchService, IneffectiveSearchService>();
 
-            services.AddHostedService<QueuedHostedService>();
+            services.AddHostedService<AddressResolverService>();
             services.AddSingleton<IBackgroundJobsQueue, BackgroundJobsQueue>();
 
             services.AddScoped<IUserProvider, UserProvider>();
