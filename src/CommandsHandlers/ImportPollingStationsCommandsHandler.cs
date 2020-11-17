@@ -138,7 +138,6 @@ namespace VotRomania.CommandsHandlers
             _ = await _context.Database.ExecuteSqlRawAsync("call PopulateAddressBank()");
         }
 
-
         // TODO: if we will use different db move this operation to a stored procedure
         private async Task<Result> AddImportedPollingStationsToPollingStations(Guid jobId, CancellationToken cancellationToken)
         {

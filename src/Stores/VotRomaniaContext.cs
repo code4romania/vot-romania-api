@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using VotRomania.Stores.Entities;
 
 namespace VotRomania.Stores
@@ -188,7 +190,7 @@ namespace VotRomania.Stores
 
                 entity.Property(m => m.Locality)
                     .HasColumnName("Locality");
-
+                    
                 entity.Property(m => m.StreetCode)
                     .HasColumnName("StreetCode");
 
@@ -200,7 +202,7 @@ namespace VotRomania.Stores
 
                 entity.Property(m => m.Remarks)
                     .HasColumnName("Remarks");
-
+                    
                 entity.HasOne(d => d.ImportedPollingStation)
                     .WithMany(p => p.AssignedAddresses)
                     .HasForeignKey(d => d.ImportedPollingStationId)
@@ -230,6 +232,7 @@ namespace VotRomania.Stores
 
                 entity.Property(m => m.Longitude)
                     .HasColumnName("Longitude");
+
             });
 
             base.OnModelCreating(builder);
