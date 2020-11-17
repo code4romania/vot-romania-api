@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using VotRomania.Stores.Entities;
@@ -15,6 +15,7 @@ namespace VotRomania.Stores
         public DbSet<UploadJobsEntity> ImportJobs { get; set; }
         public DbSet<ImportedPollingStationEntity> ImportedPollingStations { get; set; }
         public DbSet<ImportedPollingStationAddressEntity> ImportedPollingStationAddresses { get; set; }
+        public DbSet<ResolvedAddressEntity> ResolvedAddresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -85,7 +86,6 @@ namespace VotRomania.Stores
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-
             builder.Entity<ApplicationContentEntity>(entity =>
             {
                 entity.ToTable("ApplicationContent");
@@ -98,7 +98,6 @@ namespace VotRomania.Stores
                     .HasColumnName("Data")
                     .IsRequired();
             });
-
 
             builder.Entity<UploadJobsEntity>(entity =>
             {
@@ -191,7 +190,7 @@ namespace VotRomania.Stores
 
                 entity.Property(m => m.Locality)
                     .HasColumnName("Locality");
-
+                    
                 entity.Property(m => m.StreetCode)
                     .HasColumnName("StreetCode");
 
@@ -203,11 +202,37 @@ namespace VotRomania.Stores
 
                 entity.Property(m => m.Remarks)
                     .HasColumnName("Remarks");
-
+                    
                 entity.HasOne(d => d.ImportedPollingStation)
                     .WithMany(p => p.AssignedAddresses)
                     .HasForeignKey(d => d.ImportedPollingStationId)
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            builder.Entity<ResolvedAddressEntity>(entity =>
+            {
+                entity.ToTable("ResolvedAddresses");
+                entity.Property(m => m.Id).IsRequired();
+                entity.HasKey(m => m.Id);
+                entity.HasIndex(r => new { r.County, r.Locality, r.Address });
+
+                entity.HasIndex(m => m.Id);
+
+                entity.Property(m => m.County)
+                    .HasColumnName("County");
+
+                entity.Property(m => m.Locality)
+                    .HasColumnName("Locality");
+
+                entity.Property(m => m.Address)
+                    .HasColumnName("Address");
+
+                entity.Property(m => m.Latitude)
+                    .HasColumnName("Latitude");
+
+                entity.Property(m => m.Longitude)
+                    .HasColumnName("Longitude");
+
             });
 
             base.OnModelCreating(builder);

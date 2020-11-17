@@ -128,10 +128,15 @@ namespace VotRomania.CommandsHandlers
                 .Tap(() => _pollingStationsRepository.RemoveAllPollingStations())
                 .Tap(() => AddImportedPollingStationsToPollingStations(request.JobId, cancellationToken))
                 .Tap(() => _importedPollingStationsRepository.RemoveImportedPollingStations(request.JobId))
+                .Tap(() => UpdateAddressBank())
                 .Tap(() => _importJobsRepository.UpdateJobStatus(request.JobId, JobStatus.Imported))
                 .Tap(() => _pollingStationSearchService.BustCache());
         }
 
+        private async Task UpdateAddressBank()
+        {
+            _ = await _context.Database.ExecuteSqlRawAsync("call PopulateAddressBank()");
+        }
 
         // TODO: if we will use different db move this operation to a stored procedure
         private async Task<Result> AddImportedPollingStationsToPollingStations(Guid jobId, CancellationToken cancellationToken)
