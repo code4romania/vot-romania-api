@@ -125,9 +125,7 @@ namespace VotRomania.CommandsHandlers
                 .Bind(_ => _importedPollingStationsRepository.GetNumberOfUnresolvedAddresses(request.JobId))
                 .Ensure(numberOfUnresolvedAddresses => numberOfUnresolvedAddresses == 0,
                     "Cannot complete job with unresolved addresses.")
-                .Tap(() => _pollingStationsRepository.RemoveAllPollingStations())
-                .Tap(() => AddImportedPollingStationsToPollingStations(request.JobId, cancellationToken))
-                .Tap(() => _importedPollingStationsRepository.RemoveImportedPollingStations(request.JobId))
+                .Tap(() => SwapPollingStations())
                 .Tap(() => UpdateAddressBank())
                 .Tap(() => _importJobsRepository.UpdateJobStatus(request.JobId, JobStatus.Imported))
                 .Tap(() => _pollingStationSearchService.BustCache());
@@ -138,26 +136,9 @@ namespace VotRomania.CommandsHandlers
             _ = await _context.Database.ExecuteSqlRawAsync("call PopulateAddressBank()");
         }
 
-        // TODO: if we will use different db move this operation to a stored procedure
-        private async Task<Result> AddImportedPollingStationsToPollingStations(Guid jobId, CancellationToken cancellationToken)
+        private async Task SwapPollingStations()
         {
-            var result = await Result.Try(async () =>
-            {
-                var pollingStationEntities = await _context.ImportedPollingStations
-                    .Include(x => x.AssignedAddresses)
-                    .Where(x => x.JobId == jobId.ToString())
-                    .Select(x => MapToPollingStationEntity(x))
-                    .ToListAsync(cancellationToken);
-
-
-                foreach (var entity in pollingStationEntities)
-                {
-                    await _context.PollingStations.AddAsync(entity, cancellationToken);
-                }
-
-                await _context.SaveChangesAsync(cancellationToken);
-            }, e => LogException(e));
-            return result;
+            _ = await _context.Database.ExecuteSqlRawAsync("call swapPollingStations()");
         }
 
         public async Task<Result<JobStatusModel>> Handle(GetCurrentImportJob request, CancellationToken cancellationToken)

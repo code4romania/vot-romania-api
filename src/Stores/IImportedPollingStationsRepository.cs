@@ -17,7 +17,6 @@ namespace VotRomania.Stores
         Task<Result> CleanPreviouslyImportedData();
         Task<Result> InsertPollingStations(Guid jobId, List<PollingStationModel> pollingStations);
         Task<Result<int>> AddPollingStation(Guid jobId, ImportedPollingStationModel pollingStation);
-        Task<Result> RemoveImportedPollingStations(Guid jobId);
         Task<Result<int>> GetNumberOfImportedAddresses(Guid jobId);
         Task<Result<int>> GetNumberOfUnresolvedAddresses(Guid jobId);
         Task<Result<PagedResult<ImportedPollingStationModel>>> GetImportedPollingStationsAsync(Guid jobId,
@@ -87,23 +86,6 @@ namespace VotRomania.Stores
 
             return result;
         }
-
-        public async Task<Result> RemoveImportedPollingStations(Guid jobId)
-        {
-            var result = await Result.Try(async () =>
-            {
-                var importedPollingStationEntities = await _context.ImportedPollingStations
-                    .Where(x => x.JobId == jobId.ToString())
-                    .ToListAsync();
-
-                _context.ImportedPollingStations.RemoveRange(importedPollingStationEntities);
-
-                await _context.SaveChangesAsync();
-            }, e => LogException(e));
-
-            return result;
-        }
-
         public async Task<Result<int>> GetNumberOfImportedAddresses(Guid jobId)
         {
             var result = await Result.Try(async () => await _context.ImportedPollingStations

@@ -81,17 +81,6 @@ namespace VotRomania.Stores
             return await pollingStationsQuery.SingleOrDefaultAsync();
         }
 
-        public async Task<Result> RemoveAllPollingStations()
-        {
-            var result = await Result.Try(async () =>
-            {
-                _context.PollingStations.RemoveRange(_context.PollingStations);
-                await _context.SaveChangesAsync();
-            }, e => LogException(e));
-
-            return result;
-        }
-
         private string LogException(Exception exception, string? message = null)
         {
             var exceptionMessage = string.IsNullOrWhiteSpace(message) ? exception.Message : message;
