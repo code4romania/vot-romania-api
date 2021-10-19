@@ -7,7 +7,7 @@ name: Deploy
 
 
 env:
-  IMAGE_VOT_ROMANIA: ${{ secrets.DOCKER_HUB_ORGANIZATION }}/vot-romania
+  IMAGE_VOT_ROMANIA: code4romania/vot-romania
 
 jobs:
   build-dockerimage:
@@ -23,6 +23,7 @@ jobs:
           cd src
           docker build . \
             --tag $IMAGE_VOT_ROMANIA:$GITHUB_SHA \
+            --tag $IMAGE_VOT_ROMANIA:latest \
             --file Dockerfile
 
       - name: Upload Docker image
@@ -31,11 +32,4 @@ jobs:
           docker login \
             -u ${{ secrets.DOCKER_HUB_USERNAME }} \
             --password-stdin
-          docker push $IMAGE_VOT_ROMANIA:$GITHUB_SHA
-      
-      - name: Tag Latest
-        run: |
-          docker tag \
-            $IMAGE_VOT_ROMANIA:$GITHUB_SHA \
-            $IMAGE_VOT_ROMANIA:latest
-          docker push $IMAGE_VOT_ROMANIA:latest
+          docker push -a $IMAGE_VOT_ROMANIA:$GITHUB_SHA
