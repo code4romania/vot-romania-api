@@ -11,6 +11,5 @@ namespace VotRomania.Stores
         Task<(bool isSuccess, string errorMessage, int pollingStationId)> AddPollingStationAsync(PollingStationModel pollingStation);
         Task<(bool isSuccess, string errorMessage)> DeletePollingStationAsync(int pollingStationId);
         Task<(bool isSuccess, string errorMessage)> UpdatePollingStationAsync(PollingStationModel pollingStation);
-        Task<Result> RemoveAllPollingStations();
     }
 }
