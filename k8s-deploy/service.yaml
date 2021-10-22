@@ -1,0 +1,63 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: vot-romania
+  namespace: vot-romania
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: "3"
+    spec:
+      containers:
+        - image: code4romania/vot-romania:<IMAGE_TAG_HERE>
+          resources:
+            requests:
+              cpu: 100m
+              memory: 240M
+            limits:
+              cpu: 1
+              memory: 1Gi
+          ports:
+            - containerPort: 80
+          env:
+            - name: ConnectionStrings__VotRoDBConnection
+              valueFrom:
+                secretKeyRef:
+                  name: vot-romania-secret
+                  key: db_connection
+            - name: HereMaps__Token
+              valueFrom:
+                secretKeyRef:
+                  name: vot-romania-secret
+                  key: heremaps_token
+            - name: Authentication__Secret
+              valueFrom:
+                secretKeyRef:
+                  name: vot-romania-secret
+                  key: authentication_secret
+            - name: UserSettings__Users__0__UserName
+              valueFrom:
+                secretKeyRef:
+                  name: vot-romania-secret
+                  key: admin_username
+            - name: UserSettings__Users__0__Name
+              valueFrom:
+                secretKeyRef:
+                  name: vot-romania-secret
+                  key: admin_name
+            - name: UserSettings__Users__0__Password
+              valueFrom:
+                secretKeyRef:
+                  name: vot-romania-secret
+                  key: admin_password
+            - name: UserSettings__Users__0__Scopes__0
+              valueFrom:
+                secretKeyRef:
+                  name: vot-romania-secret
+                  key: admin_scopes_content
+            - name: UserSettings__Users__0__Scopes__1
+              valueFrom:
+                secretKeyRef:
+                  name: vot-romania-secret
+                  key: admin_scopes_stations

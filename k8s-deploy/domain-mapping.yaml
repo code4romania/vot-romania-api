@@ -1,0 +1,10 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: DomainMapping
+metadata:
+  name: api.votromania.ro
+  namespace: vot-romania
+spec:
+  ref:
+    name: vot-romania
+    kind: Service
+    apiVersion: serving.knative.dev/v1
