@@ -7,7 +7,7 @@ name: Deploy
 
 
 env:
-  IMAGE_VOT_ROMANIA: code4romania/vot-romania
+  IMAGE_VOT_ROMANIA: ${{ secrets.DOCKER_HUB_ORGANIZATION }}/vot-romania
 
 jobs:
   build-dockerimage:
