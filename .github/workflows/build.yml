@@ -48,18 +48,15 @@ jobs:
       - name: Replace image tag in template
         run: sed -e 's,<IMAGE_TAG_HERE>,'$GITHUB_SHA',g' ./k8s-deploy/service.yaml
 
-      - name: Configure AWS credentials
+      - name: aws v check
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: arn:aws:iam::172019762325:user/github-action-eks
+          aws-region: eu-central-1
 
-      - name: Deploy to AWS EKS
-        uses: ianbelcher/eks-kubectl-action@master
+      - name: Deploy
+      - uses: actions-hub/kubectl@v1.21.2
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: ${{ secrets.AWS_REGION }}
-          cluster_name: ${{ secrets.CLUSTER_NAME }}
           args: apply -f ./k8s-deploy/service.yaml
