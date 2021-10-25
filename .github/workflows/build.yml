@@ -48,14 +48,14 @@ jobs:
       - name: Replace image tag in template
         run: sed -e 's,<IMAGE_TAG_HERE>,'$GITHUB_SHA',g' ./k8s-deploy/service.yaml
 
-      - name: aws v check
+      - name: aws check
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::172019762325:user/github-action-eks
           aws-region: eu-central-1
 
       - name: Deploy
-      - uses: actions-hub/kubectl@v1.21.2
+        uses: actions-hub/kubectl@v1.21.2
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
         with:
