@@ -11,7 +11,10 @@ jobs:
   build-dockerimage:
     name: Build Docker container
     runs-on: ubuntu-latest
-
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: eu-central-1
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -59,5 +62,4 @@ jobs:
         uses: actions-hub/kubectl@v1.21.2
         env:
           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-        with:
-          args: apply -f ./k8s-deploy/service.yaml
+      - run: kubectl apply -f ./k8s-deploy/service.yaml
