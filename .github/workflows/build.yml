@@ -5,7 +5,7 @@ on:
 name: Deploy
 
 env:
-  DOCKER_IMAGE_BASE: code4romania/vot-romania
+  DOCKER_IMAGE_BASE: utwo/vot-romania
 
 jobs:
   build-dockerimage:
