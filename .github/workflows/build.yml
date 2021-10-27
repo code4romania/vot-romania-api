@@ -47,7 +47,7 @@ jobs:
       - name: Replace image tag in template
         run: sed -e 's,<IMAGE_TAG_HERE>,'${GITHUB_SHA::7}',g' ./k8s-deploy/service.yaml
 
-      - name: Deployment
+      - name: Deploy
         uses: kodermax/kubectl-aws-eks@master
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG }}
