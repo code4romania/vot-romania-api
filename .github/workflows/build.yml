@@ -40,7 +40,7 @@ jobs:
           context: ./src
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: $DOCKER_IMAGE_BASE:latest,$DOCKER_IMAGE_BASE:${GITHUB_SHA::7}
+          tags: $DOCKER_IMAGE_BASE:${GITHUB_SHA::7}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
