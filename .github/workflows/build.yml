@@ -6,7 +6,6 @@ name: Deploy
 
 env:
   DOCKER_IMAGE_BASE: utwo/vot-romania
-  GITHUB_SHA1: 123
 
 jobs:
   build-dockerimage:
@@ -41,7 +40,7 @@ jobs:
           context: ./src
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ env.DOCKER_IMAGE_BASE }}:latest,${{ env.DOCKER_IMAGE_BASE }}:${{ env.GITHUB_SHA1 }}
+          tags: ${{ env.DOCKER_IMAGE_BASE }}:latest,${{ env.DOCKER_IMAGE_BASE }}:${{ github.sha }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
