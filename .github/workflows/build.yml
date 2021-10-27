@@ -6,6 +6,7 @@ name: Deploy
 
 env:
   DOCKER_IMAGE_BASE: utwo/vot-romania
+  GITHUB_SHA1: 123
 
 jobs:
   build-dockerimage:
@@ -40,12 +41,12 @@ jobs:
           context: ./src
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ env.DOCKER_IMAGE_BASE }}:latest,${{ env.DOCKER_IMAGE_BASE }}:${{ env.GITHUB_SHA }}
+          tags: ${{ env.DOCKER_IMAGE_BASE }}:latest,${{ env.DOCKER_IMAGE_BASE }}:${{ env.GITHUB_SHA1 }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Replace image tag in template
-        run: sed -e 's,<IMAGE_TAG_HERE>,'${GITHUB_SHA::7}',g' ./k8s-deploy/service.yaml
+        run: sed -e 's,<IMAGE_TAG_HERE>,'$GITHUB_SHA',g' ./k8s-deploy/service.yaml
 
       - name: Deploy
         uses: kodermax/kubectl-aws-eks@master
