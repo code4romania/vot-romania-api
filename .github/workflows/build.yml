@@ -5,7 +5,7 @@ on:
 name: Deploy
 
 env:
-  DOCKER_IMAGE_BASE: code4romania/vot-romania
+  DOCKER_IMAGE_BASE: utwo/vot-romania
 
 jobs:
   build-dockerimage:
@@ -33,6 +33,9 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
@@ -40,12 +43,12 @@ jobs:
           context: ./src
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ env.DOCKER_IMAGE_BASE }}:latest,${{ env.DOCKER_IMAGE_BASE }}:${ github.sha::7 }
+          tags: ${{ env.DOCKER_IMAGE_BASE }}:latest,${{ env.DOCKER_IMAGE_BASE }}:${{ env.SHORT_SHA }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Replace image tag in template
-        run: sed -e 's,<IMAGE_TAG_HERE>,'${ GITHUB_SHA::7 }',g' ./k8s-deploy/service.yaml
+        run: sed -e 's,<IMAGE_TAG_HERE>,'$SHORT_SHA',g' ./k8s-deploy/service.yaml
 
       - name: Deploy
         uses: kodermax/kubectl-aws-eks@master
