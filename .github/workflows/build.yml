@@ -28,7 +28,7 @@ jobs:
 
       - name: Upload Docker image
         run: |
-          echo ${{ secrets.DOCKER_HUB_PASSWORD }} | \
+          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | \
           docker login \
             -u ${{ secrets.DOCKER_HUB_USERNAME }} \
             --password-stdin
