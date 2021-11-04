@@ -4,7 +4,7 @@
 
 The project aims to be the go-to source of useful information for voters in Romanian elections.
 
-[See the project live](https://votromania.azurewebsites.net/)
+[See the project live](https://votromania.ro)
 
 There are some differences in the voting process depending on a person's residency and citizenship status. This project aims to clearly present all relevant info.
 
@@ -14,37 +14,45 @@ There are some differences in the voting process depending on a person's residen
 
 This project is built by amazing volunteers and you can be one of them! Here's a list of ways in [which you can contribute to this project](.github/CONTRIBUTING.md). If you want to make any change to this repository, please **make a fork first**.
 
-Help us out by testing this project in the [staging environment](https://votromania.azurewebsites.net/). If you see something that doesn't quite work the way you expect it to, open an Issue. Make sure to describe what you _expect to happen_ and _what is actually happening_ in detail.
-
-If you would like to suggest new functionality, open an Issue and mark it as a __[Feature request]__. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
+If you would like to suggest new functionality, open an Issue and mark it as a **[Feature request]**. Please be specific about why you think this functionality will be of use. If you can, please include some visual description of what you would like the UI to look like, if you are suggesting new UI elements.
 
 Also, this is [the workflow we follow](.github/WORKFLOW.md).
 
 ## Built With
+
 .net core 3.1 and Angular 8
 
 ### Programming languages
+
 C# 8
 
-### Frontend framework
+### Frontend framework for admin
+
 Angular 8
 
+### Frontend for user facing app
+
+[vot-romania-client](https://github.com/code4romania/vot-romania-client) (Nuxtjs)
+
 ### Package managers
+
 NPM
 
 ### Database technology & provider
+
 SQLite
 
 ## Deployment
 
-run `dotnet watch run` to debug your code
+1. Add a new tag to the repository
+2. Go to the [Code4ro k8s manifest repo](https://github.com/code4romania/code4ro-k8s) and update the k8s manifest with the new image tag
 
 ## Feedback
 
-* Request a new feature on GitHub.
-* Vote for popular feature requests.
-* File a bug in GitHub Issues.
-* Email us with other feedback contact@code4.ro
+- Request a new feature on GitHub.
+- Vote for popular feature requests.
+- File a bug in GitHub Issues.
+- Email us with other feedback contact@code4.ro
 
 ## License
 
