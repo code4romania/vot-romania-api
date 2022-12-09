@@ -67,7 +67,7 @@ namespace VotRomania.Controllers
         [SwaggerResponse(200, "Id of new polling station", typeof(int))]
         [SwaggerResponse(401)]
         [SwaggerResponse(500, "Something went wrong when adding or updating a polling station", typeof(ProblemDetails))]
-        public async Task<IActionResult> AddPollingStationAsync([FromBody]PollingStationUploadModel pollingStation)
+        public async Task<IActionResult> AddPollingStationAsync([FromBody] PollingStationUploadModel pollingStation)
         {
             var result = await _mediator.Send(new AddPollingStation(pollingStation));
 
@@ -85,7 +85,7 @@ namespace VotRomania.Controllers
         [SwaggerResponse(200, "Latest data", typeof(void))]
         [SwaggerResponse(401)]
         [SwaggerResponse(500, "Something went wrong when adding or updating a polling station", typeof(ProblemDetails))]
-        public async Task<IActionResult> UpdatePollingStationAsync([FromRoute] int id, [FromBody]PollingStationUploadModel pollingStation)
+        public async Task<IActionResult> UpdatePollingStationAsync([FromRoute] int id, [FromBody] PollingStationUploadModel pollingStation)
         {
             var result = await _mediator.Send(new UpdatePollingStation(id, pollingStation));
 

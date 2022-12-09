@@ -232,7 +232,7 @@ namespace VotRomania.Controllers
         [Consumes("application/json")]
         [SwaggerResponse(200, "The token info", typeof(TokenResponseModel))]
         [SwaggerResponse(404, "The user was not found", typeof(ProblemDetails))]
-        public async Task<IActionResult> CreateTokenAsync([FromBody, Required]TokenRequestModel model)
+        public async Task<IActionResult> CreateTokenAsync([FromBody, Required] TokenRequestModel model)
         {
             var userToken = await _tokenProvider.CreateUserTokenAsync(model.UserName, model.Password);
             if (userToken == null)

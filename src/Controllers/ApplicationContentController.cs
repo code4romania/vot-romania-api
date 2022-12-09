@@ -49,7 +49,7 @@ namespace VotRomania.Controllers
         [SwaggerResponse(200, "Operation response", typeof(void))]
         [SwaggerResponse(401)]
         [SwaggerResponse(500, "Something went wrong when updating content", typeof(ProblemDetails))]
-        public async Task<IActionResult> UpdateContentAsync([FromRoute] Language language, [FromBody]ApplicationContentModel content)
+        public async Task<IActionResult> UpdateContentAsync([FromRoute] Language language, [FromBody] ApplicationContentModel content)
         {
             var result = await _mediator.Send(new AddOrUpdateApplicationContent(language, content));
 
